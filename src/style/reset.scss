@@ -1,0 +1,7 @@
+// 디폴트 값 없애기 (ex. 브라우저마다 기본으로 내장된 사이즈 통일)
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
