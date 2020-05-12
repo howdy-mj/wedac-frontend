@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "img": "https://resources.gdac.com/imgs/bigSlider/openAPI.png",
+    "title": "GDAC API 서비스 정식 오픈",
+    "description1": "오픈 API를 발급받고",
+    "description2": "더 빠르고 스마트한 거래를 체험해보세요",
+    "action": "API 서비스 바로가기"
+  },
+  {
+    "id": 2,
+    "img": "https://resources.gdac.com/imgs/bigSlider/security.png",
+    "title": "ISMS인증 심사원이 고객의 자산을 지킵니다",
+    "description1": "국방부 해커부대 출신 보안 엔지니어 등",
+    "description2": "최고 전문가들이 철저하게 자산을 지킵니다",
+    "action": "회원 가입하기"
+  }
+]
