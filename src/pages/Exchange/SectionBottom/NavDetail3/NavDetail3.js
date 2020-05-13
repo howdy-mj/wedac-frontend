@@ -9,7 +9,7 @@ function NavDetail3() {
         <img src={bitcoinicon} alt="cointitle" />
         <CrytoHeaderTitle>비트코인(Bitcoin)</CrytoHeaderTitle>
       </CrytoHeader>
-      <CrytoContainer>
+      <CrytoBottomContainer>
         <CrytoInner>
           <CrytoTable>
             <CrytoTDody>
@@ -55,7 +55,7 @@ function NavDetail3() {
             </CrytoTDody>
           </CrytoTable>
         </CrytoInner>
-      </CrytoContainer>
+      </CrytoBottomContainer>
     </BottomInfo>
   );
 }
@@ -63,8 +63,8 @@ function NavDetail3() {
 export default NavDetail3;
 
 const BottomInfo = styled.div`
-  width: 100%;
-  height: 100%;
+  /* width: 100%; */
+  height: 220px;
   background-color: #fff;
 `;
 const CrytoHeader = styled.div`
@@ -87,10 +87,18 @@ const CrytoHeaderTitle = styled.p`
   line-height: 24px;
   vertical-align: top;
 `;
-const CrytoContainer = styled.div`
+const CrytoBottomContainer = styled.div`
   width: 100%;
-  height: 100px;
-  /* overflow: scroll; */
+  height: 100%;
+  overflow: scroll;
+  overflow-x: hidden;
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #b8b8b8;
+    border-radius: 3px;
+  }
 `;
 const CrytoInner = styled.div`
   width: 50%;

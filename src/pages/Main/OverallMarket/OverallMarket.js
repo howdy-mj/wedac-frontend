@@ -11,23 +11,23 @@ const selectedMarket = {
   2: <GT />,
 };
 
-function useFetch() {
-  const [marketInfo, setMarketInfo] = useState([]);
+// function useFetch() {
+//   const [marketInfo, setMarketInfo] = useState([]);
 
-  useEffect(() => {
-    fetch("https://api.gdac.com/v1/cryptos/price")
-      .then((data) => data.json())
-      .then((data) => setMarketInfo(data.data));
-  }, []);
+//   useEffect(() => {
+//     fetch("https://api.gdac.com/v1/cryptos/price")
+//       .then((data) => data.json())
+//       .then((data) => setMarketInfo(data.data));
+//   }, []);
 
-  return { marketInfo };
-}
+//   return { marketInfo };
+// }
 
 function OverallMarket() {
   const [selected, setSelected] = useState(0);
   const [userInput, setUserInput] = useState("");
   const changeSeletedNum = (id) => setSelected(id);
-  const handleInput = (e) => setUserInput(e.target.value);
+  // const handleInput = (e) => setUserInput(e.target.value);
   // const { userInput, marketInfo } = useFetch();
 
   // const filteredList = marketInfo.filter((one) => {
@@ -59,7 +59,7 @@ function OverallMarket() {
             </LeftDiv>
           </MarketLeft>
           <MarketRight>
-            <SearchBox handleChange={handleInput} userInput={userInput} />
+            {/* <SearchBox handleChange={handleInput} userInput={userInput} /> */}
           </MarketRight>
         </MarketOption>
 
