@@ -55,19 +55,27 @@ function HomeNav() {
             </Left>
             <FlexDiv>
               <Ul>
-                <Li middle>거래소</Li>
+                <Link to="/exchange">
+                  <Li middle>거래소</Li>
+                </Link>
                 <Link to="/balance">
                   <Li middle>잔고</Li>
                 </Link>
-                <Li middle>지갑</Li>
+                <Link to="/wallet">
+                  <Li middle>지갑</Li>
+                </Link>
                 <Link to="/history">
                   <Li middle>거래내역</Li>
                 </Link>
               </Ul>
             </FlexDiv>
             <Right>
-              <Button login>로그인</Button>
-              <Button join>회원가입</Button>
+              <Link to="/login">
+                <Button login>로그인</Button>
+              </Link>
+              <Link to="/signup">
+                <Button join>회원가입</Button>
+              </Link>
             </Right>
           </MainNav>
         </Container>

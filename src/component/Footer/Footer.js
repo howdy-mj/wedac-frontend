@@ -184,11 +184,20 @@ const Container = styled.div`
   @media ${(props) => props.theme.mobile} {
     display: none;
   }
+
+  @media ${(props) => props.theme.desktop} {
+    width: 1152px;
+    margin: 0 auto;
+  }
 `;
 
 const First = styled.div`
   margin-bottom: 40px;
   display: flex;
+
+  @media (min-width: 1221px) {
+    justify-content: space-between;
+  }
 `;
 
 const Img = styled.img`
@@ -230,6 +239,10 @@ const Img = styled.img`
 const SNS = styled.div`
   position: absolute;
   right: 20px;
+
+  @media (min-width: 1221px) {
+    position: static;
+  }
 `;
 
 const Second = styled.div`
@@ -300,6 +313,10 @@ const Category = styled.div`
     top: 400px;
     left: -10px;
   }
+
+  @media (min-width: 1221px) {
+    position: static;
+  }
 `;
 
 const Ul = styled.ul`
@@ -351,6 +368,10 @@ const Div = styled.div`
       padding-left: 8px;
       margin: auto 0;
     `}
+
+  @media (min-width: 1221px) {
+    position: static;
+  }
 `;
 
 const Corporate = styled.div`
@@ -361,6 +382,10 @@ const Corporate = styled.div`
   @media ${(props) => props.theme.tabletM} {
     display: none;
   }
+
+  @media (min-width: 1221px) {
+    position: static;
+  }
 `;
 
 const Copyright = styled.div`
@@ -369,6 +394,10 @@ const Copyright = styled.div`
   bottom: 20px;
   font-size: 12px;
   color: #919dae;
+
+  @media (min-width: 1221px) {
+    position: static;
+  }
 `;
 
 const Mobile = styled.nav`

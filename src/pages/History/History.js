@@ -1,10 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import styled, { css } from "styled-components";
 import Nav from "../../component/Nav/Nav";
+import Trade from "./Trade/Trade";
+import InOut from "./InOut/InOut";
 import Footer from "../../component/Footer/Footer";
-import test from "../../images/search.png";
+import search from "../../images/history-search.PNG";
+
+const tab = {
+  0: <Trade />,
+  1: <InOut />,
+};
 
 function History() {
+  const [selected, setSelected] = useState(0);
+  const changeTab = (id) => setSelected(id);
+
   return (
     <>
       <Nav />
@@ -13,8 +23,22 @@ function History() {
           <HistoryLeft>
             <Header>
               <Category>
-                <CategoryDiv selected>체결내역</CategoryDiv>
-                <CategoryDiv>입출금내역</CategoryDiv>
+                <CategoryDiv
+                  isActive={selected === 0}
+                  onClick={() => {
+                    changeTab(0);
+                  }}
+                >
+                  체결내역
+                </CategoryDiv>
+                <CategoryDiv
+                  isActive={selected === 1}
+                  onClick={() => {
+                    changeTab(1);
+                  }}
+                >
+                  입출금내역
+                </CategoryDiv>
               </Category>
               <Filter>
                 <FilterDiv calendar>
@@ -27,54 +51,13 @@ function History() {
                   <Input coin type="text" placeholder="전체 코인" />
                 </FilterDiv>
                 <FilterDiv img>
-                  <SearchImg img src={test} alt="" />
+                  <SearchImg img src={search} alt="" />
                 </FilterDiv>
               </Filter>
             </Header>
-            <HistoryContent>
-              <HistoryTable>
-                <HistoryTHead>
-                  <HeadTR>
-                    <HeadTH>체결시간</HeadTH>
-                    <HeadTH>구분</HeadTH>
-                    <HeadTH>종목</HeadTH>
-                    <HeadTH>가격</HeadTH>
-                    <HeadTH>수량</HeadTH>
-                    <HeadTH>수수료</HeadTH>
-                    <HeadTH>금액(수량)</HeadTH>
-                    <HeadTH>주문시간</HeadTH>
-                  </HeadTR>
-                </HistoryTHead>
-                <HistoryTbody>
-                  <BodyTR>
-                    <BodyTD>
-                      <p>2020-03-19</p>
-                      <p>18:50:03</p>
-                    </BodyTD>
-                    <BodyTD>
-                      <BodyP red>매수</BodyP>
-                    </BodyTD>
-                    <BodyTD>GT/KRW</BodyTD>
-                    <BodyTD>
-                      <p>0.1235 KRW</p>
-                    </BodyTD>
-                    <BodyTD>
-                      <p>83,432.21415887 GT</p>
-                    </BodyTD>
-                    <BodyTD>
-                      <p>5 KRW</p>
-                    </BodyTD>
-                    <BodyTD>
-                      <BodyP value>10,309 KRW</BodyP>
-                    </BodyTD>
-                    <BodyTD>
-                      <p>2020-03-19</p>
-                      <p>18:50:03</p>
-                    </BodyTD>
-                  </BodyTR>
-                </HistoryTbody>
-              </HistoryTable>
-            </HistoryContent>
+            {/*체결내역, 입출금내역 Component*/}
+            {tab[selected]}
+
             <Bottom>
               <Save>저장하기</Save>
             </Bottom>
@@ -88,7 +71,7 @@ function History() {
 }
 
 const HistoryWrap = styled.div`
-  background-color: #f5f8ff;
+  background-color: ${(props) => props.theme.backgroundColor};
 
   @media ${(props) => props.theme.mobile} {
     margin-top: 45px;
@@ -135,9 +118,10 @@ const CategoryDiv = styled.div`
   color: #919dae;
   font-size: 14px;
   font-weight: 700;
+  cursor: pointer;
 
   ${(props) =>
-    props.selected &&
+    props.isActive &&
     css`
       color: ${(props) => props.theme.subColor};
       padding-bottom: 20px;
@@ -204,70 +188,8 @@ const FilterDiv = styled.div`
 `;
 
 const SearchImg = styled.img`
-  height: 20px;
-  width: 20px;
-`;
-
-const HistoryContent = styled.div`
-  height: 850px;
-`;
-
-const HistoryTable = styled.table`
-  width: 100%;
-  font-size: 12px;
-  letter-spacing: -0.03em;
-  text-align: center;
-  display: table;
-`;
-
-const HistoryTHead = styled.thead`
-  color: #919dae;
-  display: table-header-group;
-`;
-
-const HeadTR = styled.tr`
-  height: 38px;
-  display: table-row;
-`;
-
-const HeadTH = styled.th`
-  padding: 14px 8px 0 8px;
-  display: table-cell;
-`;
-
-const HistoryTbody = styled.tbody`
-  border-top: 1px solid #ebeef6;
-  color: #596070;
-  display: table-row-group;
-`;
-
-const BodyTR = styled.tr`
-  display: table-row;
-
-  &:nth-child(odd) {
-    background-color: #f5f8ff;
-  }
-`;
-
-const BodyTD = styled.td`
-  height: 48px;
-  display: table-cell;
-  vertical-align: middle;
-`;
-
-const BodyP = styled.p`
-  ${(props) =>
-    props.red &&
-    css`
-      color: ${(props) => props.theme.plusColor};
-      font-weight: 700;
-    `}
-
-  ${(props) =>
-    props.value &&
-    css`
-      font-weight: 700;
-    `}
+  height: 25px;
+  width: 25px;
 `;
 
 const HistoryRight = styled.div`

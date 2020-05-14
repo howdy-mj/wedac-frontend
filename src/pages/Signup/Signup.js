@@ -1,60 +1,65 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-
+import styled, { css } from "styled-components";
+import Nav from "../../component/Nav/Nav";
+import SignupEmail from "./SignupEmail/SignupEmail";
+import Footer from "../../component/Footer/Footer";
 import kakao from "../../images/kakaotalk.png";
 import circle from "../../images/circle.png";
-import SignupEmail from "./SignupEmail/SignupEmail";
-import styled, { css } from "styled-components";
 
 function Signup() {
   return (
-    <SignupPage className="Signup">
-      <SignupWrapper className="signupWrapper">
-        <SignupFeed className="signupFeed">
-          <SignupGdac className="signupGdac">GDAC 회원가입</SignupGdac>
-          <KakaoSignup className="kakaoSignup">
-            <KakaoSignupButton type="button" className="kakaoSignupButton">
-              <img src={kakao} alt="kaka" />
-              카카오 계정으로 가입하기
-            </KakaoSignupButton>
-          </KakaoSignup>
-          <MiddleLine2 className="middleLine2">
-            <span>또는</span>
-          </MiddleLine2>
-          <EmailSignup className="emailSignup">
-            <Link to={`/SignupEmail/SignupEmail`}>
-              <EmailSignupButton type="button" className="emailSignupButton">
-                이메일로 가입하기
-              </EmailSignupButton>
-            </Link>
-          </EmailSignup>
-          <BelowSignupButton className="belowSignupButton">
-            <BottomLeft2 className="bottomLeft2">
-              이미 계정이 있으신가요?<a href="/#">로그인</a>
-            </BottomLeft2>
-            <BottomRight2 className="bottomRight2">
-              <a href="/#">Registration guide</a>
-            </BottomRight2>
-          </BelowSignupButton>
-          <SupportBottom2 className="supportBottom2">
-            <SupportFirst2 className="supportFirst2">
-              문제가 있으시면&nbsp;
-              <a href="/#" target="_blank">
-                개별문의
-              </a>
-              를 진행해 주세요.
-            </SupportFirst2>
-            <SupportSecond2 className="supportSecond2">
-              <img src={circle} alt="circle" />
-              고객센터
-              <a href="/https://support.gdac.com" target="_blank">
-                https://support.gdac.com
-              </a>
-            </SupportSecond2>
-          </SupportBottom2>
-        </SignupFeed>
-      </SignupWrapper>
-    </SignupPage>
+    <>
+      <Nav />
+      <SignupPage className="Signup">
+        <SignupWrapper className="signupWrapper">
+          <SignupFeed className="signupFeed">
+            <SignupGdac className="signupGdac">GDAC 회원가입</SignupGdac>
+            <KakaoSignup className="kakaoSignup">
+              <KakaoSignupButton type="button" className="kakaoSignupButton">
+                <img src={kakao} alt="kaka" />
+                카카오 계정으로 가입하기
+              </KakaoSignupButton>
+            </KakaoSignup>
+            <MiddleLine2 className="middleLine2">
+              <span>또는</span>
+            </MiddleLine2>
+            <EmailSignup className="emailSignup">
+              <Link to={`/SignupEmail/SignupEmail`}>
+                <EmailSignupButton type="button" className="emailSignupButton">
+                  이메일로 가입하기
+                </EmailSignupButton>
+              </Link>
+            </EmailSignup>
+            <BelowSignupButton className="belowSignupButton">
+              <BottomLeft2 className="bottomLeft2">
+                이미 계정이 있으신가요?<a href="/#">로그인</a>
+              </BottomLeft2>
+              <BottomRight2 className="bottomRight2">
+                <a href="/#">Registration guide</a>
+              </BottomRight2>
+            </BelowSignupButton>
+            <SupportBottom2 className="supportBottom2">
+              <SupportFirst2 className="supportFirst2">
+                문제가 있으시면&nbsp;
+                <a href="/#" target="_blank">
+                  개별문의
+                </a>
+                를 진행해 주세요.
+              </SupportFirst2>
+              <SupportSecond2 className="supportSecond2">
+                <img src={circle} alt="circle" />
+                고객센터
+                <a href="/https://support.gdac.com" target="_blank">
+                  https://support.gdac.com
+                </a>
+              </SupportSecond2>
+            </SupportBottom2>
+          </SignupFeed>
+        </SignupWrapper>
+      </SignupPage>
+      <Footer />
+    </>
   );
 }
 
