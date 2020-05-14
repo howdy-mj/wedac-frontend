@@ -1,12 +1,14 @@
 import React from "react";
 import styled, { css } from "styled-components";
+import CrytoContainerTop from './CrytoContainerTop/CrytoContainerTop';
+import CrytoContainerBottom from './CrytoContainerBottom/CrytoContainerBottom';
 
 function SectionRight() {
   return (
-    <SectionRightPage className="sectionRight">
-      <CrytoContainer className="crytoContainer">
-        <CrytoContainerTop className="crytoContainerTop"></CrytoContainerTop>
-        <CrytoContainerBottom className="crytoContainerBottom"></CrytoContainerBottom>
+    <SectionRightPage >
+      <CrytoContainer >
+        <CrytoContainerTop />
+        <CrytoContainerBottom />
       </CrytoContainer>
     </SectionRightPage>
   );
@@ -22,21 +24,9 @@ const CrytoContainer = styled.div`
   width: 320px;
   border-spacing: 0;
   //border: 1px solid #ebeef6;
-  background-color: #fff;
+  //background-color: #fff;
   margin-bottom: 0px;
   border-bottom: 1px solid #ebeef6;
 `;
-const CrytoContainerTop = styled.div`
-  border: 1px solid #ebeef6;
-  background-color: #fff;
-  height: 556px;
-  display: block;
-`;
-const CrytoContainerBottom = styled.div`
-  width: 320px;
-  margin: 8px auto 0;
-  border: 1px solid #ebeef6;
-  background-color: #fff;
-  height: 354px;
-  display: block;
-`;
+
+
