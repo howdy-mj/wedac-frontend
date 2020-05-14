@@ -1,12 +1,16 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import styled, { css } from "styled-components";
+import Nav from "../../component/Nav/Nav";
+import Footer from "../../component/Footer/Footer";
 import kakao from "../../images/kakaotalk.png";
 import circle from "../../images/circle.png";
-import styled, { css } from "styled-components";
-import { Link } from "react-router-dom";
 
 function Login() {
-    return (
-        <LoginPage>
+  return (
+    <>
+      <Nav />
+      <LoginPage>
         <LoginWrapper>
           <LoginFeed>
             <LoginGdac>GDAC 로그인</LoginGdac>
@@ -65,7 +69,7 @@ function Login() {
                 </BelowRight>
               </BelowLoginButton>
             </BottomPart>
-  
+
             <SupportBottom className="supportBottom">
               <SupportFirst className="supportFirst">
                 문제가 있으시면&nbsp;
@@ -85,11 +89,12 @@ function Login() {
           </LoginFeed>
         </LoginWrapper>
       </LoginPage>
-    )
+      <Footer />
+    </>
+  );
 }
 
 export default Login;
-
 
 const LoginPage = styled.div`
   background-color: #f7fbff;

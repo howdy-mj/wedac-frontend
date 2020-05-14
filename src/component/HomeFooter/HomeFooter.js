@@ -185,7 +185,7 @@ const Container = styled.div`
     display: none;
   }
 
-  @media (min-width: 1221px) {
+  @media ${(props) => props.theme.desktop} {
     width: 1152px;
     margin: 0 auto;
   }
@@ -239,6 +239,10 @@ const Img = styled.img`
 const SNS = styled.div`
   position: absolute;
   right: 20px;
+
+  @media (min-width: 1221px) {
+    position: static;
+  }
 `;
 
 const Second = styled.div`
@@ -362,6 +366,10 @@ const Div = styled.div`
       padding-left: 8px;
       margin: auto 0;
     `}
+
+  @media (min-width: 1221px) {
+    position: static;
+  }
 `;
 
 const Corporate = styled.div`
@@ -372,6 +380,10 @@ const Corporate = styled.div`
   @media ${(props) => props.theme.tabletM} {
     display: none;
   }
+
+  @media (min-width: 1221px) {
+    position: static;
+  }
 `;
 
 const Copyright = styled.div`
@@ -380,6 +392,10 @@ const Copyright = styled.div`
   bottom: 20px;
   font-size: 12px;
   color: hsla(0, 0%, 100%, 0.6);
+
+  @media (min-width: 1221px) {
+    position: static;
+  }
 `;
 
 const Mobile = styled.nav`

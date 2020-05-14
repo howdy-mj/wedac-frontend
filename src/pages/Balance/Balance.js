@@ -1,11 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import styled, { css } from "styled-components";
 import Nav from "../../component/Nav/Nav";
+import CurrentBalance from "./CurerntBalance/CurrentBalance";
+import OutstnadingOrder from "./OutstandingOrder/OutstandingOrder";
 import MobileBalance from "./MobileBalance/MobileBalance";
 import Footer from "../../component/Footer/Footer";
-import test from "../../images/search.png";
+
+const tabs = {
+  0: <CurrentBalance />,
+  1: <OutstnadingOrder />,
+};
 
 function Balance() {
+  const [selected, setSelected] = useState(0);
+  const changeTab = (id) => setSelected(id);
   return (
     <>
       <Nav />
@@ -68,69 +76,25 @@ function Balance() {
             <ContentsContainer>
               <Contents>
                 <Category>
-                  <CategoryDiv selected>
-                    <span>잔고</span>
+                  <CategoryDiv
+                    isActive={selected === 0}
+                    onClick={() => {
+                      changeTab(0);
+                    }}
+                  >
+                    잔고
                   </CategoryDiv>
-                  <CategoryDiv>미체결 주문</CategoryDiv>
+                  <CategoryDiv
+                    isActive={selected === 1}
+                    onClick={() => {
+                      changeTab(1);
+                    }}
+                  >
+                    미체결 주문
+                  </CategoryDiv>
                 </Category>
-                <DetailContainer>
-                  <DetailInner>
-                    <Header>
-                      <HeaderUl>
-                        <Li header name>
-                          종목
-                        </Li>
-                        <Li header currentAmount>
-                          보유수량
-                        </Li>
-                        <Li header avgBidPrice>
-                          평균 매수가격
-                        </Li>
-                        <Li header currentValue>
-                          평가액
-                        </Li>
-                        <Li header valuation>
-                          평가손익
-                        </Li>
-                        <Li header earningsRate>
-                          수익률(%)
-                        </Li>
-                        <Li header empty></Li>
-                      </HeaderUl>
-                    </Header>
-                    <DetailContents>
-                      <DetailContentsUl>
-                        <Li detail name>
-                          <Logo>
-                            <LogoImg src={test} alt="" />
-                          </Logo>
-                          <div>
-                            <P kor>지닥토큰</P>
-                            <P eng>GT</P>
-                          </div>
-                        </Li>
-                        <Li detail currentAmount>
-                          <P>300,000.00004256</P>
-                        </Li>
-                        <Li detail avgBidPrice>
-                          <P>2.3624</P>
-                        </Li>
-                        <Li detail currentValue>
-                          <P>27,930</P>
-                        </Li>
-                        <Li detail valuation>
-                          <P minus>-680,790</P>
-                        </Li>
-                        <Li detail earningsRate>
-                          <P minus>-96.06%</P>
-                        </Li>
-                        <Li detail goOrder>
-                          <P goOrder>주문</P>
-                        </Li>
-                      </DetailContentsUl>
-                    </DetailContents>
-                  </DetailInner>
-                </DetailContainer>
+                {/* 잔고, 미체결주문 Component*/}
+                {tabs[selected]}
               </Contents>
             </ContentsContainer>
           </Left>
@@ -260,6 +224,7 @@ const CalculatedDiv = styled.div`
   height: 114px;
   background-color: white;
   border: 1px solid #ebeef6;
+  
 
   ${(props) =>
     props.bottom &&
@@ -378,9 +343,10 @@ const Category = styled.div`
 const CategoryDiv = styled.div`
   width: 126px;
   text-align: center;
+  cursor: pointer;
 
   ${(props) =>
-    props.selected &&
+    props.isActive &&
     css`
       color: ${(props) => props.theme.subColor};
       border-bottom: 1px solid ${(props) => props.theme.subColor};
@@ -389,151 +355,6 @@ const CategoryDiv = styled.div`
   @media ${(props) => props.theme.tabletS} {
     width: 50%;
   }
-`;
-
-const DetailContainer = styled.div`
-  display: flex;
-`;
-
-const DetailInner = styled.div`
-  width: 100%;
-`;
-
-const Header = styled.div`
-  height: 58px;
-`;
-
-const HeaderUl = styled.ul`
-  display: flex;
-  align-items: center;
-  border-bottom: 1px solid #d8dce9;
-`;
-
-const Li = styled.li`
-
-${(props) =>
-  props.header &&
-  css`
-    color: ${(props) => props.theme.noChangeColor};
-    font-size: 12px;
-    font-weight: 700;
-    padding: 20px 24px;
-  `}
-
-${(props) =>
-  props.detail &&
-  css`
-    padding: 10px 14px;
-    font-size: 14px;
-  `}
-
-${(props) =>
-  props.name &&
-  css`
-    width: 17%;
-  `}
-${(props) =>
-  props.currentAmount &&
-  css`
-    width: 16%;
-    text-align: center;
-  `}
-${(props) =>
-  props.avgBidPrice &&
-  css`
-    width: 12%;
-  `}
-${(props) =>
-  props.currentValue &&
-  css`
-    width: 15%;
-  `}
-${(props) =>
-  props.valuation &&
-  css`
-    width: 15%;
-  `}
-${(props) =>
-  props.eargningsRate &&
-  css`
-    width: 14%;
-  `}
-${(props) =>
-  props.empty &&
-  css`
-    width: 11%;
-  `}
-  ${(props) =>
-    props.goOrder &&
-    css`
-      width: 11%;
-      text-align: center;
-      line-height: 28px;
-      margin-left: 50px;
-    `}
-
-`;
-
-const DetailContents = styled.div`
-  height: 59px;
-`;
-
-const DetailContentsUl = styled.ul`
-  display: flex;
-  width: 100%;
-  border-bottom: 1px solid #ebeef6;
-  align-items: center;
-`;
-
-const Logo = styled.div`
-  margin-right: 3px;
-`;
-
-const LogoImg = styled.img`
-  height: 22px;
-  width: 22px;
-`;
-
-const P = styled.p`
-  ${(props) =>
-    props.kor &&
-    css`
-      color: ${(props) => props.theme.noChangeColor};
-      font-weight: 700;
-      margin-bottom: 2px;
-    `}
-  ${(props) =>
-    props.eng &&
-    css`
-      font-size: 12px;
-      letter-spacing: -0.03em;
-      color: #919dae;
-    `}
-
-  ${(props) =>
-    props.goOrder &&
-    css`
-      width: 65px;
-      height: 30px;
-      color: #596070;
-      font-family: "NotoSans";
-      font-size: 12px;
-      letter-spacing: -0.03em;
-      border: 1px solid #ebeef6;
-      border-radius: 2px;
-    `}
-  
-    ${(props) =>
-      props.plus &&
-      css`
-        color: ${(props) => props.theme.plusColor};
-      `}
-    ${(props) =>
-      props.minus &&
-      css`
-        color: ${(props) => props.theme.minusColor};
-      `}
-
 `;
 
 const Right = styled.section`

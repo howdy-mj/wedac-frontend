@@ -1,110 +1,114 @@
 import React, { Component } from "react";
+import Nav from "../../../component/Nav/Nav";
+import Footer from "../../../component/Footer/Footer";
 import circle from "../../../images/circle.png";
 import checkbox from "../../../images/checkbox.png";
 import chec from "../../../images/chec.png";
 import styled, { css } from "styled-components";
 
 function SignupEmail() {
-
-
   return (
-    <SignupEmailPage className="SignupEmail">
-      <SignupEmailWrapper className="SignupEmailWrapper">
-        <SignupEmailFeed className="SignupEmailFeed">
-          <SignupEmailGdacP className="SignupEmailGdac">
-            GDAC 회원가입
-          </SignupEmailGdacP>
-          <BottomPart3 className="bottomPart3">
-            <TypeEmailPassWord className="typeEmail3">
-              <input
-                className="inputEmail3"
-                type="text"
-                name="email"
-                placeholder="이메일"
-              />
-            </TypeEmailPassWord>
-            <BetweenDivP className="betweenDiv3"></BetweenDivP>
+    <>
+      <Nav />
+      <SignupEmailPage className="SignupEmail">
+        <SignupEmailWrapper className="SignupEmailWrapper">
+          <SignupEmailFeed className="SignupEmailFeed">
+            <SignupEmailGdacP className="SignupEmailGdac">
+              GDAC 회원가입
+            </SignupEmailGdacP>
+            <BottomPart3 className="bottomPart3">
+              <TypeEmailPassWord className="typeEmail3">
+                <input
+                  className="inputEmail3"
+                  type="text"
+                  name="email"
+                  placeholder="이메일"
+                />
+              </TypeEmailPassWord>
+              <BetweenDivP className="betweenDiv3"></BetweenDivP>
 
-            <TypeEmailPassWord className="typePassword3">
-              <input
-                className="inputPassword3"
-                type="password"
-                name="password"
-                placeholder="비밀번호"
-              />
-            </TypeEmailPassWord>
-            <BetweenDivP className="betweenDiv3"></BetweenDivP>
+              <TypeEmailPassWord className="typePassword3">
+                <input
+                  className="inputPassword3"
+                  type="password"
+                  name="password"
+                  placeholder="비밀번호"
+                />
+              </TypeEmailPassWord>
+              <BetweenDivP className="betweenDiv3"></BetweenDivP>
 
-            <TypeEmailPassWord className="typePasswordAgain3">
-              <input
-                className="inputPasswordAgain3"
-                type="password"
-                name="password"
-                placeholder="비밀번호 확인"
-              />
-            </TypeEmailPassWord>
-            <BetweenDivP className="betweenDiv3"></BetweenDivP>
+              <TypeEmailPassWord className="typePasswordAgain3">
+                <input
+                  className="inputPasswordAgain3"
+                  type="password"
+                  name="password"
+                  placeholder="비밀번호 확인"
+                />
+              </TypeEmailPassWord>
+              <BetweenDivP className="betweenDiv3"></BetweenDivP>
 
-            <AgreementPart className="agreementPart">
-              {/* <p> */}
-              <AgreementPartInner className="agreementTop">
-                {/* <div
+              <AgreementPart className="agreementPart">
+                {/* <p> */}
+                <AgreementPartInner className="agreementTop">
+                  {/* <div
                   // onclick={this.handleClick}
                   className="checkbox"
                 > */}
-                <img src={checkbox} alt="checkbox" />
-                GDAC&nbsp;<a href="/#">이용약관,</a>
-                <a href="/#">&nbsp;개인정보처리방침,</a>
-                <a href="/#">&nbsp;원화 입출금 방침</a>에 동의합니다.(필수)
-                {/* </div> */}
-              </AgreementPartInner>
+                  <img src={checkbox} alt="checkbox" />
+                  GDAC&nbsp;<a href="/#">이용약관,</a>
+                  <a href="/#">&nbsp;개인정보처리방침,</a>
+                  <a href="/#">&nbsp;원화 입출금 방침</a>에 동의합니다.(필수)
+                  {/* </div> */}
+                </AgreementPartInner>
 
-              {/* <p> */}
-              <AgreementPartInner className="agreementBottom">
-                {/* <div
+                {/* <p> */}
+                <AgreementPartInner className="agreementBottom">
+                  {/* <div
                     className="checkBox"
                     // onclick={this.handleClick}
                   > */}
-                <img src={checkbox} alt="checkbox" />
-                GDAC 마케팅 정보 수신에 동의합니다. (선택)
-                {/* </div> */}
-              </AgreementPartInner>
-            </AgreementPart>
+                  <img src={checkbox} alt="checkbox" />
+                  GDAC 마케팅 정보 수신에 동의합니다. (선택)
+                  {/* </div> */}
+                </AgreementPartInner>
+              </AgreementPart>
 
-            <EmailButtonDiv3 className="emailButtonDiv3">
-              <button type="submit" className="emailButton3">
-                이메일로 가입하기
-              </button>
-            </EmailButtonDiv3>
-            <BelowSignupEmailButton3 className="belowSignupEmailButton3">
-              <BelowLeft3 className="belowLeft3">
-                <a href="/#">로그인</a>
-              </BelowLeft3>
-              <BelowLeft3 className="belowRight3">
-                <a href="/#">카카오 계정으로 가입하기</a>
-              </BelowLeft3>
-            </BelowSignupEmailButton3>
-          </BottomPart3>
+              <EmailButtonDiv3 className="emailButtonDiv3">
+                <button type="submit" className="emailButton3">
+                  이메일로 가입하기
+                </button>
+              </EmailButtonDiv3>
+              <BelowSignupEmailButton3 className="belowSignupEmailButton3">
+                <BelowLeft3 className="belowLeft3">
+                  <a href="/#">로그인</a>
+                </BelowLeft3>
+                <BelowLeft3 className="belowRight3">
+                  <a href="/#">카카오 계정으로 가입하기</a>
+                </BelowLeft3>
+              </BelowSignupEmailButton3>
+            </BottomPart3>
 
-          <SupportBottom3 className="supportBottom3">
-            <SupportFirst3 className="supportFirst3">
-              문제가 있으시면
-              <a href="/#" target="_blank">
-                개별문의
-              </a>
-              를 진행해 주세요.
-            </SupportFirst3>
-            <SupportFirst3 className="supportSecond3">
-              <img src={circle} alt="circle" />
-              고객센터
-              <a href="/https://support.gdac.com" target="_blank">
-                https://support.gdac.com
-              </a>
-            </SupportFirst3>
-          </SupportBottom3>
-        </SignupEmailFeed>
-      </SignupEmailWrapper>
-    </SignupEmailPage>
+            <SupportBottom3 className="supportBottom3">
+              <SupportFirst3 className="supportFirst3">
+                문제가 있으시면
+                <a href="/#" target="_blank">
+                  개별문의
+                </a>
+                를 진행해 주세요.
+              </SupportFirst3>
+              <SupportFirst3 className="supportSecond3">
+                <img src={circle} alt="circle" />
+                고객센터
+                <a href="/https://support.gdac.com" target="_blank">
+                  https://support.gdac.com
+                </a>
+              </SupportFirst3>
+            </SupportBottom3>
+          </SignupEmailFeed>
+        </SignupEmailWrapper>
+      </SignupEmailPage>
+      <Footer />
+    </>
   );
 }
 
