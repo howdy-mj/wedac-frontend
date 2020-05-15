@@ -1,12 +1,184 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
+import { Link, RouteComponentProps } from "react-router-dom";
+import styled, { css } from "styled-components";
 import Nav from "../../../component/Nav/Nav";
 import Footer from "../../../component/Footer/Footer";
 import circle from "../../../images/circle.png";
 import checkbox from "../../../images/checkbox.png";
-import chec from "../../../images/chec.png";
-import styled, { css } from "styled-components";
+import checked from "../../../images/chec.png";
 
-function SignupEmail() {
+function SignupEmail(props: RouteComponentProps) {
+  const [email, setEmail] = useState("");
+  const [warningEmail, setWarningEmail] = useState("");
+  const [emailsatisfied, setEmailsatisfied] = useState(false);
+  const [emailBorder, setEmailBorder] = useState(true);
+  const [password, setPassword] = useState("");
+  const [pwsatisfied, setPwsatisfied] = useState(false);
+  const [warningPW, setWarningPW] = useState("");
+  const [passwordBorder, setPasswordBorder] = useState(true);
+  const [show, setShow] = useState(false);
+  const [checkLengthYN, setCheckLengthYN] = useState("F");
+  const [checkUpperYN, setCheckUpperYN] = useState("F");
+  const [checkLowerYN, setCheckLowerYN] = useState("F");
+  const [checkNumYN, setCheckNumYN] = useState("F");
+  const [checkCharYN, setCheckCharYN] = useState("F");
+  const [pwDoubleCheck, setPwDoubleCheck] = useState("");
+  const [doublesatisfied, setDoublesatisfied] = useState(false);
+  const [warningDouble, setWarningDouble] = useState("");
+  const [pwDoubleBorder, setPwDoubleBorder] = useState(true);
+  const [isNecessary, setIsNecessary] = useState(false);
+  const [isOption, setIsOption] = useState(false);
+  const [notAllowed, setNotAllowed] = useState(true);
+
+  const emailValidation = (e) => {
+    setEmail(e.target.value);
+    setEmailBorder(false);
+
+    const regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+    let result = regExp.test(email);
+
+    if (result) {
+      setWarningEmail("");
+      setEmailBorder(true);
+      setEmailsatisfied(true);
+    } else if (!result) {
+      setWarningEmail("이메일 주소를 정확히 입력해주세요.");
+      setEmailBorder(false);
+      setEmailsatisfied(false);
+    }
+  };
+
+  const warningEmailMessage = (e) => {
+    if (!e.target.value) {
+      setWarningEmail("이메일을 입력해 주세요.");
+      setEmailBorder(false);
+    }
+  };
+
+  const passwordValidation = (e) => {
+    let pwInput = e.target.value;
+    setPassword(pwInput);
+    setPasswordBorder(false);
+
+    const regExp = /^.*(?=^.{8,50}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
+    const Upper = /[A-Z]/;
+    const Lower = /[a-z]/;
+    const Number = /[0-9]/;
+    const Char = /[!@#$%^&+=]/;
+    let result = regExp.test(pwInput);
+    console.log("password", pwInput);
+
+    if (result) {
+      setWarningPW("");
+      setPasswordBorder(true);
+      setPwsatisfied("true");
+    } else if (!result) {
+      setWarningPW(`영문대문자, 영어소문자, 숫자, 특수문자를 각 1개 이상 포함하여
+      8자리~50자리의 비밀번호를 입력하세요.`);
+      setPasswordBorder(false);
+    }
+
+    if (pwInput.length > 7) {
+      setCheckLengthYN("x");
+    } else {
+      setCheckLengthYN("F");
+    }
+
+    if (Upper.test(pwInput)) {
+      setCheckUpperYN("x");
+    } else {
+      setCheckUpperYN("F");
+    }
+    if (Lower.test(pwInput)) {
+      setCheckLowerYN("x");
+    } else {
+      setCheckLowerYN("F");
+    }
+
+    if (Number.test(pwInput)) {
+      setCheckNumYN("x");
+    } else {
+      setCheckNumYN("F");
+    }
+
+    if (Char.test(pwInput)) {
+      setCheckCharYN("x");
+    } else {
+      setCheckCharYN("F");
+    }
+
+    if (e.target.value === pwDoubleCheck || pwDoubleCheck === "") {
+      setWarningDouble("");
+      setPwDoubleBorder(true);
+      setPwsatisfied(true);
+    } else if (e.target.value !== pwDoubleCheck) {
+      setWarningDouble("비밀번호와 일치하지 않습니다. 다시 확인해 주세요.");
+      setPwDoubleBorder(false);
+      setPwsatisfied(false);
+    }
+  };
+
+  const warningPWMessage = (e) => {
+    setShow(false);
+    if (!e.target.value) {
+      setWarningPW("비밀번호를 입력해 주세요.");
+      setPasswordBorder(false);
+    }
+  };
+
+  const pwDoubleValidation = (e) => {
+    setPwDoubleCheck(e.target.value);
+    setPwDoubleBorder(false);
+
+    if (e.target.value === password) {
+      setWarningDouble("");
+      setPwDoubleBorder(true);
+      setDoublesatisfied(true);
+    } else {
+      setWarningDouble("비밀번호와 일치하지 않습니다. 다시 확인해 주세요.");
+      setPwDoubleBorder(false);
+      setDoublesatisfied(false);
+    }
+  };
+
+  const warningDoubleMessage = (e) => {
+    if (password && pwDoubleCheck !== password) {
+      setWarningDouble("비밀번호와 일치하지 않습니다. 다시 확인해 주세요.");
+    }
+  };
+
+  const showGuide = () => {
+    setShow(true);
+  };
+
+  const hasArgreeNecessary = () => {
+    setIsNecessary(!isNecessary);
+  };
+
+  const hasAgreeOption = () => {
+    setIsOption(!isOption);
+  };
+
+  const goVerify = (e) => {
+    e.preventDefault();
+
+    fetch(`http://10.58.7.3:8000/user/sign-up`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email: email,
+        password: password,
+        check_password: pwDoubleCheck,
+      }),
+    }).then((res) => {
+      if (res.status === 200) {
+        props.history.push("/signupVerify");
+      } else if (res.status === 404) {
+        console.log("재입력");
+      }
+    });
+  };
+
   return (
     <>
       <Nav />
@@ -19,68 +191,146 @@ function SignupEmail() {
             <BottomPart3 className="bottomPart3">
               <TypeEmailPassWord className="typeEmail3">
                 <input
-                  className="inputEmail3"
                   type="text"
                   name="email"
                   placeholder="이메일"
+                  style={{
+                    borderColor: emailBorder ? "" : "red",
+                  }}
+                  onChange={emailValidation}
+                  onBlur={warningEmailMessage}
+                  required
                 />
               </TypeEmailPassWord>
-              <BetweenDivP className="betweenDiv3"></BetweenDivP>
+              <WarningEmail>{warningEmail}</WarningEmail>
 
               <TypeEmailPassWord className="typePassword3">
                 <input
-                  className="inputPassword3"
                   type="password"
                   name="password"
                   placeholder="비밀번호"
+                  style={{ borderColor: passwordBorder ? "" : "red" }}
+                  onChange={passwordValidation}
+                  onBlur={warningPWMessage}
+                  onFocus={showGuide}
                 />
+                <PasswordGuide showGuide={show}>
+                  <p>
+                    <CheckYN
+                      style={{ color: checkLengthYN === "x" ? "#3bbee0" : "" }}
+                    >
+                      {checkLengthYN}
+                    </CheckYN>
+                    8자 이상 50자 이하
+                  </p>
+                  <p>
+                    <CheckYN
+                      style={{ color: checkUpperYN === "x" ? "#3bbee0" : "" }}
+                    >
+                      {checkUpperYN}
+                    </CheckYN>
+                    최소 1개 이상 대문자 포함
+                  </p>
+                  <p>
+                    <CheckYN
+                      style={{ color: checkLowerYN === "x" ? "#3bbee0" : "" }}
+                    >
+                      {checkLowerYN}
+                    </CheckYN>
+                    최소 1개 이상 소문자 포함
+                  </p>
+                  <p>
+                    <CheckYN
+                      style={{ color: checkNumYN === "x" ? "#3bbee0" : "" }}
+                    >
+                      {checkNumYN}
+                    </CheckYN>
+                    최소 1개 이상 숫자 포함
+                  </p>
+                  <p>
+                    <CheckYN
+                      style={{ color: checkCharYN === "x" ? "#3bbee0" : "" }}
+                    >
+                      {checkCharYN}
+                    </CheckYN>
+                    최소 1개 이상 특수 문자 포함($, @, %...)
+                  </p>
+                </PasswordGuide>
               </TypeEmailPassWord>
-              <BetweenDivP className="betweenDiv3"></BetweenDivP>
+              <WarningPassword>{warningPW}</WarningPassword>
 
               <TypeEmailPassWord className="typePasswordAgain3">
                 <input
-                  className="inputPasswordAgain3"
                   type="password"
-                  name="password"
+                  name="passwordDouble"
                   placeholder="비밀번호 확인"
+                  style={{ borderColor: pwDoubleBorder ? "" : "red" }}
+                  onChange={pwDoubleValidation}
+                  onBlur={warningDoubleMessage}
                 />
               </TypeEmailPassWord>
-              <BetweenDivP className="betweenDiv3"></BetweenDivP>
+              <WarningPasswordCheck>{warningDouble}</WarningPasswordCheck>
 
               <AgreementPart className="agreementPart">
-                {/* <p> */}
-                <AgreementPartInner className="agreementTop">
-                  {/* <div
-                  // onclick={this.handleClick}
-                  className="checkbox"
-                > */}
-                  <img src={checkbox} alt="checkbox" />
-                  GDAC&nbsp;<a href="/#">이용약관,</a>
-                  <a href="/#">&nbsp;개인정보처리방침,</a>
-                  <a href="/#">&nbsp;원화 입출금 방침</a>에 동의합니다.(필수)
-                  {/* </div> */}
+                <AgreementPartInner
+                  firstline
+                  name="necessary"
+                  value={isNecessary}
+                  onClick={hasArgreeNecessary}
+                >
+                  <CheckboxImg checkTF={isNecessary} />
+                  GDAC&nbsp;<a href="/signupEmail">이용약관,</a>
+                  <a href="/signupEmail">&nbsp;개인정보처리방침,</a>
+                  <a href="/signupEmail">&nbsp;원화 입출금 방침</a>에
+                  동의합니다.(필수)
                 </AgreementPartInner>
 
-                {/* <p> */}
-                <AgreementPartInner className="agreementBottom">
-                  {/* <div
-                    className="checkBox"
-                    // onclick={this.handleClick}
-                  > */}
-                  <img src={checkbox} alt="checkbox" />
+                <AgreementPartInner
+                  name="option"
+                  value={isOption}
+                  onClick={hasAgreeOption}
+                >
+                  <CheckboxImg checkTF={isOption} />
                   GDAC 마케팅 정보 수신에 동의합니다. (선택)
-                  {/* </div> */}
                 </AgreementPartInner>
               </AgreementPart>
 
-              <EmailButtonDiv3 className="emailButtonDiv3">
-                <button type="submit" className="emailButton3">
+              <EmailButtonDiv3 onClick={goVerify} className="emailButtonDiv3">
+                <button
+                  type="submit"
+                  disabled={
+                    !(
+                      emailsatisfied &&
+                      pwsatisfied &&
+                      doublesatisfied &&
+                      isNecessary
+                    )
+                  }
+                  style={{
+                    cursor:
+                      emailsatisfied === true &&
+                      pwsatisfied === true &&
+                      doublesatisfied === true &&
+                      isNecessary === true
+                        ? "pointer"
+                        : "not-allowed",
+                    backgroundColor:
+                      emailsatisfied === true &&
+                      pwsatisfied === true &&
+                      doublesatisfied === true &&
+                      isNecessary === true
+                        ? "#0086ec"
+                        : "rgba(0, 134, 236, 0.5)",
+                  }}
+                  className="emailButton3"
+                >
                   이메일로 가입하기
                 </button>
               </EmailButtonDiv3>
+
               <BelowSignupEmailButton3 className="belowSignupEmailButton3">
                 <BelowLeft3 className="belowLeft3">
-                  <a href="/#">로그인</a>
+                  <Link to="/login">로그인</Link>
                 </BelowLeft3>
                 <BelowLeft3 className="belowRight3">
                   <a href="/#">카카오 계정으로 가입하기</a>
@@ -116,11 +366,22 @@ export default SignupEmail;
 
 const SignupEmailPage = styled.div`
   background-color: #f7fbff;
+  height: 100%;
+
+  @media ${(props) => props.theme.mobile} {
+    height: 90vh;
+  }
 `;
+
 const SignupEmailWrapper = styled.div`
   padding: 6px;
   overflow: hidden;
+
+  @media ${(props) => props.theme.mobile} {
+    margin-top: 46px;
+  }
 `;
+
 const SignupEmailFeed = styled.div`
   border: 0px solid black;
   min-height: 600px;
@@ -130,6 +391,7 @@ const SignupEmailFeed = styled.div`
   box-shadow: 0 2px 4px 0 rgba(2, 37, 83, 0.2);
   background-color: #fff;
 `;
+
 const SignupEmailGdacP = styled.p`
   font-size: 24px;
   font-weight: 700;
@@ -139,22 +401,24 @@ const SignupEmailGdacP = styled.p`
   color: #022553;
   text-align: center;
 `;
+
 const BottomPart3 = styled.div`
   border: 0px solid blue;
 `;
+
 const TypeEmailPassWord = styled.div`
   padding: 0 65px;
   position: relative;
-  z-index: 10;
   height: 50px;
   input {
     width: 100%;
-    height: 50px;
+    height: 46px;
     line-height: 50px;
     background-color: #f5f8ff;
     border: 1px solid #ebeef6;
     border-radius: 2px;
     padding-left: 15px;
+    outline: none;
 
     &::placeholder {
       font-size: 13px;
@@ -162,12 +426,63 @@ const TypeEmailPassWord = styled.div`
       //letter-spacing: -0.03em;
       color: #596070;
       opacity: 0.6;
+
+      ${(props) =>
+        props.hasborder &&
+        css`
+          border: red;
+        `}
+    }
+
+    &:after:focus {
+      border-color: ${(props) => props.theme.plusColor};
     }
   }
 `;
-const BetweenDivP = styled.p`
-  height: 24px;
+
+const WarningEmail = styled.p`
+  position: relative;
+  min-height: 24px;
+  line-height: 1.6;
+  padding: 0 65px;
+  font-size: 12px;
+  color: ${(props) => props.theme.plusColor};
 `;
+
+const PasswordGuide = styled.div`
+  display: none;
+  position: absolute;
+  top: 50px;
+  height: 111px;
+  width: 407px;
+  padding: 8px 14px;
+  background-color: white;
+  box-shadow: 0 2px 4px 0 rgba(2, 37, 83, 0.2);
+  z-index: 999999999;
+
+  p {
+    font-size: 12px;
+    letter-spacing: -0.03em;
+    line-height: 17px;
+    color: #596070;
+  }
+
+  ${(props) =>
+    props.showGuide &&
+    css`
+      display: block;
+    `}
+`;
+
+const CheckYN = styled.span`
+  font-family: "emoticon";
+  margin-right: 5px;
+`;
+
+const WarningPassword = styled(WarningEmail)``;
+
+const WarningPasswordCheck = styled(WarningEmail)``;
+
 const AgreementPart = styled.div`
   padding: 10px 65px 0;
   padding-bottom: 30px;
@@ -179,13 +494,14 @@ const AgreementPartInner = styled.div`
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  img {
-    cursor: pointer;
-    margin-right: 10px;
-    width: 20px;
-    height: 20px;
-    border-radius: 2px;
-  }
+  color: #596070;
+  cursor: pointer;
+
+  ${(props) =>
+    props.firstline &&
+    css`
+      margin-bottom: 10px;
+    `}
 
   a {
     font-weight: 700;
@@ -193,16 +509,36 @@ const AgreementPartInner = styled.div`
     text-decoration: none;
   }
 `;
+
+const CheckboxImg = styled.div`
+  cursor: pointer;
+  margin-right: 10px;
+  width: 20px;
+  height: 20px;
+  border-radius: 2px;
+  background: url(${checkbox}) no-repeat 0 0;
+  background-size: contain;
+
+  ${(props) =>
+    props.checkTF &&
+    css`
+      background: url(${checked}) no-repeat 0 0;
+      background-size: contain;
+    `}
+`;
+
 const EmailButtonDiv3 = styled.div`
   padding: 0 65px;
   button {
-    background-color: rgba(0, 134, 236, 0.5);
+    /* background-color: rgba(0, 134, 236, 0.5); */
     border-color: transparent;
     width: 100%;
     height: 50px;
     font-size: 14px;
     color: #fff;
     border-radius: 2px;
+    outline: none;
+    /* cursor: not-allowed; */
   }
 `;
 const BelowSignupEmailButton3 = styled.div`
@@ -224,7 +560,6 @@ const BelowLeft3 = styled.div`
     cursor: pointer;
     text-decoration: none;
     font-size: 12px;
-    font-weight: bold;
   }
 `;
 const SupportBottom3 = styled.div`

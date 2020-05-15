@@ -259,12 +259,11 @@ const BelowLeft = styled.div`
   float: left;
   a {
     display: inline-block;
-    margin-top: 14px;
+    margin-top: 7px;
     color: #0086ec;
     cursor: pointer;
     text-decoration: none;
     font-size: 12px;
-    font-weight: bold;
   }
 `;
 const BelowRight = styled.div`
@@ -276,7 +275,6 @@ const BelowRight = styled.div`
     cursor: pointer;
     text-decoration: none;
     font-size: 12px;
-    font-weight: bold;
   }
 `;
 const SupportBottom = styled.div`
