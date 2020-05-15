@@ -1,7 +1,7 @@
 import React from "react";
 import styled, { css } from "styled-components";
 
-function CrytoContainerBottom() {
+function MiddleBottomRight() {
   return (
     <div>
       <CrytoContainerBottomPage>
@@ -299,16 +299,32 @@ function CrytoContainerBottom() {
   );
 }
 
-export default CrytoContainerBottom;
+export default MiddleBottomRight;
 
 const CrytoContainerBottomPage = styled.div`
-  width: 320px;
-  margin: 8px auto 0;
+  /* width: 320px; */
+  /* margin: 8px auto 0; */
   border: 1px solid #ebeef6;
   background-color: #fff;
   height: 354px;
   display: block;
+  /* margin-left: 8px; */
+  @media ${(props) => props.theme.tabletL} {
+    /* display: flex; */
+    /* flex-basis: 10%; */
+    float: right;
+    width: 280px;
+    height: 275px;
+    margin-top: 8px;
+    margin-right: 8px;
+  }
+
+  @media ${(props) => props.theme.mobile} {
+    margin-top: 8px;
+    width: 100%;
+  }
 `;
+
 const BottomNavTable1 = styled.table`
   width: 100%;
   padding-top: 4px;
@@ -332,7 +348,7 @@ const BottomNavTable = styled.table`
 `;
 
 const ScrollBar = styled.div`
-  height: 310px;
+  height: 290px;
   overflow: scroll;
   overflow-x: hidden;
   ::-webkit-scrollbar {
@@ -341,6 +357,32 @@ const ScrollBar = styled.div`
   ::-webkit-scrollbar-thumb {
     background: #b8b8b8;
     border-radius: 3px;
+  }
+
+  @media ${(props) => props.theme.tabletL} {
+    height: 230px;
+    overflow: scroll;
+    overflow-x: hidden;
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #b8b8b8;
+      border-radius: 3px;
+    }
+  }
+
+  @media ${(props) => props.theme.mobile} {
+    height: 230px;
+    overflow: scroll;
+    overflow-x: hidden;
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #b8b8b8;
+      border-radius: 3px;
+    }
   }
 `;
 

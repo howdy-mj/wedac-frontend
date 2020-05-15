@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import styled, { css } from "styled-components";
-import TradingPartRight from "./TradingPartRight/TradingPartRight";
+import styled from "styled-components";
+import { css } from "styled-components";
 
-function TradingPart() {
+function TradingPartRight() {
   const [activeClick, setActiveClick] = useState(false);
   const borderColorOn = () => setActiveClick(true);
   const borderColorOff = () => setActiveClick(false);
@@ -10,156 +10,94 @@ function TradingPart() {
   const [activeClick1, setActiveClick1] = useState(false);
   const borderColorOn1 = () => setActiveClick1(true);
   const borderColorOff1 = () => setActiveClick1(false);
-
-  console.log(activeClick);
   return (
     <div>
-      {" "}
-      <TradingPartArticle>
-        <TradingPartNav>
-          <Nav left>매수</Nav>
-          <Nav right>매도</Nav>
-        </TradingPartNav>
-        <TradingPartFeed>
-          <TradingPartFeedLeft>
-            <TradingPartFeedInner>
-              <InputWrapper>
-                <InputWrapperLeft>주문 가능</InputWrapperLeft>
-                <InputWrapperRight>
-                  <MoneyDetail left>0</MoneyDetail>
-                  <MoneyDetail right>KRW</MoneyDetail>
-                </InputWrapperRight>
-              </InputWrapper>
-              <InputWrapper>
-                <InputWrapperLeft>주문 가격</InputWrapperLeft>
-                <InputPriceRight>
-                  <InputPriceRightInner>
-                    <InputInner click={activeClick}>
-                      <InputPricePart
-                        onFocus={() => borderColorOn()}
-                        onBlur={() => borderColorOff()}
-                        type="text"
-                        placeholder
-                        value="11,442,000"
-                      />
-                      <PriceUnit>
-                        <p>KRW</p>
-                      </PriceUnit>
-                    </InputInner>
-                    <UpDown>
-                      <Up>
-                        <Button>u</Button>
-                      </Up>
-                      <Down>
-                        <Button>f</Button>
-                      </Down>
-                    </UpDown>
-                  </InputPriceRightInner>
-                </InputPriceRight>
-              </InputWrapper>
-              <InputWrapper>
-                <InputWrapperLeft>주문 수량</InputWrapperLeft>
-                <InputPriceRight>
-                  <InputPriceRightInner click={activeClick1}>
-                    <InputPricePart
-                      onFocus={() => borderColorOn1()}
-                      onBlur={() => borderColorOff1()}
-                      className="inputInput"
-                      type="text"
-                      placeholder
-                      value=""
-                      on
-                    />
-                    <PriceUnit>
-                      <p>BTC</p>
-                    </PriceUnit>
-                    <UpDown></UpDown>
-                  </InputPriceRightInner>
-                </InputPriceRight>
-              </InputWrapper>
+      <TradingPartFeedLeft>
+        <TradingPartFeedInner>
+          <InputWrapper>
+            <InputWrapperLeft>주문 가능</InputWrapperLeft>
+            <InputWrapperRight>
+              <MoneyDetail left>0</MoneyDetail>
+              <MoneyDetail right>KRW</MoneyDetail>
+            </InputWrapperRight>
+          </InputWrapper>
+          <InputWrapper>
+            <InputWrapperLeft>주문 가격</InputWrapperLeft>
+            <InputPriceRight>
+              <InputPriceRightInner>
+                <InputInner click={activeClick}>
+                  <InputPricePart
+                    onFocus={() => borderColorOn()}
+                    onBlur={() => borderColorOff()}
+                    type="text"
+                    placeholder
+                    value="11,442,000"
+                  />
+                  <PriceUnit>
+                    <p>KRW</p>
+                  </PriceUnit>
+                </InputInner>
+                <UpDown>
+                  <Up>
+                    <Button>u</Button>
+                  </Up>
+                  <Down>
+                    <Button>f</Button>
+                  </Down>
+                </UpDown>
+              </InputPriceRightInner>
+            </InputPriceRight>
+          </InputWrapper>
+          <InputWrapper>
+            <InputWrapperLeft>주문 수량</InputWrapperLeft>
+            <InputPriceRight>
+              <InputPriceRightInner clickright={activeClick1}>
+                <InputPricePart
+                  onFocus={() => borderColorOn1()}
+                  onBlur={() => borderColorOff1()}
+                  type="text"
+                  placeholder
+                  value=""
+                />
+                <PriceUnit>
+                  <p>BTC</p>
+                </PriceUnit>
+                <UpDown></UpDown>
+              </InputPriceRightInner>
+            </InputPriceRight>
+          </InputWrapper>
 
-              <PercentOrder>
-                <PercentList>25%</PercentList>
-                <PercentList>50%</PercentList>
-                <PercentList>75%</PercentList>
-                <PercentList>100%</PercentList>
-              </PercentOrder>
-              {/* </div> */}
-              <InputWrapper>
-                <InputWrapperLeft red>정산수량</InputWrapperLeft>
-                <InputPriceRight>
-                  <InputPriceRightInner>
-                    <InputPricePart amount type="text" placeholder value="" />
-                    <PriceUnit amount>
-                      <p>KRW</p>
-                    </PriceUnit>
-                    <UpDown amount></UpDown>
-                  </InputPriceRightInner>
-                </InputPriceRight>
-              </InputWrapper>
-              <TextBottom className="textBottom">
-                <span>최소주문수량:500 KRW</span>
-                <span>수수료: 0.04%</span>
-              </TextBottom>
-              <TradingPartButton className="buttonButton" type="button">
-                매수 BTC
-              </TradingPartButton>
-            </TradingPartFeedInner>
-          </TradingPartFeedLeft>
-          <TradingPartRight />
-        </TradingPartFeed>
-      </TradingPartArticle>
+          <PercentOrder>
+            <PercentList>25%</PercentList>
+            <PercentList>50%</PercentList>
+            <PercentList>75%</PercentList>
+            <PercentList>100%</PercentList>
+          </PercentOrder>
+          {/* </div> */}
+          <InputWrapper>
+            <InputWrapperLeft blue>정산수량</InputWrapperLeft>
+            <InputPriceRight>
+              <InputPriceRightInner>
+                <InputPricePart amount type="text" placeholder value="" />
+                <PriceUnit amount>
+                  <p>KRW</p>
+                </PriceUnit>
+                <UpDown amount></UpDown>
+              </InputPriceRightInner>
+            </InputPriceRight>
+          </InputWrapper>
+          <TextBottom className="textBottom">
+            <span>최소주문수량:500 KRW</span>
+            <span>수수료: 0.04%</span>
+          </TextBottom>
+          <TradingPartButton selling>매도 BTC</TradingPartButton>
+        </TradingPartFeedInner>
+      </TradingPartFeedLeft>
     </div>
   );
 }
 
-export default TradingPart;
-
-const TradingPartArticle = styled.div`
-  border: 1px solid #ebeef6;
-  height: 355px;
-  /* bottom: 0; */
-`;
-
-const TradingPartNav = styled.div``;
-
-const Nav = styled.div`
-  ${(props) =>
-    props.left &&
-    css`
-      display: inline-block;
-      color: #e21b36;
-      height: 48px;
-      width: 50%;
-      padding: 0 14px;
-      line-height: 48px;
-      text-align: left;
-      cursor: default;
-      background-color: #fff !important;
-      border-bottom: 1px solid #ebeef6 !important;
-      border-right: 1px solid #ebeef6 !important;
-    `}
-
-  ${(props) =>
-    props.right &&
-    css`
-      color: #00338d;
-      display: inline-block;
-      height: 48px;
-      padding: 0 14px;
-      line-height: 48px;
-      text-align: left;
-      width: 50%;
-      cursor: default;
-      background-color: #fff !important;
-      border-bottom: 1px solid #ebeef6 !important;
-    `}
-`;
-
-const TradingPartFeed = styled.div`
-  display: block;
-  height: 100%;
-`;
+export default TradingPartRight;
 
 const TradingPartFeedLeft = styled.div`
   border-right: 1px solid #ebeef6;
@@ -260,7 +198,7 @@ const InputInner = styled.div`
   ${(props) =>
     props.click &&
     css`
-      border: 1px solid red;
+      border: 1px solid blue;
     `}
 `;
 

@@ -1,58 +1,62 @@
 import React from "react";
+import styled from "styled-components";
 import bitcoinicon from "../../../images/bitcoinicon.png";
 import arrowdown from "../../../images/arrowdown.png";
 import PriceAmountTop from "../SectionLeft/PriceAmountTop/PriceAmountTop";
 import PriceAmountBottom from "../SectionLeft/PriceAmountBottom/PriceAmountBottom";
-import styled from "styled-components";
+import theme from "../../../style/theme";
 
 function SectionLeft() {
   return (
     <div>
-      <SectionLeftPage className="sectionLeft">
-        <DashBoard className="dashBoard">
-          <TitlePart className="titlePart">
-            <CoinIcon className="coinIcon">
+      <SectionLeftPage>
+        <DashBoard>
+          <TitlePart>
+            <CoinIcon>
               <img src={bitcoinicon} alt="icon" />
-              <CrytoDetail className="crytoDetail">
-                <span className="crytoName">비트코인</span>
-                <span className="crytoPair">BTC/KRW</span>
+              <CrytoDetail>
+                <span>비트코인</span>
+                <span>BTC/KRW</span>
               </CrytoDetail>
             </CoinIcon>
           </TitlePart>
-          <RatePart className="ratePart">
-            <div className="rateOfPrice"></div>
-            <PriceDetail className="priceDetail">
-              <span className="detailLeft">전일대비</span>
-              <span className="detailMiddle">1.67%</span>
-              <span className="detailRight">
+          <RatePart>
+            <CurrentMarketPrice>
+              <span>11,432,000</span>
+              <span>KRW</span>
+            </CurrentMarketPrice>
+            <PriceDetail>
+              <span>전일대비</span>
+              <span>1.67%</span>
+              <span>
                 <img src={arrowdown} alt="down" />
                 201,000
               </span>
             </PriceDetail>
           </RatePart>
-          <PricePart className="pricePart">
-            <PricePartTop className="pricePartTop">
+          <PricePart>
+            <PricePartTop>
               <span>고가</span>
               <span red>12111000</span>
             </PricePartTop>
-            <PricePartBottom className="pricePartBottom">
+            <PricePartBottom>
               <span>저가</span>
               <span blue>11750000</span>
             </PricePartBottom>
           </PricePart>
-          <VolumePart className="volumePart">
-            <VolumePartTop className="volumePartTop">
+          <VolumePart>
+            <VolumePartTop>
               <span>거래량(24h)</span>
               <span>14690143840 BTC</span>
             </VolumePartTop>
-            <VolumePartTop className="volumePartBottom">
+            <VolumePartTop>
               <span>거래대금(24h)</span>
               <span>1758684634 KRW</span>
             </VolumePartTop>
           </VolumePart>
         </DashBoard>
-        <OrderBookArticle className="orderBook">
-          <OrderBookNav className="orderBookNav">
+        <OrderBookArticle>
+          <OrderBookNav>
             <OrderBookNavLeft>
               <span>가격</span>
               <span>(KRW)</span>
@@ -65,13 +69,9 @@ function SectionLeft() {
 
           <PriceAmountTop />
 
-          <PriceStatus className="priceStatus">
-            <PriceStatusLeft className="priceStatusLeft">
-              11661000
-            </PriceStatusLeft>
-            <PriceStatusRight className="priceStatusRight">
-              -3.21%
-            </PriceStatusRight>
+          <PriceStatus>
+            <PriceStatusLeft>11661000</PriceStatusLeft>
+            <PriceStatusRight>-3.21%</PriceStatusRight>
           </PriceStatus>
 
           <PriceAmountBottom />
@@ -83,36 +83,59 @@ function SectionLeft() {
 
 export default SectionLeft;
 
-const SectionLeftPage = styled.div`
+const SectionLeftPage = styled.div``;
+/* @media (max-width: 1280px) {
   float: left;
-`;
+  width: 260px;
+} */
+// @media ${(props) => props.theme.moblie} {
+//   float: left;
+//   /* width: 260px; */
+// }
+//  @media (min-width: 600px) {
+//   float: left;
+//   /* width: 260px; */
+// }
+
 const DashBoard = styled.div`
   border: 0px solid blue;
-  width: 320px;
+  /* width: 320px; */
   padding: 14px 14px 0;
   margin: 0 0 8px;
   border: 1px solid #ebeef6;
   background-color: #fff;
   height: 285px;
 `;
+
 const TitlePart = styled.div`
   position: relative;
   height: 40px;
   line-height: 40px;
 `;
+// /* @media ${(props) => props.theme.tabletL} {
+// } */
+// @media ${(props) => props.theme.moblie} {
+//   border-bottom: 0;
+// }
+// @media (min-width: 600px) {
+//   border-top: 0;
+
 const CoinIcon = styled.div`
   display: flex;
   align-items: center;
+
   img {
     width: 30px;
     height: 30px;
     margin-right: 10px;
   }
 `;
+
 const CrytoDetail = styled.div`
   display: flex;
   flex-direction: column;
   line-height: 1.5;
+
   span:first-child {
     color: #022553;
     font-size: 18px;
@@ -128,18 +151,59 @@ const CrytoDetail = styled.div`
     color: #919dae;
   }
 `;
+
 const RatePart = styled.div`
   font-family: NotoSansCJKkr, WhaleXSans, sans-serif;
   margin: 14px 0 0;
   padding-bottom: 14px;
   margin: 14px 10px 0;
   border-bottom: 1px solid #ebeef6;
+  line-height: 1.8;
+  display: flex;
+  flex-direction: column;
 `;
+
+const CurrentMarketPrice = styled.div`
+  width: 100%;
+  display: block;
+  /* float: left; */
+  color: #174ca2;
+
+  span:first-child {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 20px;
+  }
+  span:last-child {
+    font-size: 10px;
+    font-weight: 400;
+  }
+`;
+// /* @media ${(props) => props.theme.tabletL} {
+//   padding: 6px;
+// } */
+// @media ${(props) => props.theme.moblie} {
+//   margin: 14px 0 0;
+// }
+// /* @media (min-width: 600px) {
+//   float: left;
+
+// } */
+
 const PriceDetail = styled.div`
+  display: flex;
+  align-items: center;
+  text-align: left;
+  span {
+    /* display: flex;
+    align-items: center; */
+  }
   span:nth-child(1) {
     font-size: 10px;
     font-weight: 400;
-    display: inline;
+    /* display: flex;
+  align-items: center; */
+    /* display: inline; */
     margin: 0 3px 0 0;
     line-height: 13px;
     color: #596070;
@@ -217,7 +281,7 @@ const VolumePartTop = styled.li`
 `;
 const OrderBookArticle = styled.article`
   border: 1px solid #ebeef6;
-  width: 320px;
+  width: 100%;
   background-color: #fff;
   box-sizing: border-box;
 `;

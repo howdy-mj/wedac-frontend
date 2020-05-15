@@ -10,7 +10,7 @@ function NavDetail2() {
             <BottomNavTH>일자</BottomNavTH>
             <BottomNavTH>종가(KRW)</BottomNavTH>
             <BottomNavTH>전일대비</BottomNavTH>
-            <BottomNavTH>거래량(BTC)</BottomNavTH>
+            <BottomNavTH>거래량(ATOM)</BottomNavTH>
           </BottomNavTR>
         </BottomNavTBody>
       </BottomNavTable>
