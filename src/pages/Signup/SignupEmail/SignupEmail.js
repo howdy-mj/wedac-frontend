@@ -28,7 +28,6 @@ function SignupEmail(props: RouteComponentProps) {
   const [pwDoubleBorder, setPwDoubleBorder] = useState(true);
   const [isNecessary, setIsNecessary] = useState(false);
   const [isOption, setIsOption] = useState(false);
-  const [notAllowed, setNotAllowed] = useState(true);
 
   const emailValidation = (e) => {
     setEmail(e.target.value);
@@ -71,7 +70,7 @@ function SignupEmail(props: RouteComponentProps) {
     if (result) {
       setWarningPW("");
       setPasswordBorder(true);
-      setPwsatisfied("true");
+      setPwsatisfied(true);
     } else if (!result) {
       setWarningPW(`영문대문자, 영어소문자, 숫자, 특수문자를 각 1개 이상 포함하여
       8자리~50자리의 비밀번호를 입력하세요.`);
