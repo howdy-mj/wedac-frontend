@@ -13,7 +13,7 @@ function OutstandingOrder() {
             <Li header market>
               종목
             </Li>
-            <Li header order>
+            <Li header orderType>
               거래종류
             </Li>
             <Li header price>
@@ -41,8 +41,8 @@ function OutstandingOrder() {
             <Li detail market>
               <P>GT/KRW</P>
             </Li>
-            <Li detail order>
-              <P order minus>
+            <Li detail orderType>
+              <P orderType minus>
                 매도
               </P>
             </Li>
@@ -128,7 +128,7 @@ width: 100%;
       text-align: right;
     `}
   ${(props) =>
-    props.order &&
+    props.orderType &&
     css`
       width: 10%;
       text-align: right;
@@ -194,7 +194,7 @@ const P = styled.p`
       margin-top: 0;
     `}
     ${(props) =>
-      props.order &&
+      props.orderType &&
       css`
         padding-right: 15px;
       `}

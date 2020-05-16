@@ -8,7 +8,7 @@ function CurrentBalance() {
       <DetailInner>
         <Header>
           <HeaderUl>
-            <Li header name>
+            <Li header isName>
               종목
             </Li>
             <Li header currentAmount>
@@ -31,7 +31,7 @@ function CurrentBalance() {
         </Header>
         <DetailContents>
           <DetailContentsUl>
-            <Li detail name>
+            <Li detail isName>
               <Logo>
                 <LogoImg src={test} alt="" />
               </Logo>
@@ -106,7 +106,7 @@ ${(props) =>
   `}
 
 ${(props) =>
-  props.name &&
+  props.isName &&
   css`
     width: 17%;
   `}
