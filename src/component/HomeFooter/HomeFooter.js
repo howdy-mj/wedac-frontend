@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
 import logoImg from "../../images/logo_white.png";
@@ -14,6 +14,14 @@ import wallet from "../../images/b-wallet.png";
 import history from "../../images/b-history.png";
 
 function HomeFooter() {
+  const [hasColor, setHasColor] = useState(false);
+  const isHover = () => {
+    setHasColor(true);
+  };
+  const notHover = () => {
+    setHasColor(false);
+  };
+
   return (
     <HomeFooterWrap>
       <Container>
@@ -53,26 +61,26 @@ function HomeFooter() {
           </div>
           <Category>
             <Ul>
-              <Li title>Products</Li>
+              <Li bold>Products</Li>
               <Li>지닥 솔로리그</Li>
               <Li>지닥 프로리그</Li>
               <Li>그로우 서비스</Li>
               <Li>GDAC API</Li>
             </Ul>
             <Ul>
-              <Li title>GDAC Token</Li>
+              <Li bold>GDAC Token</Li>
               <Li>GT 소개</Li>
               <Li>GT 마이닝</Li>
               <Li>GT 백서</Li>
             </Ul>
             <Ul>
-              <Li title>Support Center</Li>
+              <Li bold>Support Center</Li>
               <Li>공지사항</Li>
               <Li>고객센터</Li>
               <Li>1:1 상담톡</Li>
             </Ul>
             <Ul>
-              <Li title>Information</Li>
+              <Li bold>Information</Li>
               <Li>회사소개</Li>
               <Li>이벤트</Li>
               <Li>이용약관</Li>
@@ -88,8 +96,9 @@ function HomeFooter() {
             href="https://resources.gdac.com/docs/peertec-escrow-confirm.pdf"
             target="_blank"
           >
-            <Escrow>
+            <Escrow onMouseOver={isHover} onMouseLeave={notHover}>
               <Img
+                hasColor={hasColor}
                 escrow
                 src="https://resources.gdac.com/imgs/escrow-color.png"
                 alt="escrow"
@@ -136,20 +145,24 @@ function HomeFooter() {
             <MobileImg src={market} alt="logo" />
             <MobileP>마켓</MobileP>
           </MobileDiv>
-          <MobileDiv>
-            <MobileImg src={exchange} alt="logo" />
-            <MobileP>거래소</MobileP>
-          </MobileDiv>
+          <Link to="/exchange">
+            <MobileDiv>
+              <MobileImg src={exchange} alt="logo" />
+              <MobileP>거래소</MobileP>
+            </MobileDiv>
+          </Link>
           <Link to="/balance">
             <MobileDiv>
               <MobileImg src={balance} alt="logo" />
               <MobileP>잔고</MobileP>
             </MobileDiv>
           </Link>
-          <MobileDiv>
-            <MobileImg src={wallet} alt="logo" />
-            <MobileP>지갑</MobileP>
-          </MobileDiv>
+          <Link to="/wallet">
+            <MobileDiv>
+              <MobileImg src={wallet} alt="logo" />
+              <MobileP>지갑</MobileP>
+            </MobileDiv>
+          </Link>
           <Link to="/history">
             <MobileDiv>
               <MobileImg src={history} alt="logo" />
@@ -234,6 +247,12 @@ const Img = styled.img`
       height: 30px;
       width: 50px;
     `}
+
+    ${(props) =>
+      props.hasColor &&
+      css`
+        filter: grayscale(0);
+      `}
 `;
 
 const SNS = styled.div`
@@ -291,6 +310,7 @@ const P = styled.p`
       color: #0e3672;
       text-align: center;
       margin-top: 2px;
+      font-family: "NotoSans";
     `}
 `;
 
@@ -326,7 +346,7 @@ const Li = styled.li`
   line-height: 28px;
 
   ${(props) =>
-    props.title &&
+    props.bold &&
     css`
       font-size: 16px;
       font-weight: 700;
@@ -364,7 +384,6 @@ const Div = styled.div`
     css`
       width: 145px;
       padding-left: 8px;
-      margin: auto 0;
     `}
 
   @media (min-width: 1221px) {

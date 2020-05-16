@@ -42,9 +42,6 @@ function Nav() {
               </Logo>
               <Category>
                 <Ul>
-                  <Li>
-                    지닥리그 <ArrowDown />
-                  </Li>
                   <Li>그로우</Li>
                   <Li>이벤트</Li>
                   <Li>

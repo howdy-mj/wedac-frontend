@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
 import logoImg from "../../images/logo_black.png";
@@ -14,6 +14,14 @@ import wallet from "../../images/b-wallet.png";
 import history from "../../images/b-history.png";
 
 function Footer() {
+  const [hasColor, setHasColor] = useState(false);
+  const isHover = () => {
+    setHasColor(true);
+  };
+  const notHover = () => {
+    setHasColor(false);
+  };
+
   return (
     <FooterWrap>
       <Container>
@@ -88,8 +96,9 @@ function Footer() {
             href="https://resources.gdac.com/docs/peertec-escrow-confirm.pdf"
             target="_blank"
           >
-            <Escrow>
+            <Escrow onMouseOver={isHover} onMouseLeave={notHover}>
               <Img
+                hasColor={hasColor}
                 escrow
                 src="https://resources.gdac.com/imgs/escrow-color.png"
                 alt="escrow"
@@ -136,20 +145,24 @@ function Footer() {
             <MobileImg src={market} alt="logo" />
             <MobileP>마켓</MobileP>
           </MobileDiv>
-          <MobileDiv>
-            <MobileImg src={exchange} alt="logo" />
-            <MobileP>거래소</MobileP>
-          </MobileDiv>
+          <Link to="/exchange">
+            <MobileDiv>
+              <MobileImg src={exchange} alt="logo" />
+              <MobileP>거래소</MobileP>
+            </MobileDiv>
+          </Link>
           <Link to="/balance">
             <MobileDiv>
               <MobileImg src={balance} alt="logo" />
               <MobileP>잔고</MobileP>
             </MobileDiv>
           </Link>
-          <MobileDiv>
-            <MobileImg src={wallet} alt="logo" />
-            <MobileP>지갑</MobileP>
-          </MobileDiv>
+          <Link to="/wallet">
+            <MobileDiv>
+              <MobileImg src={wallet} alt="logo" />
+              <MobileP>지갑</MobileP>
+            </MobileDiv>
+          </Link>
           <Link to="/history">
             <MobileDiv>
               <MobileImg src={history} alt="logo" />
@@ -185,7 +198,7 @@ const Container = styled.div`
     display: none;
   }
 
-  @media ${(props) => props.theme.desktop} {
+  @media (min-width: 1221px) {
     width: 1152px;
     margin: 0 auto;
   }
@@ -233,6 +246,12 @@ const Img = styled.img`
     css`
       height: 30px;
       width: 50px;
+    `}
+
+  ${(props) =>
+    props.hasColor &&
+    css`
+      filter: grayscale(0);
     `}
 `;
 
@@ -294,10 +313,6 @@ const P = styled.p`
       font-family: "NotoSans";
     `}
 `;
-
-//  &:hover $(Escrow) {
-//    css`filter: grayscale(0%);`
-//   }
 
 const Span = styled.span`
   color: ${(props) => props.theme.subColor};
