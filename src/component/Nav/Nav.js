@@ -222,7 +222,8 @@ const Button = styled.button`
     }
     if (props.join) {
       return css`
-        background-color: white;
+        background-color: ${(props) => props.theme.subColor};
+        color: white;
       `;
     }
   }}

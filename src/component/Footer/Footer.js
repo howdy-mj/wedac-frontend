@@ -53,26 +53,26 @@ function Footer() {
           </div>
           <Category>
             <Ul>
-              <Li title>Products</Li>
+              <Li bold>Products</Li>
               <Li>지닥 솔로리그</Li>
               <Li>지닥 프로리그</Li>
               <Li>그로우 서비스</Li>
               <Li>GDAC API</Li>
             </Ul>
             <Ul>
-              <Li title>GDAC Token</Li>
+              <Li bold>GDAC Token</Li>
               <Li>GT 소개</Li>
               <Li>GT 마이닝</Li>
               <Li>GT 백서</Li>
             </Ul>
             <Ul>
-              <Li title>Support Center</Li>
+              <Li bold>Support Center</Li>
               <Li>공지사항</Li>
               <Li>고객센터</Li>
               <Li>1:1 상담톡</Li>
             </Ul>
             <Ul>
-              <Li title>Information</Li>
+              <Li bold>Information</Li>
               <Li>회사소개</Li>
               <Li>이벤트</Li>
               <Li>이용약관</Li>
@@ -331,7 +331,7 @@ const Li = styled.li`
   line-height: 28px;
 
   ${(props) =>
-    props.title &&
+    props.bold &&
     css`
       font-size: 16px;
       font-weight: 700;

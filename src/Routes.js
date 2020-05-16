@@ -4,11 +4,12 @@ import Home from "./Home";
 import Balance from "./pages/Balance/Balance";
 import Wallet from "./pages/Wallet/Wallet";
 import History from "./pages/History/History";
-import PageNotFound from "./pages/PageNotFount/PageNotFound";
 import Login from "./pages/Login/Login";
 import Signup from "./pages/Signup/Signup";
 import SignupEmail from "./pages/Signup/SignupEmail/SignupEmail";
+import SignupVerify from "./pages/Signup/SignupVerify/SignupVerify";
 import Exchange from "./pages/Exchange/Exchange";
+import PageNotFound from "./pages/PageNotFount/PageNotFound";
 
 class Routes extends Component {
   render() {
@@ -22,6 +23,7 @@ class Routes extends Component {
           <Route path="/login" component={Login} />
           <Route path="/signup" component={Signup} />
           <Route path="/signupEmail" component={SignupEmail} />
+          <Route path="/signupVerify" component={SignupVerify} />
           <Route path="/exchange" component={Exchange} />
           <Route component={PageNotFound} />
         </Switch>

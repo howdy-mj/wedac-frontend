@@ -33,7 +33,7 @@ function Signup() {
             </EmailSignup>
             <BelowSignupButton className="belowSignupButton">
               <BottomLeft2 className="bottomLeft2">
-                이미 계정이 있으신가요?<a href="/#">로그인</a>
+                이미 계정이 있으신가요? <a href="/#">로그인</a>
               </BottomLeft2>
               <BottomRight2 className="bottomRight2">
                 <a href="/#">Registration guide</a>
@@ -67,10 +67,18 @@ export default Signup;
 
 const SignupPage = styled.div`
   background-color: #f7fbff;
+
+  @media ${(props) => props.theme.mobile} {
+    height: 90vh;
+  }
 `;
 const SignupWrapper = styled.div`
   padding: 6px;
   overflow: hidden;
+
+  @media ${(props) => props.theme.mobile} {
+    margin-top: 46px;
+  }
 `;
 const SignupFeed = styled.div`
   border: 0px solid black;
@@ -177,7 +185,6 @@ const BottomLeft2 = styled.div`
     cursor: pointer;
     text-decoration: none;
     font-size: 12px;
-    font-weight: bold;
   }
 `;
 const BottomRight2 = styled.div`
@@ -189,7 +196,6 @@ const BottomRight2 = styled.div`
     cursor: pointer;
     text-decoration: none;
     font-size: 12px;
-    font-weight: bold;
   }
 `;
 const SupportBottom2 = styled.div`
