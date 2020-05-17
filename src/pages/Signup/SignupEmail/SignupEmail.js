@@ -1,18 +1,27 @@
-import React, { useState, useEffect } from "react";
-import { Link, RouteComponentProps } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useHistory } from "react-router-dom";
+import { connect } from "react-redux";
 import styled, { css } from "styled-components";
+import { SH } from "../../../config";
 import Nav from "../../../component/Nav/Nav";
 import Footer from "../../../component/Footer/Footer";
 import circle from "../../../images/circle.png";
 import checkbox from "../../../images/checkbox.png";
 import checked from "../../../images/chec.png";
+import * as actions from "../../../store/actions";
 
-function SignupEmail(props: RouteComponentProps) {
-  const [email, setEmail] = useState("");
+function SignupEmail({
+  HandleEmail,
+  HandlePassword,
+  HandleDoubleCheck,
+  email,
+  password,
+  pwDoubleCheck,
+}) {
+  const history = useHistory();
   const [warningEmail, setWarningEmail] = useState("");
   const [emailsatisfied, setEmailsatisfied] = useState(false);
   const [emailBorder, setEmailBorder] = useState(true);
-  const [password, setPassword] = useState("");
   const [pwsatisfied, setPwsatisfied] = useState(false);
   const [warningPW, setWarningPW] = useState("");
   const [passwordBorder, setPasswordBorder] = useState(true);
@@ -22,15 +31,16 @@ function SignupEmail(props: RouteComponentProps) {
   const [checkLowerYN, setCheckLowerYN] = useState("F");
   const [checkNumYN, setCheckNumYN] = useState("F");
   const [checkCharYN, setCheckCharYN] = useState("F");
-  const [pwDoubleCheck, setPwDoubleCheck] = useState("");
   const [doublesatisfied, setDoublesatisfied] = useState(false);
   const [warningDouble, setWarningDouble] = useState("");
   const [pwDoubleBorder, setPwDoubleBorder] = useState(true);
   const [isNecessary, setIsNecessary] = useState(false);
   const [isOption, setIsOption] = useState(false);
+  // const [notAllowed, setNotAllowed] = useState(true);
 
   const emailValidation = (e) => {
-    setEmail(e.target.value);
+    email = e.target.value;
+    HandleEmail(email);
     setEmailBorder(false);
 
     const regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
@@ -55,8 +65,8 @@ function SignupEmail(props: RouteComponentProps) {
   };
 
   const passwordValidation = (e) => {
-    let pwInput = e.target.value;
-    setPassword(pwInput);
+    password = e.target.value;
+    HandlePassword(password);
     setPasswordBorder(false);
 
     const regExp = /^.*(?=^.{8,50}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
@@ -64,43 +74,44 @@ function SignupEmail(props: RouteComponentProps) {
     const Lower = /[a-z]/;
     const Number = /[0-9]/;
     const Char = /[!@#$%^&+=]/;
-    let result = regExp.test(pwInput);
-    console.log("password", pwInput);
+    let result = regExp.test(password);
+    console.log("password", password);
 
     if (result) {
       setWarningPW("");
       setPasswordBorder(true);
-      setPwsatisfied(true);
+      setPwsatisfied("true");
+      HandlePassword(password);
     } else if (!result) {
       setWarningPW(`영문대문자, 영어소문자, 숫자, 특수문자를 각 1개 이상 포함하여
       8자리~50자리의 비밀번호를 입력하세요.`);
       setPasswordBorder(false);
     }
 
-    if (pwInput.length > 7) {
+    if (password.length > 7) {
       setCheckLengthYN("x");
     } else {
       setCheckLengthYN("F");
     }
 
-    if (Upper.test(pwInput)) {
+    if (Upper.test(password)) {
       setCheckUpperYN("x");
     } else {
       setCheckUpperYN("F");
     }
-    if (Lower.test(pwInput)) {
+    if (Lower.test(password)) {
       setCheckLowerYN("x");
     } else {
       setCheckLowerYN("F");
     }
 
-    if (Number.test(pwInput)) {
+    if (Number.test(password)) {
       setCheckNumYN("x");
     } else {
       setCheckNumYN("F");
     }
 
-    if (Char.test(pwInput)) {
+    if (Char.test(password)) {
       setCheckCharYN("x");
     } else {
       setCheckCharYN("F");
@@ -126,13 +137,15 @@ function SignupEmail(props: RouteComponentProps) {
   };
 
   const pwDoubleValidation = (e) => {
-    setPwDoubleCheck(e.target.value);
+    pwDoubleCheck = e.target.value;
+    HandleDoubleCheck(pwDoubleCheck);
     setPwDoubleBorder(false);
 
-    if (e.target.value === password) {
+    if (pwDoubleCheck === password) {
       setWarningDouble("");
       setPwDoubleBorder(true);
       setDoublesatisfied(true);
+      HandleDoubleCheck(pwDoubleCheck);
     } else {
       setWarningDouble("비밀번호와 일치하지 않습니다. 다시 확인해 주세요.");
       setPwDoubleBorder(false);
@@ -161,7 +174,7 @@ function SignupEmail(props: RouteComponentProps) {
   const goVerify = (e) => {
     e.preventDefault();
 
-    fetch(`http://10.58.7.3:8000/user/sign-up`, {
+    fetch(`${SH}/user/sign-up`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -171,7 +184,7 @@ function SignupEmail(props: RouteComponentProps) {
       }),
     }).then((res) => {
       if (res.status === 200) {
-        props.history.push("/signupVerify");
+        history.push("/signupVerify");
       } else if (res.status === 404) {
         console.log("재입력");
       }
@@ -361,12 +374,33 @@ function SignupEmail(props: RouteComponentProps) {
   );
 }
 
-export default SignupEmail;
+const mapStateToProps = (state) => {
+  return {
+    email: state.goRegister.email,
+    password: state.goRegister.password,
+    pwDoubleCheck: state.goRegister.pwDoubleCheck,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    HandleEmail: (email) => {
+      dispatch(actions.goRegisterEmail(email));
+    },
+    HandlePassword: (password) => {
+      dispatch(actions.goRegisterPassword(password));
+    },
+    HandleDoubleCheck: (pwDoubleCheck) => {
+      dispatch(actions.goRegisterPwDoubleCheck(pwDoubleCheck));
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignupEmail);
 
 const SignupEmailPage = styled.div`
   background-color: #f7fbff;
   height: 100%;
-
   @media ${(props) => props.theme.mobile} {
     height: 90vh;
   }
@@ -375,7 +409,6 @@ const SignupEmailPage = styled.div`
 const SignupEmailWrapper = styled.div`
   padding: 6px;
   overflow: hidden;
-
   @media ${(props) => props.theme.mobile} {
     margin-top: 46px;
   }
@@ -418,21 +451,18 @@ const TypeEmailPassWord = styled.div`
     border-radius: 2px;
     padding-left: 15px;
     outline: none;
-
     &::placeholder {
       font-size: 13px;
       font-weight: 600;
       //letter-spacing: -0.03em;
       color: #596070;
       opacity: 0.6;
-
       ${(props) =>
         props.hasborder &&
         css`
           border: red;
         `}
     }
-
     &:after:focus {
       border-color: ${(props) => props.theme.plusColor};
     }
@@ -458,14 +488,12 @@ const PasswordGuide = styled.div`
   background-color: white;
   box-shadow: 0 2px 4px 0 rgba(2, 37, 83, 0.2);
   z-index: 999999999;
-
   p {
     font-size: 12px;
     letter-spacing: -0.03em;
     line-height: 17px;
     color: #596070;
   }
-
   ${(props) =>
     props.showGuide &&
     css`
@@ -495,13 +523,11 @@ const AgreementPartInner = styled.div`
   align-items: center;
   color: #596070;
   cursor: pointer;
-
   ${(props) =>
     props.firstline &&
     css`
       margin-bottom: 10px;
     `}
-
   a {
     font-weight: 700;
     color: #0086ec;
@@ -517,7 +543,6 @@ const CheckboxImg = styled.div`
   border-radius: 2px;
   background: url(${checkbox}) no-repeat 0 0;
   background-size: contain;
-
   ${(props) =>
     props.checkTF &&
     css`
