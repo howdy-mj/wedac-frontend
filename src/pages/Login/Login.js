@@ -1,12 +1,108 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, RouteComponentProps } from "react-router-dom";
 import styled, { css } from "styled-components";
 import Nav from "../../component/Nav/Nav";
 import Footer from "../../component/Footer/Footer";
 import kakao from "../../images/kakaotalk.png";
 import circle from "../../images/circle.png";
 
-function Login() {
+function Login(props: RouteComponentProps) {
+  const [email, setEmail] = useState("");
+  const [warningEmail, setWarningEmail] = useState("");
+  const [emailsatisfied, setEmailsatisfied] = useState(false);
+  const [emailBorder, setEmailBorder] = useState(true);
+  const [password, setPassword] = useState("");
+  const [pwsatisfied, setPwsatisfied] = useState(false);
+  const [warningPW, setWarningPW] = useState("");
+  const [passwordBorder, setPasswordBorder] = useState(true);
+
+  const emailValidation = (e) => {
+    setEmail(e.target.value);
+    setEmailBorder(false);
+
+    const regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+    let result = regExp.test(email);
+
+    if (result) {
+      setWarningEmail("");
+      setEmailBorder(true);
+      setEmailsatisfied(true);
+    } else if (!result) {
+      setWarningEmail("이메일 주소를 정확히 입력해주세요.");
+      setEmailBorder(false);
+      setEmailsatisfied(false);
+    }
+  };
+
+  const warningEmailMessage = (e) => {
+    if (!e.target.value) {
+      setWarningEmail("이메일을 입력해 주세요.");
+      setEmailBorder(false);
+    }
+  };
+
+  const passwordValidation = (e) => {
+    let pwInput = e.target.value;
+    setPassword(pwInput);
+    setPasswordBorder(false);
+
+    const regExp = /^.*(?=^.{8,50}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
+    let result = regExp.test(pwInput);
+    console.log("password", pwInput);
+
+    if (result) {
+      setWarningPW("");
+      setPasswordBorder(true);
+      setPwsatisfied(true);
+    } else if (!result) {
+      setWarningPW(`영문대문자, 영어소문자, 숫자, 특수문자를 각 1개 이상 포함하여
+      8자리~50자리의 비밀번호를 입력하세요.`);
+      setPasswordBorder(false);
+      setPwsatisfied(false);
+    }
+  };
+
+  const warningPWMessage = (e) => {
+    if (!e.target.value) {
+      setWarningPW("비밀번호를 입력해 주세요.");
+      setPasswordBorder(false);
+    }
+  };
+
+  const goLogin = () => {
+    console.log(
+      JSON.stringify({
+        email: email,
+        password: password,
+      })
+    );
+
+    fetch(`http://10.58.7.3:8000/user/sign-in`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email: email,
+        password: password,
+      }),
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        console.log("res", res);
+
+        if (res.access_token) {
+          console.log("성공");
+          localStorage.setItem("access_token", res.access_token);
+          props.history.push("/");
+        } else {
+          alert("이메일 또는 비밀번호가 일치하지 않습니다.");
+        }
+      })
+      .catch((err) => {
+        console.log("실패");
+        console.log(err);
+      });
+  };
+
   return (
     <>
       <Nav />
@@ -41,28 +137,50 @@ function Login() {
                   type="text"
                   name="email"
                   placeholder="이메일"
+                  style={{
+                    borderColor: emailBorder ? "" : "red",
+                  }}
+                  onChange={emailValidation}
+                  onBlur={warningEmailMessage}
                 />
               </TypeEmail>
-              <BetweenDiv></BetweenDiv>
+              <WarningEmail>{warningEmail}</WarningEmail>
+
               <TypePassword>
                 <InputPassword
                   className="inputPassword"
                   type="password"
                   name="password"
                   placeholder="비밀번호"
+                  style={{ borderColor: passwordBorder ? "" : "red" }}
+                  onChange={passwordValidation}
+                  onBlur={warningPWMessage}
                 />
               </TypePassword>
-              <BetweenDiv></BetweenDiv>
-              <EmailButtonDiv>
-                <EmailButton type="submit" className="emailButton">
+              <WarningPassword>{warningPW}</WarningPassword>
+
+              <EmailButtonDiv onClick={goLogin}>
+                <EmailButton
+                  type="submit"
+                  disabled={!(emailsatisfied && pwsatisfied)}
+                  style={{
+                    cursor:
+                      emailsatisfied === true && pwsatisfied === true
+                        ? "pointer"
+                        : "not-allowed",
+                    backgroundColor:
+                      emailsatisfied === true && pwsatisfied === true
+                        ? "#0086ec"
+                        : "rgba(0, 134, 236, 0.5)",
+                  }}
+                  className="emailButton"
+                >
                   이메일로 로그인
                 </EmailButton>
               </EmailButtonDiv>
               <BelowLoginButton>
                 <BelowLeft className="belowLeft">
-                  <Link to={`/Signup/Signup`}>
-                    <a href="/#">회원가입</a>
-                  </Link>
+                  <Link to={`/Signup/Signup`}>회원가입</Link>
                 </BelowLeft>
                 <BelowRight className="belowRight">
                   <a href="/#">비밀번호 찾기</a>
@@ -197,14 +315,17 @@ const TypeEmail = styled.div`
   z-index: 10;
   height: 50px;
 `;
+
 const InputEmail = styled.input`
   width: 100%;
-  height: 50px;
+  height: 46px;
   line-height: 50px;
   background-color: #f5f8ff;
   border: 1px solid #ebeef6;
   border-radius: 2px;
   padding-left: 15px;
+  outline: none;
+
   &::placeholder {
     font-size: 13px;
     font-weight: 600;
@@ -213,23 +334,35 @@ const InputEmail = styled.input`
     opacity: 0.6;
   }
 `;
-const BetweenDiv = styled.div`
-  height: 24px;
+
+const WarningEmail = styled.p`
+  position: relative;
+  min-height: 24px;
+  line-height: 1.6;
+  padding: 0 65px;
+  font-size: 12px;
+  color: ${(props) => props.theme.plusColor};
 `;
+
 const TypePassword = styled.div`
   padding: 0 65px;
   position: relative;
   z-index: 10;
   height: 50px;
 `;
+
+const WarningPassword = styled(WarningEmail)``;
+
 const InputPassword = styled.input`
   width: 100%;
-  height: 50px;
+  height: 46px;
   line-height: 50px;
   background-color: #f5f8ff;
   border: 1px solid #ebeef6;
   border-radius: 2px;
   padding-left: 15px;
+  outline: none;
+
   &::placeholder {
     font-size: 13px;
     font-weight: 600;
