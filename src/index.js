@@ -4,11 +4,12 @@ import Routes from "./Routes";
 import { Provider } from "react-redux";
 import { createStore } from "redux";
 import { ThemeProvider } from "styled-components";
+import { composeWithDevTools } from "redux-devtools-extension"
 import rootReducer from "./store/reducers";
 import theme from "./style/theme";
 import GlobalStyle from "./style/global";
 
-const store = createStore(rootReducer);
+const store = createStore(rootReducer, composeWithDevTools());
 const track = store.subscribe(() => console.log("action!", store.getState()));
 console.log(store.getState());
 

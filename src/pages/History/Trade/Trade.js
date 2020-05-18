@@ -119,8 +119,7 @@ const BodyP = styled.p`
 `;
 
 const NoTrade = styled.div`
-  margin: 60px auto;
-  margin-left: 450px;
+  margin: 60px 200px;
   text-align: center;
   color: #919dae;
   font-size: 12px;

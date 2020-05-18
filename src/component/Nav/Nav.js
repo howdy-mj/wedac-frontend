@@ -1,30 +1,33 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, withRouter } from "react-router-dom";
 import styled, { css } from "styled-components";
 import MobileNav from "./MobileNav/MobileNav";
 import logoImg from "../../images/logo_black.png";
 
-const obj = {
+const tabs = {
   0: "exchange",
   1: "balance",
   2: "wallet",
   3: "history",
 };
 
+const tabsMap = {
+  "/exchange": 1,
+  "/balance": 2,
+  "/wallet": 3,
+  "/history": 4,
+};
+
 function Nav(props) {
   let token = localStorage.getItem("token");
+
   const handleLogOut = () => {
     localStorage.removeItem("token");
   };
 
-  const [selected, setSelected] = useState(0);
-
   const changeTab = (id) => {
-    setSelected(id);
-    props.history.push(`/${obj[id]}`);
+    props.history.push(`/${tabs[id]}`);
   };
-
-  // console.log('Nav', selected);
 
   return (
     <>
@@ -74,8 +77,8 @@ function Nav(props) {
             <FlexDiv>
               <Ul>
                 <Li
+                  bold={tabsMap[props.match.path]}
                   middle
-                  isActive={selected === 0}
                   onClick={() => {
                     changeTab(0);
                   }}
@@ -84,8 +87,8 @@ function Nav(props) {
                 </Li>
 
                 <Li
+                  bold={tabsMap[props.match.path]}
                   middle
-                  isActive={selected === 1}
                   onClick={() => {
                     changeTab(1);
                   }}
@@ -94,8 +97,8 @@ function Nav(props) {
                 </Li>
 
                 <Li
+                  bold={tabsMap[props.match.path]}
                   middle
-                  isActive={selected === 2}
                   onClick={() => {
                     changeTab(2);
                   }}
@@ -104,8 +107,8 @@ function Nav(props) {
                 </Li>
 
                 <Li
+                  bold={tabsMap[props.match.path]}
                   middle
-                  isActive={selected === 3}
                   onClick={() => {
                     changeTab(3);
                   }}
@@ -120,8 +123,18 @@ function Nav(props) {
                   {!token ? "로그인" : "로그아웃"}
                 </Button>
               </Link>
-              <Link to={!token ? "/signup" : "/settings/dashboard"}>
-                <Button join>{!token ? "회원가입" : "내 설정"}</Button>
+              <Link to={!token ? "/signup" : `/settings/dashboard`}>
+                <Button
+                  join
+                  style={{
+                    backgroundColor: token
+                      ? "white"
+                      : `${(props) => props.theme.subColor}`,
+                    color: token ? "#05317f" : "white",
+                  }}
+                >
+                  {!token ? "회원가입" : "내 설정"}
+                </Button>
               </Link>
             </Right>
           </MainNav>
@@ -231,6 +244,10 @@ const Li = styled.li`
   cursor: pointer;
   color: #05317f;
   margin-right: 10px;
+
+  &:nth-child(${(props) => props.bold}) {
+    font-weight: 900;
+  }}
 
   ${(props) => {
     if (props.middle) {

@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { connect } from "react-redux";
-import styled, { css } from "styled-components";
+import Kakao from "kakaojs";
+import styled from "styled-components";
 import { SH } from "../../config";
+import { YE } from "../../config";
 import * as actions from "../../store/actions";
 import kakao from "../../images/kakaotalk.png";
 import circle from "../../images/circle.png";
@@ -104,6 +106,29 @@ function OnlyLogin({ HandleEmail, HandlePassword, email, password }) {
       });
   };
 
+  const kakaoLogin = () => {
+    Kakao.Auth.login({
+      success: (authObj) => {
+        fetch(`${YE}/user/kakao-login`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: authObj.access_token,
+          },
+        })
+          .then((res) => res.json())
+          .then((res) => {
+            localStorage.setItem("token", res.token);
+            history.push("/");
+            window.location.reload();
+          });
+      },
+      fail: (err) => {
+        console.log(err);
+      },
+    });
+  };
+
   return (
     <>
       <LoginPage>
@@ -121,7 +146,7 @@ function OnlyLogin({ HandleEmail, HandlePassword, email, password }) {
                 alt="website"
               />
             </LoginText>
-            <KakaoLogin>
+            <KakaoLogin onClick={kakaoLogin}>
               <KakaoButton>
                 <KakaoButtonImg src={kakao} alt="kaka" />
                 카카오계정으로 로그인
@@ -187,7 +212,6 @@ function OnlyLogin({ HandleEmail, HandlePassword, email, password }) {
                 </BelowRight>
               </BelowLoginButton>
             </BottomPart>
-
             <SupportBottom className="supportBottom">
               <SupportFirst className="supportFirst">
                 문제가 있으시면&nbsp;
@@ -303,6 +327,7 @@ const KakaoButtonImg = styled.img`
   width: 29px;
   height: 27px;
 `;
+
 const MiddleLine = styled.div`
   margin: 0 65px;
   position: relative;

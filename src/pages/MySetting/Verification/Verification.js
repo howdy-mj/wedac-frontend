@@ -1,158 +1,210 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { withRouter } from "react-router-dom";
 import styled, { css } from "styled-components";
+import { connect } from "react-redux";
+import Phone from "./Phone/Phone";
+import Account from "./Account/Account";
 import levelCheck from "../../../images/levelCheck.PNG";
 import deposit from "../../../images/deposit.PNG";
 import withdraw from "../../../images/withdraw.PNG";
+import { changeAuthLevel } from "../../../store/actions";
 
-function Vertification() {
+function Vertification({
+  vertifyPhone,
+  vertifyAccount,
+  match,
+  nextLevel,
+  nextGrade,
+  description,
+  // nextAuthStatus,
+}) {
+  let accountAuth = localStorage.getItem("accountAuth");
   const [done, setDone] = useState(false);
   const [logo, setLogo] = useState("y");
-  const [possible, setPossible] = useState(false);
+
+  // possible이 true라면, 코인 입출금, 원화 입출금 true로 바꾸기
+
   const [complete, setComplete] = useState(false);
 
+  const currentUrl = match.params.type;
+
   return (
-    <VertificationWrap>
-      <VertificationContainer>
-        <Title>인증센터</Title>
-        <Top>
-          <Left>
-            <LevelContent>
-              <FirstLine>
-                <CheckLogo>
-                  <img src={levelCheck} alt="" />
-                </CheckLogo>
-                <ShowLevel>
-                  <div>Level 5</div>신원 인증
-                </ShowLevel>
-              </FirstLine>
-              <Detail>
-                현재 회원님은 코인 및 원화 입출금이 가능합니다. 출금한도 개별
-                승인을 원하는 경우 신원 인증을 진행해주시기 바랍니다.
-              </Detail>
-              <GoAuth>인증하기</GoAuth>
-            </LevelContent>
-          </Left>
+    <>
+      {currentUrl === undefined ? (
+        <VertificationWrap>
+          <VertificationContainer>
+            <Title>인증센터</Title>
+            <Top>
+              <Left>
+                <LevelContent>
+                  <FirstLine>
+                    <CheckLogo>
+                      <img src={levelCheck} alt="" />
+                    </CheckLogo>
+                    <ShowLevel>
+                      <div>Level {nextLevel}</div>
+                      {nextGrade}
+                    </ShowLevel>
+                  </FirstLine>
+                  <Detail>
+                    {description}
+                    {/* 현재 회원님은 코인 및 원화 입출금이 가능합니다. 출금한도
+                    개별 승인을 원하는 경우 신원 인증을 진행해주시기 바랍니다. */}
+                  </Detail>
+                  <GoAuth>인증하기</GoAuth>
+                </LevelContent>
+              </Left>
 
-          <Right>
-            <CurrentAuthority>
-              <SmallTitle>현 인증레벨 권한</SmallTitle>
-              <EachContainer>
-                <ConLeft>
-                  <AuthorityImg src={deposit} alt="" />
-                  코인 입금
-                </ConLeft>
-                <ConRight isPossible={possible}>
-                  {possible ? "가능" : "불가능"}
-                </ConRight>
-              </EachContainer>
-              <EachContainer>
-                <ConLeft>
-                  <AuthorityImg src={withdraw} alt="" />
-                  코인 출금
-                </ConLeft>
-                <ConRight isPossible={possible}>
-                  {possible ? "가능" : "불가능"}
-                </ConRight>
-              </EachContainer>
-              <EachContainer>
-                <ConLeft>
-                  <AuthorityImg src={deposit} alt="" />
-                  원화 입금
-                </ConLeft>
-                <ConRight isPossible={possible}>
-                  {possible ? "가능" : "불가능"}
-                </ConRight>
-              </EachContainer>
-              <EachContainer>
-                <ConLeft>
-                  <AuthorityImg src={withdraw} alt="" />
-                  원화 출금
-                </ConLeft>
-                <ConRight isPossible={possible}>
-                  {possible ? "가능" : "불가능"}
-                </ConRight>
-              </EachContainer>
-              <MoreInfo>원화 및 코인 상세 출금 한도 보기</MoreInfo>
-            </CurrentAuthority>
-          </Right>
-        </Top>
-        <Bottom>
-          <CurrentState>인증현황</CurrentState>
-          <StageContainer>
-            <EachLevel>
-              <Line></Line>
-              <Middle>
-                <CheckBox isDone={true}>x</CheckBox>
-                <div>
-                  <Level>Level 1</Level>
-                  <Description done>이메일 인증</Description>
-                </div>
-              </Middle>
-              <UserInfo>abcd@gmail.com</UserInfo>
-            </EachLevel>
-          </StageContainer>
+              <Right>
+                <CurrentAuthority>
+                  <SmallTitle>현 인증레벨 권한</SmallTitle>
+                  <EachContainer>
+                    <ConLeft>
+                      <AuthorityImg src={deposit} alt="" />
+                      코인 입금
+                    </ConLeft>
+                    <ConRight isPossible={accountAuth}>
+                      {accountAuth ? "가능" : "불가능"}
+                    </ConRight>
+                  </EachContainer>
+                  <EachContainer>
+                    <ConLeft>
+                      <AuthorityImg src={withdraw} alt="" />
+                      코인 출금
+                    </ConLeft>
+                    <ConRight isPossible={accountAuth}>
+                      {accountAuth ? "가능" : "불가능"}
+                    </ConRight>
+                  </EachContainer>
+                  <EachContainer>
+                    <ConLeft>
+                      <AuthorityImg src={deposit} alt="" />
+                      원화 입금
+                    </ConLeft>
+                    <ConRight isPossible={accountAuth}>
+                      {accountAuth ? "가능" : "불가능"}
+                    </ConRight>
+                  </EachContainer>
+                  <EachContainer>
+                    <ConLeft>
+                      <AuthorityImg src={withdraw} alt="" />
+                      원화 출금
+                    </ConLeft>
+                    <ConRight isPossible={accountAuth}>
+                      {accountAuth ? "가능" : "불가능"}
+                    </ConRight>
+                  </EachContainer>
+                  <MoreInfo>원화 및 코인 상세 출금 한도 보기</MoreInfo>
+                </CurrentAuthority>
+              </Right>
+            </Top>
+            <Bottom>
+              <CurrentState>인증현황</CurrentState>
+              <StageContainer>
+                <EachLevel>
+                  <Line></Line>
+                  <Middle>
+                    <CheckBox isDone={true}>x</CheckBox>
+                    <div>
+                      <Level>Level 1</Level>
+                      <Description done>이메일 인증</Description>
+                    </div>
+                  </Middle>
+                  <UserInfo isComplete={true}>abcd@gmail.com</UserInfo>
+                </EachLevel>
+              </StageContainer>
 
-          <StageContainer>
-            <EachLevel>
-              <Line></Line>
-              <Middle>
-                <CheckBox>{logo}</CheckBox>
-                <div>
-                  <Level>Level 2</Level>
-                  <Description>휴대전화번호 인증</Description>
-                </div>
-              </Middle>
-              <UserInfo isComplete={complete}>
-                {complete ? "01058****33" : "인증하기"}
-              </UserInfo>
-            </EachLevel>
-          </StageContainer>
+              <StageContainer>
+                <EachLevel>
+                  <Line></Line>
+                  <Middle>
+                    <CheckBox>{logo}</CheckBox>
+                    <div>
+                      <Level>Level 2</Level>
+                      <Description>휴대전화번호 인증</Description>
+                    </div>
+                  </Middle>
+                  <UserInfo
+                    isComplete={complete}
+                    onClick={() => {
+                      vertifyPhone("authPhone");
+                    }}
+                  >
+                    {complete ? "01058****33" : "인증하기"}
+                  </UserInfo>
+                </EachLevel>
+              </StageContainer>
 
-          <StageContainer>
-            <EachLevel>
-              <Line></Line>
-              <Middle>
-                <CheckBox>{logo}</CheckBox>
-                <div>
-                  <Level>Level 3</Level>
-                  <Description>계좌 점유 인증</Description>
-                </div>
-              </Middle>
-              <UserInfo undone>인증하기</UserInfo>
-            </EachLevel>
-          </StageContainer>
+              <StageContainer>
+                <EachLevel>
+                  <Line></Line>
+                  <Middle>
+                    <CheckBox>{logo}</CheckBox>
+                    <div>
+                      <Level>Level 3</Level>
+                      <Description>계좌 점유 인증</Description>
+                    </div>
+                  </Middle>
+                  <UserInfo
+                    undone
+                    onClick={() => {
+                      vertifyAccount("authAccount");
+                    }}
+                  >
+                    인증하기
+                  </UserInfo>
+                </EachLevel>
+              </StageContainer>
 
-          <StageContainer>
-            <EachLevel>
-              <Line></Line>
-              <Middle>
-                <CheckBox>y</CheckBox>
-                <div>
-                  <Level>Level 4</Level>
-                  <Description>카카오페이 인증</Description>
-                </div>
-              </Middle>
-              <UserInfo undone>인증하기</UserInfo>
-            </EachLevel>
-          </StageContainer>
+              <StageContainer>
+                <EachLevel>
+                  <Line></Line>
+                  <Middle>
+                    <CheckBox>y</CheckBox>
+                    <div>
+                      <Level>Level 4</Level>
+                      <Description>카카오페이 인증</Description>
+                    </div>
+                  </Middle>
+                  <UserInfo isComplete={false}>인증하기</UserInfo>
+                </EachLevel>
+              </StageContainer>
 
-          <StageContainer>
-            <EachLevel>
-              <Middle>
-                <CheckBox>y</CheckBox>
-                <div>
-                  <Level>Level 5</Level>
-                  <Description>신원 인증</Description>
-                </div>
-              </Middle>
-              <UserInfo undone>인증하기</UserInfo>
-            </EachLevel>
-          </StageContainer>
-        </Bottom>
-      </VertificationContainer>
-    </VertificationWrap>
+              <StageContainer>
+                <EachLevel>
+                  <Middle>
+                    <CheckBox>y</CheckBox>
+                    <div>
+                      <Level>Level 5</Level>
+                      <Description>신원 인증</Description>
+                    </div>
+                  </Middle>
+                  <UserInfo isComplete={false}>인증하기</UserInfo>
+                </EachLevel>
+              </StageContainer>
+            </Bottom>
+          </VertificationContainer>
+        </VertificationWrap>
+      ) : currentUrl === "authPhone" ? (
+        <Phone />
+      ) : (
+        <Account />
+      )}
+    </>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    nextLevel: state.nextAuthStatus.nextLevel,
+    nextGrade: state.nextAuthStatus.nextGrade,
+    description: state.nextAuthStatus.description,
+  };
+};
+
+export default connect(mapStateToProps, { changeAuthLevel })(
+  withRouter(Vertification)
+);
 
 const VertificationWrap = styled.div`
   max-width: 1000px;
@@ -182,7 +234,8 @@ const Title = styled.div`
 `;
 
 const LevelContent = styled.div`
-  max-width: 494px;
+  /* max-width: 494px; */
+  width: 490px;
   border: 1px solid rgb(217, 220, 232);
   padding: 24px;
   background-color: #fbfcfe;
@@ -351,23 +404,20 @@ const UserInfo = styled.div`
   width: 200px;
   height: 36px;
   font-size: 12px;
-  color: #919dae;
   border: 1px solid rgb(217, 220, 232);
   text-align: center;
   line-height: 34px;
+  color: #919dae;
 
   ${(props) =>
-    props.undone &&
+    !props.isComplete &&
     css`
       background-color: ${(props) => props.theme.subColor};
       color: white;
       cursor: pointer;
-
       &:hover {
         background-color: ${(props) => props.theme.gdacColor};
         transition: all 0.3s ease 0s;
       }
     `};
 `;
-
-export default Vertification;

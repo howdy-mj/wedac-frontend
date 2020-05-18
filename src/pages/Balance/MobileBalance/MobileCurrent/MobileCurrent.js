@@ -1,47 +1,56 @@
-import React from "react";
+import React, { useState } from "react";
 import styled, { css } from "styled-components";
 import test from "../../../../images/search.png";
 
 function MobileCurrent() {
+  const [hasTrade, setHasTrade] = useState(false);
+  const [plus, setPlus] = useState(false);
+
   return (
-    <DetailContainer>
-      <Header>
-        <HeaderLeft>
-          <LogoDiv>
-            <LogoImg src={test} alt="" />
-          </LogoDiv>
-          <Name>
-            지닥토큰<HeaderSpan>GT</HeaderSpan>
-          </Name>
-        </HeaderLeft>
-        <HeaderRight>
-          <div>300,000.00004256 GT</div>
-        </HeaderRight>
-      </Header>
-      <DetailContents>
-        <DetailLeft>
-          <OneContainer>
-            <DetailTitle>평균 매수가격</DetailTitle>
-            <DetailValue>2.3624</DetailValue>
-          </OneContainer>
-          <OneContainer>
-            <DetailTitle>평가액</DetailTitle>
-            <DetailValue>27,930</DetailValue>
-          </OneContainer>
-          <OneContainer>
-            <DetailTitle>평가손익</DetailTitle>
-            <DetailValue minus>-680,790</DetailValue>
-          </OneContainer>
-          <OneContainer>
-            <DetailTitle>수익률(%)</DetailTitle>
-            <DetailValue minus>-96.06%</DetailValue>
-          </OneContainer>
-        </DetailLeft>
-        <DetailRight>
-          <GoExchange>주문</GoExchange>
-        </DetailRight>
-      </DetailContents>
-    </DetailContainer>
+    <>
+      {hasTrade ? (
+        <DetailContainer>
+          <Header>
+            <HeaderLeft>
+              <LogoDiv>
+                <LogoImg src={test} alt="" />
+              </LogoDiv>
+              <Name>
+                지닥토큰<HeaderSpan>GT</HeaderSpan>
+              </Name>
+            </HeaderLeft>
+            <HeaderRight>
+              <div>300,000.00004256 GT</div>
+            </HeaderRight>
+          </Header>
+          <DetailContents>
+            <DetailLeft>
+              <OneContainer>
+                <DetailTitle>평균 매수가격</DetailTitle>
+                <DetailValue>2.3624</DetailValue>
+              </OneContainer>
+              <OneContainer>
+                <DetailTitle>평가액</DetailTitle>
+                <DetailValue>27,930</DetailValue>
+              </OneContainer>
+              <OneContainer>
+                <DetailTitle>평가손익</DetailTitle>
+                <DetailValue minus>-680,790</DetailValue>
+              </OneContainer>
+              <OneContainer>
+                <DetailTitle>수익률(%)</DetailTitle>
+                <DetailValue minus>-96.06%</DetailValue>
+              </OneContainer>
+            </DetailLeft>
+            <DetailRight>
+              <GoExchange>주문</GoExchange>
+            </DetailRight>
+          </DetailContents>
+        </DetailContainer>
+      ) : (
+        <NoTrade>해당하는 검색 내역이 없습니다.</NoTrade>
+      )}
+    </>
   );
 }
 
@@ -136,6 +145,13 @@ const GoExchange = styled.p`
   border-radius: 2px;
   text-align: center;
   line-height: 25px;
+`;
+
+const NoTrade = styled.div`
+  margin: 60px auto;
+  text-align: center;
+  color: #919dae;
+  font-size: 12px;
 `;
 
 export default MobileCurrent;

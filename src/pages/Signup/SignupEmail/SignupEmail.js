@@ -345,7 +345,7 @@ function SignupEmail({
                   <Link to="/login">로그인</Link>
                 </BelowLeft3>
                 <BelowLeft3 className="belowRight3">
-                  <a href="/#">카카오 계정으로 가입하기</a>
+                  <a href="/signup">카카오 계정으로 가입하기</a>
                 </BelowLeft3>
               </BelowSignupEmailButton3>
             </BottomPart3>
@@ -562,7 +562,6 @@ const EmailButtonDiv3 = styled.div`
     color: #fff;
     border-radius: 2px;
     outline: none;
-    /* cursor: not-allowed; */
   }
 `;
 const BelowSignupEmailButton3 = styled.div`

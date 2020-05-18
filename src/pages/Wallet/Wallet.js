@@ -112,6 +112,10 @@ const WalletWrap = styled.div`
   width: 100%;
   height: 100%;
   margin: 0 auto;
+
+  @media ${(props) => props.theme.mobile} {
+    margin-top: 46px;
+  }
 `;
 
 const WalletContainer = styled.div`
@@ -188,6 +192,10 @@ const Checkbox = styled.span`
   padding: 6.5px 6px;
   border: 1px solid #ebeef6;
   border-radius: 2px;
+
+  @media ${(props) => props.theme.mobile} {
+    display: none;
+  }
 `;
 
 const CheckButton = styled.span`
@@ -387,7 +395,6 @@ const Category = styled.div`
 
 const Right = styled.section`
   width: 320px;
-  padding-top: 15px;
 
   @media ${(props) => props.theme.tabletL} {
     display: none;

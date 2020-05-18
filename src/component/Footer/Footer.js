@@ -13,18 +13,6 @@ import balance from "../../images/b-balance.png";
 import wallet from "../../images/b-wallet.png";
 import history from "../../images/b-history.png";
 
-import logoImgW from "../../images/logo_white.png";
-import facebookW from "../../images/sns-b-facebook.png";
-import kakaoW from "../../images/sns-b-kakao.png";
-import naverW from "../../images/sns-b-blog.png";
-import twitterW from "../../images/sns-b-twitter.png";
-import telegramW from "../../images/sns-b-telegram.png";
-import marketW from "../../images/b-market.png";
-import exchangeW from "../../images/b-exchange.png";
-import balanceW from "../../images/b-balance.png";
-import walletW from "../../images/b-wallet.png";
-import historyW from "../../images/b-history.png";
-
 function Footer(props) {
   const [hasColor, setHasColor] = useState(false);
   const isHover = () => {
@@ -40,34 +28,14 @@ function Footer(props) {
         <Container>
           <First>
             <div className="logo">
-              {
-                (props.match.url = "/" ? (
-                  <Img logo src={logoImgW} alt="logo" />
-                ) : (
-                  <Img logo src={logoImg} alt="logo" />
-                ))
-              }
+              <Img logo src={logoImg} alt="logo" />
             </div>
             <SNS>
-              {
-                (props.match.url = "/" ? (
-                  <>
-                    <Img sns src={facebookW} alt="facebook" />
-                    <Img sns src={kakaoW} alt="kakao" />
-                    <Img sns src={naverW} alt="naver" />
-                    <Img sns src={twitterW} alt="twitter" />
-                    <Img sns src={telegramW} alt="telegram" />
-                  </>
-                ) : (
-                  <>
-                    <Img sns src={facebook} alt="facebook" />
-                    <Img sns src={kakao} alt="kakao" />
-                    <Img sns src={naver} alt="naver" />
-                    <Img sns src={twitter} alt="twitter" />
-                    <Img sns src={telegram} alt="telegram" />
-                  </>
-                ))
-              }
+              <Img sns src={facebook} alt="facebook" />
+              <Img sns src={kakao} alt="kakao" />
+              <Img sns src={naver} alt="naver" />
+              <Img sns src={twitter} alt="twitter" />
+              <Img sns src={telegram} alt="telegram" />
             </SNS>
           </First>
           <Second>

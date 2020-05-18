@@ -4,6 +4,21 @@ import Nav from "../../../component/Nav/Nav";
 import Footer from "../../../component/Footer/Footer";
 
 function SignupVerify() {
+  const [countDown, setCountDown] = useState("05:00");
+  window.onload = function () {
+    setInterval(() => {
+      var d = new Date();
+      var seconds = d.getMinutes() * 60 + d.getSeconds(); // 00:00초로 변환
+      var fiveMin = 60 * 5; // 300초
+      var timeleft = fiveMin - (seconds % fiveMin); // 남은 초 계산
+
+      var mins = parseInt(timeleft / 60);
+      var secs = timeleft % 60;
+      setCountDown(mins + ":" + secs);
+
+      console.log(countDown);
+    }, 1000);
+  };
   return (
     <>
       <Nav />
@@ -17,7 +32,7 @@ function SignupVerify() {
               - 인증메일은 발송 시점으로부터 24시간 동안 유효합니다. <br />-
               이메일 재전송 시 이전 인증메일은 만료됩니다.
             </Text>
-            <Time>이메일 재전송(05:00후 가능)</Time>
+            <Time>이메일 재전송({countDown}후 가능)</Time>
             {/* <Time resend>이메일 재전송</Time> */}
           </WhiteBox>
         </SignupVerifyContainer>

@@ -76,7 +76,7 @@ function HomeNav() {
                   {!token ? "로그인" : "로그아웃"}
                 </Button>
               </Link>
-              <Link to="/signup">
+              <Link to={!token ? "/signup" : `/settings/dashboard`}>
                 <Button join>{!token ? "회원가입" : "내 설정"}</Button>
               </Link>
             </Right>
