@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import styled, { css } from "styled-components";
 
 function Trade() {
+  const [hasTrade, setHasTrade] = useState(false);
   return (
     <HistoryContent>
       <HistoryTable>
@@ -17,34 +18,38 @@ function Trade() {
             <HeadTH>주문시간</HeadTH>
           </HeadTR>
         </HistoryTHead>
-        <HistoryTbody>
-          <BodyTR>
-            <BodyTD>
-              <p>2020-03-19</p>
-              <p>18:50:03</p>
-            </BodyTD>
-            <BodyTD>
-              <BodyP red>매수</BodyP>
-            </BodyTD>
-            <BodyTD>GT/KRW</BodyTD>
-            <BodyTD>
-              <p>0.1235 KRW</p>
-            </BodyTD>
-            <BodyTD>
-              <p>83,432.21415887 GT</p>
-            </BodyTD>
-            <BodyTD>
-              <p>5 KRW</p>
-            </BodyTD>
-            <BodyTD>
-              <BodyP value>10,309 KRW</BodyP>
-            </BodyTD>
-            <BodyTD>
-              <p>2020-03-19</p>
-              <p>18:50:03</p>
-            </BodyTD>
-          </BodyTR>
-        </HistoryTbody>
+        {hasTrade ? (
+          <HistoryTbody>
+            <BodyTR>
+              <BodyTD>
+                <p>2020-03-19</p>
+                <p>18:50:03</p>
+              </BodyTD>
+              <BodyTD>
+                <BodyP red>매수</BodyP>
+              </BodyTD>
+              <BodyTD>GT/KRW</BodyTD>
+              <BodyTD>
+                <p>0.1235 KRW</p>
+              </BodyTD>
+              <BodyTD>
+                <p>83,432.21415887 GT</p>
+              </BodyTD>
+              <BodyTD>
+                <p>5 KRW</p>
+              </BodyTD>
+              <BodyTD>
+                <BodyP value>10,309 KRW</BodyP>
+              </BodyTD>
+              <BodyTD>
+                <p>2020-03-19</p>
+                <p>18:50:03</p>
+              </BodyTD>
+            </BodyTR>
+          </HistoryTbody>
+        ) : (
+          <NoTrade>해당하는 검색 내역이 없습니다.</NoTrade>
+        )}
       </HistoryTable>
     </HistoryContent>
   );
@@ -111,6 +116,15 @@ const BodyP = styled.p`
     css`
       font-weight: 700;
     `}
+`;
+
+const NoTrade = styled.div`
+  margin: 60px auto;
+  margin-left: 400px;
+  text-align: center;
+  color: #919dae;
+  font-size: 12px;
+  position: absolute;
 `;
 
 export default Trade;

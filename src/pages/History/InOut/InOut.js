@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import styled, { css } from "styled-components";
 
 function InOut() {
+  const [hasTrade, setHasTrade] = useState(false);
+
   return (
     <HistoryContent>
       <HistoryTable>
@@ -16,24 +18,28 @@ function InOut() {
             </HeadTH>
           </HeadTR>
         </HistoryTHead>
-        <HistoryTbody>
-          <BodyTR>
-            <BodyTD left>
-              <p>2020-03-19</p>
-              <p>18:50:03</p>
-            </BodyTD>
-            <BodyTD center>
-              <BodyP type>입금</BodyP>
-            </BodyTD>
-            <BodyTD center>GT</BodyTD>
-            <BodyTD right>
-              <BodyP amount>83,432.21415887</BodyP>
-            </BodyTD>
-            <BodyTD right veryright>
-              <BodyP>기타</BodyP>
-            </BodyTD>
-          </BodyTR>
-        </HistoryTbody>
+        {hasTrade ? (
+          <HistoryTbody>
+            <BodyTR>
+              <BodyTD left>
+                <p>2020-03-19</p>
+                <p>18:50:03</p>
+              </BodyTD>
+              <BodyTD center>
+                <BodyP inOutType>입금</BodyP>
+              </BodyTD>
+              <BodyTD center>GT</BodyTD>
+              <BodyTD right>
+                <BodyP amount>83,432.21415887</BodyP>
+              </BodyTD>
+              <BodyTD right veryright>
+                <BodyP>기타</BodyP>
+              </BodyTD>
+            </BodyTR>
+          </HistoryTbody>
+        ) : (
+          <NoTrade>해당하는 검색 내역이 없습니다.</NoTrade>
+        )}
       </HistoryTable>
     </HistoryContent>
   );
@@ -133,7 +139,7 @@ const BodyTD = styled.td`
 
 const BodyP = styled.p`
   ${(props) =>
-    props.type &&
+    props.inOutType &&
     css`
       font-weight: 700;
     `}
@@ -143,6 +149,15 @@ const BodyP = styled.p`
     css`
       font-weight: 700;
     `}
+`;
+
+const NoTrade = styled.div`
+  margin: 60px auto;
+  margin-left: 400px;
+  text-align: center;
+  color: #919dae;
+  font-size: 12px;
+  position: absolute;
 `;
 
 export default InOut;

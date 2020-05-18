@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import styled, { css } from "styled-components";
 import test from "../../../images/search.png";
 
 function CurrentBalance() {
+  const [hasTrade, setHasTrade] = useState(false);
+  const [plus, setPlus] = useState(false);
+
   return (
     <DetailContainer>
       <DetailInner>
@@ -30,35 +33,41 @@ function CurrentBalance() {
           </HeaderUl>
         </Header>
         <DetailContents>
-          <DetailContentsUl>
-            <Li detail isName>
-              <Logo>
-                <LogoImg src={test} alt="" />
-              </Logo>
-              <div>
-                <P kor>지닥토큰</P>
-                <P eng>GT</P>
-              </div>
-            </Li>
-            <Li detail currentAmount>
-              <P>300,000.00004256</P>
-            </Li>
-            <Li detail avgBidPrice>
-              <P price>2.3624</P>
-            </Li>
-            <Li detail currentValue>
-              <P currentValue>27,930</P>
-            </Li>
-            <Li detail valuation>
-              <P minus>-680,790</P>
-            </Li>
-            <Li detail earningsRate>
-              <P minus>-96.06%</P>
-            </Li>
-            <Li detail goOrder>
-              <P goOrder>주문</P>
-            </Li>
-          </DetailContentsUl>
+          {hasTrade ? (
+            <DetailContentsUl>
+              <Li detail isName>
+                <Logo>
+                  <LogoImg src={test} alt="" />
+                </Logo>
+                <div>
+                  <P kor>지닥토큰</P>
+                  <P eng>GT</P>
+                </div>
+              </Li>
+              <Li detail currentAmount>
+                <P>300,000.00004256</P>
+              </Li>
+              <Li detail avgBidPrice>
+                <P price>2.3624</P>
+              </Li>
+              <Li detail currentValue>
+                <P currentValue>27,930</P>
+              </Li>
+              <Li detail valuation>
+                {/* 0보다 크면 +, 작으면 -*/}
+                <PColor isPlus={plus}>-680,790</PColor>
+              </Li>
+              <Li detail earningsRate>
+                {/* 0보다 크면 +, 작으면 -*/}
+                <PColor isPlus={plus}>-96.06%</PColor>
+              </Li>
+              <Li detail goOrder>
+                <P goOrder>주문</P>
+              </Li>
+            </DetailContentsUl>
+          ) : (
+            <NoTrade>해당하는 검색 내역이 없습니다.</NoTrade>
+          )}
         </DetailContents>
       </DetailInner>
     </DetailContainer>
@@ -212,18 +221,18 @@ const P = styled.p`
       border-radius: 2px;
       cursor: pointer;
     `}
-  
-    ${(props) =>
-      props.plus &&
-      css`
-        color: ${(props) => props.theme.plusColor};
-      `}
-    ${(props) =>
-      props.minus &&
-      css`
-        color: ${(props) => props.theme.minusColor};
-      `}
+`;
 
+const PColor = styled.p`
+  color: ${(props) =>
+    props.isPlus ? props.theme.plusColor : props.theme.minusColor};
+`;
+
+const NoTrade = styled.div`
+  margin: 60px auto;
+  text-align: center;
+  color: #919dae;
+  font-size: 12px;
 `;
 
 export default CurrentBalance;

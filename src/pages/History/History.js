@@ -3,6 +3,7 @@ import styled, { css } from "styled-components";
 import Nav from "../../component/Nav/Nav";
 import Trade from "./Trade/Trade";
 import InOut from "./InOut/InOut";
+import OnlyLogin from "../Login/OnlyLogin";
 import Footer from "../../component/Footer/Footer";
 import search from "../../images/history-search.PNG";
 
@@ -12,58 +13,62 @@ const tab = {
 };
 
 function History() {
+  let token = localStorage.getItem("token");
   const [selected, setSelected] = useState(0);
   const changeTab = (id) => setSelected(id);
 
   return (
     <>
       <Nav />
-      <HistoryWrap>
-        <HistoryContainer>
-          <HistoryLeft>
-            <Header>
-              <Category>
-                <CategoryDiv
-                  isActive={selected === 0}
-                  onClick={() => {
-                    changeTab(0);
-                  }}
-                >
-                  체결내역
-                </CategoryDiv>
-                <CategoryDiv
-                  isActive={selected === 1}
-                  onClick={() => {
-                    changeTab(1);
-                  }}
-                >
-                  입출금내역
-                </CategoryDiv>
-              </Category>
-              <Filter>
-                <FilterDiv calendar>
-                  <Input calendar type="text" placeholder="전체 기간" />
-                </FilterDiv>
-                <FilterDiv order>
-                  <Input order type="text" placeholder="전체 거래" />
-                </FilterDiv>
-                <FilterDiv coin>
-                  <Input coin type="text" placeholder="전체 코인" />
-                </FilterDiv>
-                <FilterDiv img>
-                  <SearchImg img src={search} alt="" />
-                </FilterDiv>
-              </Filter>
-            </Header>
-            {/*체결내역, 입출금내역 Component*/}
-            {tab[selected]}
-
-            <Bottom>
-              <Save>저장하기</Save>
-            </Bottom>
-          </HistoryLeft>
-          <HistoryRight>test</HistoryRight>
-        </HistoryContainer>
+      <HistoryWrap status={localStorage.getItem("token")}>
+        {token ? (
+          <HistoryContainer>
+            <HistoryLeft>
+              <Header>
+                <Category>
+                  <CategoryDiv
+                    isActive={selected === 0}
+                    onClick={() => {
+                      changeTab(0);
+                    }}
+                  >
+                    체결내역
+                  </CategoryDiv>
+                  <CategoryDiv
+                    isActive={selected === 1}
+                    onClick={() => {
+                      changeTab(1);
+                    }}
+                  >
+                    입출금내역
+                  </CategoryDiv>
+                </Category>
+                <Filter>
+                  <FilterDiv calendar>
+                    <Input calendar type="text" placeholder="전체 기간" />
+                  </FilterDiv>
+                  <FilterDiv orderType>
+                    <Input orderType type="text" placeholder="전체 거래" />
+                  </FilterDiv>
+                  <FilterDiv coin>
+                    <Input coin type="text" placeholder="전체 코인" />
+                  </FilterDiv>
+                  <FilterDiv img>
+                    <SearchImg img src={search} alt="" />
+                  </FilterDiv>
+                </Filter>
+              </Header>
+              {/*체결내역, 입출금내역 Component*/}
+              {tab[selected]}
+              <Bottom>
+                <Save>저장하기</Save>
+              </Bottom>
+            </HistoryLeft>
+            <HistoryRight>test</HistoryRight>
+          </HistoryContainer>
+        ) : (
+          <OnlyLogin />
+        )}
       </HistoryWrap>
       <Footer />
     </>
@@ -155,7 +160,7 @@ const Input = styled.input`
 
 
   ${(props) =>
-    props.order &&
+    props.orderType &&
     css`
       width: 98px;
     `}
@@ -169,7 +174,7 @@ const Input = styled.input`
 
 const FilterDiv = styled.div`
   ${(props) =>
-    props.order &&
+    props.orderType &&
     css`
       margin-left: 6px;
     `}
