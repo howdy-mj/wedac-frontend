@@ -5,6 +5,10 @@ import MobileNav from "./MobileNav/MobileNav";
 import logoImg from "../../images/logo_black.png";
 
 function Nav() {
+  let token = localStorage.getItem("token");
+  const handleLogOut = () => {
+    localStorage.removeItem("token");
+  };
   return (
     <>
       <Navbar>
@@ -67,11 +71,13 @@ function Nav() {
               </Ul>
             </FlexDiv>
             <Right>
-              <Link to="/login">
-                <Button login>로그인</Button>
+              <Link to={!token ? "/login" : "/"}>
+                <Button login onClick={token && handleLogOut}>
+                  {!token ? "로그인" : "로그아웃"}
+                </Button>
               </Link>
               <Link to="/signup">
-                <Button join>회원가입</Button>
+                <Button join>{!token ? "회원가입" : "내 설정"}</Button>
               </Link>
             </Right>
           </MainNav>

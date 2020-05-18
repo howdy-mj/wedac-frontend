@@ -4,6 +4,7 @@ import Nav from "../../component/Nav/Nav";
 import Deposit from "./Deposit/Deposit";
 import Withdraw from "./Withdraw/Withdraw";
 import WalletHistory from "./WalletHistory/WalletHistory";
+import OnlyLogin from "../Login/OnlyLogin";
 import Footer from "../../component/Footer/Footer";
 import searchIcon from "../../images/search.png";
 
@@ -14,79 +15,83 @@ const category = {
 };
 
 function Wallet() {
+  let token = localStorage.getItem("token");
   const [selected, setSelected] = useState(0);
   const changeSelected = (id) => setSelected(id);
   return (
     <>
       <Nav />
-      <WalletWrap>
-        <WalletContainer>
-          <Left>
-            <SectionLeft>
-              <AssetContainer>
-                <SearchContainer>
-                  <SearchboxWrap>
-                    <SearchInput placeholder="코인명 검색"></SearchInput>
-                    <SearchImg src={searchIcon} alt="" />
-                  </SearchboxWrap>
-                  <Checkbox>
-                    <CheckImg />
-                    보유코인
-                  </Checkbox>
-                </SearchContainer>
-                <AssetTitle>
-                  <AssetDiv name>자산명</AssetDiv>
-                  <AssetDiv amount>보유수량</AssetDiv>
-                  <AssetDiv value>KRW 평가금액</AssetDiv>
-                </AssetTitle>
-                <AssetDetail>
-                  <AssetDetailContainer>
-                    <AssetDetailDiv nameDiv>
-                      <AssetDetailLeft>
-                        <AssetLogo src={searchIcon} alt="" />
-                        <AssetNameDiv>
-                          <AssetName kor>원화</AssetName>
-                          <AssetName eng>KRW</AssetName>
-                        </AssetNameDiv>
-                      </AssetDetailLeft>
-                    </AssetDetailDiv>
-                    <AssetDetailDiv amount>0</AssetDetailDiv>
-                    <AssetDetailDiv value>0</AssetDetailDiv>
-                  </AssetDetailContainer>
-                </AssetDetail>
-              </AssetContainer>
-            </SectionLeft>
-            <SecionRight>
-              <Title>KRW 지갑</Title>
-              <CategoryContainer>
-                <Category
-                  in
-                  isActive={selected === 0}
-                  onClick={() => changeSelected(0)}
-                >
-                  입금
-                </Category>
-                <Category
-                  out
-                  isActive={selected === 1}
-                  onClick={() => changeSelected(1)}
-                >
-                  출금
-                </Category>
-                <Category
-                  history
-                  isActive={selected === 2}
-                  onClick={() => changeSelected(2)}
-                >
-                  지갑 내역
-                </Category>
-              </CategoryContainer>
-              {/*입금, 출금, 지갑내역 Component*/}
-              {category[selected]}
-            </SecionRight>
-          </Left>
-          <Right>right</Right>
-        </WalletContainer>
+      <WalletWrap status={localStorage.getItem("token")}>
+        {token ? (
+          <WalletContainer>
+            <Left>
+              <SectionLeft>
+                <AssetContainer>
+                  <SearchContainer>
+                    <SearchboxWrap>
+                      <SearchInput placeholder="코인명 검색"></SearchInput>
+                    </SearchboxWrap>
+                    <Checkbox>
+                      <CheckButton>y</CheckButton>
+                      보유코인
+                    </Checkbox>
+                  </SearchContainer>
+                  <AssetTitle>
+                    <AssetDiv coin>자산명</AssetDiv>
+                    <AssetDiv amount>보유수량</AssetDiv>
+                    <AssetDiv value>KRW 평가금액</AssetDiv>
+                  </AssetTitle>
+                  <AssetDetail>
+                    <AssetDetailContainer>
+                      <AssetDetailDiv nameDiv>
+                        <AssetDetailLeft>
+                          <AssetLogo src={searchIcon} alt="" />
+                          <AssetNameDiv>
+                            <AssetName kor>원화</AssetName>
+                            <AssetName eng>KRW</AssetName>
+                          </AssetNameDiv>
+                        </AssetDetailLeft>
+                      </AssetDetailDiv>
+                      <AssetDetailDiv amount>0</AssetDetailDiv>
+                      <AssetDetailDiv value>0</AssetDetailDiv>
+                    </AssetDetailContainer>
+                  </AssetDetail>
+                </AssetContainer>
+              </SectionLeft>
+              <SecionRight>
+                <Title>KRW 지갑</Title>
+                <CategoryContainer>
+                  <Category
+                    in="true"
+                    isActive={selected === 0}
+                    onClick={() => changeSelected(0)}
+                  >
+                    입금
+                  </Category>
+                  <Category
+                    out
+                    isActive={selected === 1}
+                    onClick={() => changeSelected(1)}
+                  >
+                    출금
+                  </Category>
+                  <Category
+                    history
+                    isActive={selected === 2}
+                    onClick={() => changeSelected(2)}
+                  >
+                    지갑 내역
+                  </Category>
+                </CategoryContainer>
+                {/*입금, 출금, 지갑내역 Component*/}
+                {category[selected]}
+              </SecionRight>
+            </Left>
+            <Right>right</Right>
+          </WalletContainer>
+        ) : (
+          <OnlyLogin />
+        )}
       </WalletWrap>
       <Footer />
     </>
@@ -160,16 +165,10 @@ const SearchInput = styled.input`
   font-size: 12px;
   letter-spacing: -0.03em;
   color: #022553;
-`;
 
-const SearchImg = styled.img`
-  cursor: pointer;
-  display: inline-block;
-  position: absolute;
-  left: 120px;
-  top: 5px;
-  width: 20px;
-  height: 20px;
+  background: url(${searchIcon}) no-repeat 0 0;
+  background-position: 155px 2px;
+  background-size: 25px 25px;
 `;
 
 const Checkbox = styled.span`
@@ -182,7 +181,11 @@ const Checkbox = styled.span`
   border-radius: 2px;
 `;
 
-const CheckImg = styled.img``;
+const CheckButton = styled.span`
+  margin-right: 5px;
+  margin-top: 10px;
+  font-family: "emoticon";
+`;
 
 const AssetTitle = styled.div`
   display: table;
@@ -201,7 +204,7 @@ const AssetDiv = styled.div`
   position: relative;
 
   ${(props) =>
-    props.name &&
+    props.coin &&
     css`
       text-align: left;
     `}

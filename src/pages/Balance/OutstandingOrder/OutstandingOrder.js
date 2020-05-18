@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import styled, { css } from "styled-components";
 
 function OutstandingOrder() {
+  const [hasTrade, setHasTrade] = useState(false);
   return (
     <DetailContainer>
       <DetailInner>
@@ -31,34 +32,38 @@ function OutstandingOrder() {
           </HeaderUl>
         </Header>
         <DetailContents>
-          <DetailContentsUl>
-            <Li detail time>
-              <div>
-                <P time>2020-03-19</P>
-                <P time>18:50:03</P>
-              </div>
-            </Li>
-            <Li detail market>
-              <P>GT/KRW</P>
-            </Li>
-            <Li detail orderType>
-              <P orderType minus>
-                매도
-              </P>
-            </Li>
-            <Li detail price>
-              <P price>0.0948</P>
-            </Li>
-            <Li detail amount>
-              <P>5900.00000000</P>
-            </Li>
-            <Li detail outstanding>
-              <P>5900.00000000</P>
-            </Li>
-            <Li detail cancel>
-              <P cancel>주문취소</P>
-            </Li>
-          </DetailContentsUl>
+          {hasTrade ? (
+            <DetailContentsUl>
+              <Li detail time>
+                <div>
+                  <P time>2020-03-19</P>
+                  <P time>18:50:03</P>
+                </div>
+              </Li>
+              <Li detail market>
+                <P>GT/KRW</P>
+              </Li>
+              <Li detail orderType>
+                <P orderType minus>
+                  매도
+                </P>
+              </Li>
+              <Li detail price>
+                <P price>0.0948</P>
+              </Li>
+              <Li detail amount>
+                <P>5900.00000000</P>
+              </Li>
+              <Li detail outstanding>
+                <P>5900.00000000</P>
+              </Li>
+              <Li detail cancel>
+                <P cancel>주문취소</P>
+              </Li>
+            </DetailContentsUl>
+          ) : (
+            <NoTrade>해당하는 검색 내역이 없습니다.</NoTrade>
+          )}
         </DetailContents>
       </DetailInner>
     </DetailContainer>
@@ -230,6 +235,13 @@ const P = styled.p`
         color: ${(props) => props.theme.minusColor};
       `}
 
+`;
+
+const NoTrade = styled.div`
+  margin: 60px auto;
+  text-align: center;
+  color: #919dae;
+  font-size: 12px;
 `;
 
 export default OutstandingOrder;

@@ -28,7 +28,7 @@ function BTC() {
         <Li>
           <Img src={searchIcon} alt="logo" />
         </Li>
-        <Li name>
+        <Li isName>
           <LiDiv kor>코스모스아톰</LiDiv>
           <LiDiv eng>ATOM/BTC</LiDiv>
         </Li>
@@ -63,7 +63,7 @@ const Li = styled.li`
   text-align: right;
 
   ${(props) =>
-    props.name &&
+    props.isName &&
     css`
       width: 13%;
       text-align: left;
@@ -125,7 +125,7 @@ const Li = styled.li`
 
   @media ${(props) => props.theme.tabletS} {
     ${(props) =>
-      props.name &&
+      props.isName &&
       css`
         width: 30%;
       `}
