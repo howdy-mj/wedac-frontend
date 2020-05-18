@@ -9,6 +9,7 @@ import Signup from "./pages/Signup/Signup";
 import SignupEmail from "./pages/Signup/SignupEmail/SignupEmail";
 import SignupVerify from "./pages/Signup/SignupVerify/SignupVerify";
 import Exchange from "./pages/Exchange/Exchange";
+import MySetting from "./pages/MySetting/MySetting";
 import PageNotFound from "./pages/PageNotFount/PageNotFound";
 
 class Routes extends Component {
@@ -25,6 +26,8 @@ class Routes extends Component {
           <Route path="/signupEmail" component={SignupEmail} />
           <Route path="/signupVerify" component={SignupVerify} />
           <Route path="/exchange" component={Exchange} />
+          \<Route path="/settings/:category" component={MySetting} />
+          {/* <Route path="/settings/:selected" component={Dashboard} /> */}
           <Route component={PageNotFound} />
         </Switch>
       </Router>
