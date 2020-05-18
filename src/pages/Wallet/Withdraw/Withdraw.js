@@ -21,8 +21,8 @@ function Withdraw() {
       <BankAccount>
         <BankLeft>입금 받을 계좌</BankLeft>
         <BankRight>
-          <div>**은행</div>
-          <div>09*****1234</div>
+          <p>**은행</p>
+          <p>09*****1234</p>
         </BankRight>
       </BankAccount>
       <TotalWithdrawWrap>
@@ -128,9 +128,12 @@ const BankLeft = styled(AvailableLeft)`
   font-weight: 700;
 `;
 
-const BankRight = styled(AvailableRight)`
+const BankRight = styled.div`
+  padding-right: 14px;
+  width: 60%;
+  text-align: right;
   margin-top: 20px;
-  div {
+  p {
     line-height: 20px;
     font-weight: 700;
     color: #596070;
@@ -148,7 +151,10 @@ const TotalWithdraw = styled(BankLeft)`
   width: 30%;
 `;
 
-const TotalRight = styled(AvailableRight)`
+const TotalRight = styled.div`
+  padding-right: 14px;
+  width: 60%;
+  text-align: right;
   display: flex;
   padding-left: 15px;
   width: 70%;

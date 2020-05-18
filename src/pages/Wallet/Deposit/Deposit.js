@@ -1,7 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import styled, { css } from "styled-components";
 
 function Deposit() {
+  const [amount, setAmount] = useState(0);
+  const [redBorder, setRedBorder] = useState(false);
+  const changeBorder = () => {
+    // console.log(redBor);
+    setRedBorder(true);
+  };
   return (
     <DepositWrap>
       <DepositWarning>
@@ -29,8 +35,14 @@ function Deposit() {
       <ExpectedDepositDiv>
         <ExpectedP>입금 예정 금액을 입력해 주십시오.</ExpectedP>
         <ExpectedInputWrap>
-          <ExpectedInput type="text" inputmode="numeric" value="0" />
-          <ExpectedKRW>KRW</ExpectedKRW>
+          <ExpectedInput
+            type="tel"
+            inputmode="numeric"
+            onFocus={changeBorder}
+            defaultValue={amount}
+            hasBorder={redBorder}
+          />
+          <ExpectedKRW hasBorder={redBorder}>KRW</ExpectedKRW>
         </ExpectedInputWrap>
         {/* <UnderWarning>최소 입금 예약 가능 금액을 10,000입니다.</UnderWarning> */}
       </ExpectedDepositDiv>
@@ -138,7 +150,9 @@ const ExpectedInput = styled.input`
   border: none;
   width: 100%;
   border: 1px solid #ebeef6;
+  border-right: transparent;
   padding-right: 50px;
+  outline: none;
 `;
 
 const ExpectedKRW = styled.div`
@@ -147,6 +161,10 @@ const ExpectedKRW = styled.div`
   width: 50px;
   color: #919dae;
   font-size: 12px;
+  background-color: white;
+  border: ${(props) =>
+    props.hasBorder ? "1px solide red" : "1px solid #ebeef6"}
+  border-left: transparent;
 `;
 
 const UnderWarning = styled.p`

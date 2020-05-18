@@ -9,6 +9,8 @@ import theme from "./style/theme";
 import GlobalStyle from "./style/global";
 
 const store = createStore(rootReducer);
+const track = store.subscribe(() => console.log("action!", store.getState()));
+console.log(store.getState());
 
 ReactDOM.render(
   <React.StrictMode>

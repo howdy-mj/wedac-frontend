@@ -1,8 +1,7 @@
-import React, { Component } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
 import Nav from "../../component/Nav/Nav";
-import SignupEmail from "./SignupEmail/SignupEmail";
 import Footer from "../../component/Footer/Footer";
 import kakao from "../../images/kakaotalk.png";
 import circle from "../../images/circle.png";
