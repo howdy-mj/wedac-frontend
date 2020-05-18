@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import styled, { css } from "styled-components";
-import TradingPartRight from "./TradingPartRight/TradingPartRight";
+// import TradingPartRight from "./TradingPartRight/TradingPartRight";
+import BottomRight from "./BottomRight/BottomRight";
 
-function TradingPart() {
+function MiddleBottom() {
   const [activeClick, setActiveClick] = useState(false);
   const borderColorOn = () => setActiveClick(true);
   const borderColorOff = () => setActiveClick(false);
@@ -106,20 +107,27 @@ function TradingPart() {
               </TradingPartButton>
             </TradingPartFeedInner>
           </TradingPartFeedLeft>
-          <TradingPartRight />
+          <BottomRight />
         </TradingPartFeed>
       </TradingPartArticle>
     </div>
   );
 }
 
-export default TradingPart;
+export default MiddleBottom;
 
 const TradingPartArticle = styled.div`
   border: 1px solid #ebeef6;
   height: 355px;
-  /* bottom: 0; */
+  /* width: 900px; */
+
+  @media ${(props) => props.theme.tabletL} {
+  }
 `;
+// @media ${(props) => props.theme.mobile} {
+//   margin-top: 8px;
+//   width: 100%;
+// }
 
 const TradingPartNav = styled.div``;
 

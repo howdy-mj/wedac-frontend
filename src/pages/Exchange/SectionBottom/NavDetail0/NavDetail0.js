@@ -16,29 +16,28 @@ function NavDetail0() {
       <BottomNavTable>
         <BottomNavTBody>
           <BottomNavTR>
-              <BottomNavTH>
-                  <p>주문시간</p>
-              </BottomNavTH>
-              <BottomNavTH>
-                  <p>구분</p>
-              </BottomNavTH>
-              <BottomNavTH>
-                  <p>주문가격(KRW)</p>
-              </BottomNavTH>
-              <BottomNavTH>
-                  <p>주문수량(BTC)</p>
-              </BottomNavTH>
-              <BottomNavTH>
-                  <p>미체결수량(BTC)</p>
-              </BottomNavTH>
-              <BottomNavTH>
-                  <p>주문취소</p>
-              </BottomNavTH>
+            <BottomNavTH>
+              <p>주문시간</p>
+            </BottomNavTH>
+            <BottomNavTH>
+              <p>구분</p>
+            </BottomNavTH>
+            <BottomNavTH>
+              <p>주문가격(KRW)</p>
+            </BottomNavTH>
+            <BottomNavTH>
+              <p>주문수량(BTC)</p>
+            </BottomNavTH>
+            <BottomNavTH>
+              <p>미체결수량(BTC)</p>
+            </BottomNavTH>
+            <BottomNavTH>
+              <p>주문취소</p>
+            </BottomNavTH>
           </BottomNavTR>
         </BottomNavTBody>
-       </BottomNavTable>
-     
-     
+      </BottomNavTable>
+
       <BottomContents0>
         <img src={missinginfo} alt="info" />
         미체결 내역이 존재하지 않습니다.

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled, { css } from "styled-components";
-import search from "../../../../images/search.png";
+import search from "../../../images/search.png";
 import KRW from "./KRW/KRW";
 import BTC from "./BTC/BTC";
 import GT from "./GT/GT";
@@ -11,7 +11,7 @@ const selectedTradeInfo = {
   2: <GT />,
 };
 
-function CrytoContainerTop() {
+function MiddleRight() {
   const [activeTab, setActiveTab] = useState(0);
   const selectedTradeNum = (id) => setActiveTab(id);
   return (
@@ -49,7 +49,7 @@ function CrytoContainerTop() {
   );
 }
 
-export default CrytoContainerTop;
+export default MiddleRight;
 
 const CrytoContainerTopPage = styled.div`
   border: 1px solid #ebeef6;
@@ -57,6 +57,16 @@ const CrytoContainerTopPage = styled.div`
   /* width: 100%; */
   height: 556px;
   display: block;
+  margin-left: 8px;
+  min-width: 260px;
+  flex-grow: 1;
+
+  @media ${(props) => props.theme.tabletL} {
+    width: 100%;
+    height: 285px;
+    margin-bottom: 8px;
+    /* margin-right: 80px; */
+  }
 `;
 
 const SearchboxWrapper = styled.div`
@@ -96,7 +106,7 @@ const SearchboxInner = styled.div`
     position: absolute;
     right: 16px;
     bottom: 2px;
-    width: 45px;
+    /* width: 45px; */
     height: 25px;
     display: inline-block;
     padding: 0 5px 0 12px;
