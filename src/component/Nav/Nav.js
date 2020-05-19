@@ -1,14 +1,31 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, withRouter } from "react-router-dom";
 import styled, { css } from "styled-components";
 import MobileNav from "./MobileNav/MobileNav";
 import logoImg from "../../images/logo_black.png";
 
-function Nav() {
+const obj = {
+  0: "exchange",
+  1: "balance",
+  2: "wallet",
+  3: "history",
+};
+
+function Nav(props) {
   let token = localStorage.getItem("token");
   const handleLogOut = () => {
     localStorage.removeItem("token");
   };
+
+  const [selected, setSelected] = useState(0);
+
+  const changeTab = (id) => {
+    setSelected(id);
+    props.history.push(`/${obj[id]}`);
+  };
+
+  // console.log('Nav', selected);
+
   return (
     <>
       <Navbar>
@@ -56,18 +73,45 @@ function Nav() {
             </Left>
             <FlexDiv>
               <Ul>
-                <Link to="/exchange">
-                  <Li middle>거래소</Li>
-                </Link>
-                <Link to="/balance">
-                  <Li middle>잔고</Li>
-                </Link>
-                <Link to="/wallet">
-                  <Li middle>지갑</Li>
-                </Link>
-                <Link to="/history">
-                  <Li middle>거래내역</Li>
-                </Link>
+                <Li
+                  middle
+                  isActive={selected === 0}
+                  onClick={() => {
+                    changeTab(0);
+                  }}
+                >
+                  거래소
+                </Li>
+
+                <Li
+                  middle
+                  isActive={selected === 1}
+                  onClick={() => {
+                    changeTab(1);
+                  }}
+                >
+                  잔고
+                </Li>
+
+                <Li
+                  middle
+                  isActive={selected === 2}
+                  onClick={() => {
+                    changeTab(2);
+                  }}
+                >
+                  지갑
+                </Li>
+
+                <Li
+                  middle
+                  isActive={selected === 3}
+                  onClick={() => {
+                    changeTab(3);
+                  }}
+                >
+                  거래내역
+                </Li>
               </Ul>
             </FlexDiv>
             <Right>
@@ -83,6 +127,7 @@ function Nav() {
           </MainNav>
         </Container>
       </Navbar>
+      {props.children}
       <MobileNav />
     </>
   );
@@ -201,6 +246,12 @@ const Li = styled.li`
       `;
     }
   }}
+
+  ${(props) =>
+    props.isActive &&
+    css`
+      font-weight: 700;
+    `}
 `;
 
 const Right = styled.div`
@@ -232,4 +283,4 @@ const Button = styled.button`
   }}
 `;
 
-export default Nav;
+export default withRouter(Nav);
