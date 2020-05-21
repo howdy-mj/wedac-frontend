@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled, { css } from "styled-components";
+import { YE } from "../../../config";
 import SearchBox from "./SearchBox/SearchBox";
 import KRW from "./KRW/KRW";
 import BTC from "./BTC/BTC";
@@ -11,28 +12,21 @@ const selectedMarket = {
   2: <GT />,
 };
 
-// function useFetch() {
-//   const [marketInfo, setMarketInfo] = useState([]);
-
-//   useEffect(() => {
-//     fetch("https://api.gdac.com/v1/cryptos/price")
-//       .then((data) => data.json())
-//       .then((data) => setMarketInfo(data.data));
-//   }, []);
-
-//   return { marketInfo };
-// }
-
 function OverallMarket() {
   const [selected, setSelected] = useState(0);
   const [userInput, setUserInput] = useState("");
   const changeSeletedNum = (id) => setSelected(id);
+  const [marketInfo, setMarketInfo] = useState([]);
   // const handleInput = (e) => setUserInput(e.target.value);
-  // const { userInput, marketInfo } = useFetch();
-
   // const filteredList = marketInfo.filter((one) => {
   //   return one.name.toLowerCase().includes(userInput.toLowerCase())
   // })
+
+  // useEffect(() => {
+  //   fetch(`${YE}/market/KRW/ATOM`)
+  //     .then((res) => res.json())
+  //     .then((res) => setMarketInfo(res));
+  // });
 
   return (
     <OverallMarketWrap>

@@ -5,10 +5,18 @@
 import { combineReducers } from "redux";
 import goRegister from "./goRegister";
 import login from "./login";
+import currentAuthStatus from "./currentAuthStatus";
+import authPhone from "./authPhone";
+import authAccount from "./authAccount";
+import nextAuthStatus from "./nextAuthStatus";
 
 const rootReducer = combineReducers({
   goRegister,
   login,
+  currentAuthStatus,
+  authPhone,
+  authAccount,
+  nextAuthStatus,
 });
 
 export default rootReducer;

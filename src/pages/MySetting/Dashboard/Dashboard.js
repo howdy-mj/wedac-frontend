@@ -1,9 +1,24 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React from "react";
+import { useHistory, Link } from "react-router-dom";
 import styled, { css } from "styled-components";
+import { connect } from "react-redux";
 import levelCheck from "../../../images/levelCheck.PNG";
 
-function Dashboard(props) {
+function Dashboard({
+  email,
+  name,
+  phoneNum,
+  level,
+  nextLevel,
+  nextGrade,
+  description,
+}) {
+  const history = useHistory();
+  const goVerify = (path) => {
+    history.push(`/settings/${path}`);
+  };
+  console.log("dashboard nextLevel", nextLevel);
+
   return (
     <ContentWrap>
       <ContentContainer>
@@ -17,16 +32,16 @@ function Dashboard(props) {
           </ContainerDiv>
           <ContainerDiv>
             <Left>이름</Left>
-            <Right>김민정</Right>
+            <Right>{name}</Right>
           </ContainerDiv>
           <ContainerDiv>
             <Left>이메일</Left>
-            <Right>abcd@gmail.com</Right>
+            <Right>{email}</Right>
           </ContainerDiv>
           <ContainerDiv phoneNum>
             <Left>휴대전화</Left>
             <Right>
-              01058****33 <span>변경</span>
+              {phoneNum} <span>변경</span>
             </Right>
           </ContainerDiv>
         </Container>
@@ -35,7 +50,8 @@ function Dashboard(props) {
           <LevelTitle>
             <LevelTitleLeft>현재 입출금 레벨</LevelTitleLeft>
             <LevelTitleRight>
-              레벨 1<span>입출금 한도 보기</span>
+              레벨 {level}
+              <span>입출금 한도 보기</span>
             </LevelTitleRight>
           </LevelTitle>
           <LevelContent>
@@ -44,15 +60,24 @@ function Dashboard(props) {
                 <img src={levelCheck} alt="" />
               </CheckLogo>
               <ShowLevel>
-                <div>Level 2</div>휴대전화 인증
+                <div>Level {nextLevel}</div>
+                {nextGrade}
               </ShowLevel>
             </FirstLine>
             <Detail>
-              현재 회원님은 코인 및 원화 입출금이 가능합니다. 출금한도 개별
-              승인을 원하는 경우 신원 인증을 진행해주시기 바랍니다.
+              {description}
+              {/* 현재 회원님은 코인 및 원화 입출금이 가능합니다. 출금한도 개별
+              승인을 원하는 경우 신원 인증을 진행해주시기 바랍니다. */}
             </Detail>
-            <Link to="/settings/vetification">
-              <GoAuth>인증하기</GoAuth>
+
+            <Link to="/settings/vertification">
+              <GoAuth
+              // onClick={() => {
+              //   goVerify("vertification");
+              // }}
+              >
+                인증하기
+              </GoAuth>
             </Link>
           </LevelContent>
         </Container>
@@ -104,6 +129,22 @@ function Dashboard(props) {
     </ContentWrap>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    email: state.login.email,
+    name: state.authAccount.name,
+    bank: state.authAccount.bank,
+    account: state.authAccount.account,
+    phoneNum: state.authPhone.phoneNum,
+    level: state.currentAuthStatus.level,
+    nextLevel: state.nextAuthStatus.nextLevel,
+    nextGrade: state.nextAuthStatus.nextGrade,
+    description: state.nextAuthStatus.description,
+  };
+};
+
+export default connect(mapStateToProps)(Dashboard);
 
 const ContentWrap = styled.div`
   margin: 24px auto 120px auto;
@@ -381,5 +422,3 @@ const TD = styled.td`
 
   ${(props) => props.time && css``}
 `;
-
-export default Dashboard;

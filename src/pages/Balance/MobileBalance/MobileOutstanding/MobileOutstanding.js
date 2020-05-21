@@ -1,40 +1,47 @@
-import React from "react";
+import React, { useState } from "react";
 import styled, { css } from "styled-components";
 import test from "../../../../images/search.png";
 import Nav from "../../../../component/Nav/Nav";
 
 function MobileOutstanding() {
+  const [hasTrade, setHasTrade] = useState(false);
   return (
-    <DetailContainer>
-      <Header>
-        <HeaderLeft>
-          <OrderType minus>매도</OrderType>
-          <Name>
-            지닥토큰<HeaderSpan>GT</HeaderSpan>
-          </Name>
-        </HeaderLeft>
-        <HeaderRight>2020-05-14 08:57</HeaderRight>
-      </Header>
-      <DetailContents>
-        <DetailLeft>
-          <OneContainer>
-            <DetailTitle>주문가격</DetailTitle>
-            <DetailValue>0.0948</DetailValue>
-          </OneContainer>
-          <OneContainer>
-            <DetailTitle>주문수량</DetailTitle>
-            <DetailValue>5900.00000000</DetailValue>
-          </OneContainer>
-          <OneContainer>
-            <DetailTitle>미체결수량</DetailTitle>
-            <DetailValue>5900.00000000</DetailValue>
-          </OneContainer>
-        </DetailLeft>
-        <DetailRight>
-          <Cancel>취소</Cancel>
-        </DetailRight>
-      </DetailContents>
-    </DetailContainer>
+    <>
+      {hasTrade ? (
+        <DetailContainer>
+          <Header>
+            <HeaderLeft>
+              <OrderType minus>매도</OrderType>
+              <Name>
+                지닥토큰<HeaderSpan>GT</HeaderSpan>
+              </Name>
+            </HeaderLeft>
+            <HeaderRight>2020-05-14 08:57</HeaderRight>
+          </Header>
+          <DetailContents>
+            <DetailLeft>
+              <OneContainer>
+                <DetailTitle>주문가격</DetailTitle>
+                <DetailValue>0.0948</DetailValue>
+              </OneContainer>
+              <OneContainer>
+                <DetailTitle>주문수량</DetailTitle>
+                <DetailValue>5900.00000000</DetailValue>
+              </OneContainer>
+              <OneContainer>
+                <DetailTitle>미체결수량</DetailTitle>
+                <DetailValue>5900.00000000</DetailValue>
+              </OneContainer>
+            </DetailLeft>
+            <DetailRight>
+              <Cancel>취소</Cancel>
+            </DetailRight>
+          </DetailContents>
+        </DetailContainer>
+      ) : (
+        <NoTrade>해당하는 검색 내역이 없습니다.</NoTrade>
+      )}
+    </>
   );
 }
 
@@ -138,6 +145,13 @@ const Cancel = styled.p`
   border-radius: 2px;
   text-align: center;
   line-height: 25px;
+`;
+
+const NoTrade = styled.div`
+  margin: 60px auto;
+  text-align: center;
+  color: #919dae;
+  font-size: 12px;
 `;
 
 export default MobileOutstanding;

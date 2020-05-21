@@ -1,14 +1,34 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, withRouter } from "react-router-dom";
 import styled, { css } from "styled-components";
 import MobileNav from "./MobileNav/MobileNav";
 import logoImg from "../../images/logo_black.png";
 
-function Nav() {
+const tabs = {
+  0: "exchange",
+  1: "balance",
+  2: "wallet",
+  3: "history",
+};
+
+const tabsMap = {
+  "/exchange": 1,
+  "/balance": 2,
+  "/wallet": 3,
+  "/history": 4,
+};
+
+function Nav(props) {
   let token = localStorage.getItem("token");
+
   const handleLogOut = () => {
     localStorage.removeItem("token");
   };
+
+  const changeTab = (id) => {
+    props.history.push(`/${tabs[id]}`);
+  };
+
   return (
     <>
       <Navbar>
@@ -56,18 +76,45 @@ function Nav() {
             </Left>
             <FlexDiv>
               <Ul>
-                <Link to="/exchange">
-                  <Li middle>거래소</Li>
-                </Link>
-                <Link to="/balance">
-                  <Li middle>잔고</Li>
-                </Link>
-                <Link to="/wallet">
-                  <Li middle>지갑</Li>
-                </Link>
-                <Link to="/history">
-                  <Li middle>거래내역</Li>
-                </Link>
+                <Li
+                  bold={tabsMap[props.match.path]}
+                  middle
+                  onClick={() => {
+                    changeTab(0);
+                  }}
+                >
+                  거래소
+                </Li>
+
+                <Li
+                  bold={tabsMap[props.match.path]}
+                  middle
+                  onClick={() => {
+                    changeTab(1);
+                  }}
+                >
+                  잔고
+                </Li>
+
+                <Li
+                  bold={tabsMap[props.match.path]}
+                  middle
+                  onClick={() => {
+                    changeTab(2);
+                  }}
+                >
+                  지갑
+                </Li>
+
+                <Li
+                  bold={tabsMap[props.match.path]}
+                  middle
+                  onClick={() => {
+                    changeTab(3);
+                  }}
+                >
+                  거래내역
+                </Li>
               </Ul>
             </FlexDiv>
             <Right>
@@ -76,13 +123,24 @@ function Nav() {
                   {!token ? "로그인" : "로그아웃"}
                 </Button>
               </Link>
-              <Link to="/signup">
-                <Button join>{!token ? "회원가입" : "내 설정"}</Button>
+              <Link to={!token ? "/signup" : `/settings/dashboard`}>
+                <Button
+                  join
+                  style={{
+                    backgroundColor: token
+                      ? "white"
+                      : `${(props) => props.theme.subColor}`,
+                    color: token ? "#05317f" : "white",
+                  }}
+                >
+                  {!token ? "회원가입" : "내 설정"}
+                </Button>
               </Link>
             </Right>
           </MainNav>
         </Container>
       </Navbar>
+      {props.children}
       <MobileNav />
     </>
   );
@@ -187,6 +245,10 @@ const Li = styled.li`
   color: #05317f;
   margin-right: 10px;
 
+  &:nth-child(${(props) => props.bold}) {
+    font-weight: 900;
+  }}
+
   ${(props) => {
     if (props.middle) {
       return css`
@@ -201,6 +263,12 @@ const Li = styled.li`
       `;
     }
   }}
+
+  ${(props) =>
+    props.isActive &&
+    css`
+      font-weight: 700;
+    `}
 `;
 
 const Right = styled.div`
@@ -232,4 +300,4 @@ const Button = styled.button`
   }}
 `;
 
-export default Nav;
+export default withRouter(Nav);

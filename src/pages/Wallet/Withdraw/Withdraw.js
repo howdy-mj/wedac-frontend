@@ -2,73 +2,80 @@ import React from "react";
 import styled, { css } from "styled-components";
 
 function Withdraw() {
+  let accountAuth = localStorage.getItem("accountAuth");
   return (
     <WithdrawWrap>
-      <WithdrawWarning>
-        <WarningP>
-          대환 대출안내 또는 수익률 보장 안내를 받고 개인정보와 인증정보를
-          제공하여 GDAC에 원화입금을 한 경우 서비스 제한 및 민형사상 고발 대상이
-          될 수 있습니다.
-        </WarningP>
-      </WithdrawWarning>
-      <Available>
-        <AvailableLeft>출금 가능 금액</AvailableLeft>
-        <AvailableRight>
-          <ARValue>0</ARValue>
-          <ARPer>KRW</ARPer>
-        </AvailableRight>
-      </Available>
-      <BankAccount>
-        <BankLeft>입금 받을 계좌</BankLeft>
-        <BankRight>
-          <div>**은행</div>
-          <div>09*****1234</div>
-        </BankRight>
-      </BankAccount>
-      <TotalWithdrawWrap>
-        <TotalWithdraw>출금 요청 금액</TotalWithdraw>
-        <TotalRight>
-          <div>
-            <input />
-          </div>
-          <div>
-            <button>최대</button>
-          </div>
-        </TotalRight>
-      </TotalWithdrawWrap>
-      <WithdrawInfo>
-        <div>
-          <InfoLeft>1회 출금한도</InfoLeft>
-          <InfoRight>50,000,000 KRW</InfoRight>
-        </div>
-        <div>
-          <InfoLeft>1일 출금잔여한도</InfoLeft>
-          <InfoRight>100,000,000 KRW</InfoRight>
-        </div>
-        <div>
-          <InfoLeft>수수료</InfoLeft>
-          <InfoRight>1,000 KRW</InfoRight>
-        </div>
-      </WithdrawInfo>
-      <TotalWithdrawAmount>
-        <AmountLeft>총 출금 금액(수수료 포함)</AmountLeft>
-        <AmountRight>
-          <TotalARValue>0</TotalARValue>
-          <TotalARPer>KRW</TotalARPer>
-        </AmountRight>
-      </TotalWithdrawAmount>
-      <BankGuide>
-        <GuideTitle>출금 시 주의사항 안내</GuideTitle>
-        <GuideContent>
-          - 본인명의 실명확인된 계좌로만 출금이 가능합니다. <br />
-          - 최소 출금 가능 금액은 5,000 KRW 입니다. <br />
-          - 출금 요청 시 이상 거래 유무 확인 후 출금됩니다. <br />
-          - 부정거래가 의심될 경우 출금이 제한될 수 있습니다. <br />
-          - 은행 점검시간에는 출금이 불가능합니다. <br />
-          (은행점검시간 안내)
-        </GuideContent>
-      </BankGuide>
-      <WithdrawButton>출금신청</WithdrawButton>
+      {accountAuth ? (
+        <>
+          <WithdrawWarning>
+            <WarningP>
+              대환 대출안내 또는 수익률 보장 안내를 받고 개인정보와 인증정보를
+              제공하여 GDAC에 원화입금을 한 경우 서비스 제한 및 민형사상 고발
+              대상이 될 수 있습니다.
+            </WarningP>
+          </WithdrawWarning>
+          <Available>
+            <AvailableLeft>출금 가능 금액</AvailableLeft>
+            <AvailableRight>
+              <ARValue>0</ARValue>
+              <ARPer>KRW</ARPer>
+            </AvailableRight>
+          </Available>
+          <BankAccount>
+            <BankLeft>입금 받을 계좌</BankLeft>
+            <BankRight>
+              <p>**은행</p>
+              <p>09*****1234</p>
+            </BankRight>
+          </BankAccount>
+          <TotalWithdrawWrap>
+            <TotalWithdraw>출금 요청 금액</TotalWithdraw>
+            <TotalRight>
+              <div>
+                <input />
+              </div>
+              <div>
+                <button>최대</button>
+              </div>
+            </TotalRight>
+          </TotalWithdrawWrap>
+          <WithdrawInfo>
+            <div>
+              <InfoLeft>1회 출금한도</InfoLeft>
+              <InfoRight>50,000,000 KRW</InfoRight>
+            </div>
+            <div>
+              <InfoLeft>1일 출금잔여한도</InfoLeft>
+              <InfoRight>100,000,000 KRW</InfoRight>
+            </div>
+            <div>
+              <InfoLeft>수수료</InfoLeft>
+              <InfoRight>1,000 KRW</InfoRight>
+            </div>
+          </WithdrawInfo>
+          <TotalWithdrawAmount>
+            <AmountLeft>총 출금 금액(수수료 포함)</AmountLeft>
+            <AmountRight>
+              <TotalARValue>0</TotalARValue>
+              <TotalARPer>KRW</TotalARPer>
+            </AmountRight>
+          </TotalWithdrawAmount>
+          <BankGuide>
+            <GuideTitle>출금 시 주의사항 안내</GuideTitle>
+            <GuideContent>
+              - 본인명의 실명확인된 계좌로만 출금이 가능합니다. <br />
+              - 최소 출금 가능 금액은 5,000 KRW 입니다. <br />
+              - 출금 요청 시 이상 거래 유무 확인 후 출금됩니다. <br />
+              - 부정거래가 의심될 경우 출금이 제한될 수 있습니다. <br />
+              - 은행 점검시간에는 출금이 불가능합니다. <br />
+              (은행점검시간 안내)
+            </GuideContent>
+          </BankGuide>
+          <WithdrawButton>출금신청</WithdrawButton>
+        </>
+      ) : (
+        <NoEmailAuth>계좌 점유 인증이 필요합니다.</NoEmailAuth>
+      )}
     </WithdrawWrap>
   );
 }
@@ -128,9 +135,12 @@ const BankLeft = styled(AvailableLeft)`
   font-weight: 700;
 `;
 
-const BankRight = styled(AvailableRight)`
+const BankRight = styled.div`
+  padding-right: 14px;
+  width: 60%;
+  text-align: right;
   margin-top: 20px;
-  div {
+  p {
     line-height: 20px;
     font-weight: 700;
     color: #596070;
@@ -148,7 +158,10 @@ const TotalWithdraw = styled(BankLeft)`
   width: 30%;
 `;
 
-const TotalRight = styled(AvailableRight)`
+const TotalRight = styled.div`
+  padding-right: 14px;
+  width: 60%;
+  text-align: right;
   display: flex;
   padding-left: 15px;
   width: 70%;
@@ -160,6 +173,9 @@ const TotalRight = styled(AvailableRight)`
     text-align: right;
     border: none;
     padding-right: 10px;
+    size: 18px;
+    font-weight: 700;
+    color: #596070;
   }
 
   button {
@@ -242,6 +258,13 @@ const WithdrawButton = styled.button`
         background-color: #a7dbfe;
       }
     `}
+`;
+
+const NoEmailAuth = styled.div`
+  font-size: 14px;
+  margin: 50px auto;
+  text-align: center;
+  color: #022553;
 `;
 
 export default Withdraw;

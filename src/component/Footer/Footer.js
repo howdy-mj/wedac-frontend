@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import styled, { css } from "styled-components";
 import logoImg from "../../images/logo_black.png";
 import facebook from "../../images/sns-w-facebook.png";
@@ -13,7 +13,7 @@ import balance from "../../images/b-balance.png";
 import wallet from "../../images/b-wallet.png";
 import history from "../../images/b-history.png";
 
-function Footer() {
+function Footer(props) {
   const [hasColor, setHasColor] = useState(false);
   const isHover = () => {
     setHasColor(true);
@@ -23,161 +23,162 @@ function Footer() {
   };
 
   return (
-    <FooterWrap>
-      <Container>
-        <First>
-          <div className="logo">
-            <Img logo src={logoImg} alt="logo" />
-          </div>
-          <SNS>
-            <Img sns src={facebook} alt="facebook" />
-            <Img sns src={kakao} alt="kakao" />
-            <Img sns src={naver} alt="naver" />
-            <Img sns src={twitter} alt="twitter" />
-            <Img sns src={telegram} alt="telegram" />
-          </SNS>
-        </First>
-        <Second>
-          <div>
-            <Address>
-              <p>주식회사 피어테크 (GDAC) | 대표 한승환</p>
-              <p>서울특별시 강남구 역삼동 강남대로 376 강남8258빌딩 13F</p>
-              <p>사업자등록번호 549-88-00819 | 팩스번호 02-554-6444</p>
-            </Address>
-            <Contact>
-              <div>
-                <P contact>GDAC 상장 안내</P>
-                <Span>상장 절차 | 상장 문의</Span>
-              </div>
-              <div>
-                <P contact>마케팅/제휴</P>
-                <Span>biz@gdac.com</Span>
-              </div>
-              <div>
-                <P contact>제안/건의/버그</P>
-                <Span>contact@gdac.com</Span>
-              </div>
-            </Contact>
-          </div>
-          <Category>
-            <Ul>
-              <Li bold>Products</Li>
-              <Li>지닥 솔로리그</Li>
-              <Li>지닥 프로리그</Li>
-              <Li>그로우 서비스</Li>
-              <Li>GDAC API</Li>
-            </Ul>
-            <Ul>
-              <Li bold>GDAC Token</Li>
-              <Li>GT 소개</Li>
-              <Li>GT 마이닝</Li>
-              <Li>GT 백서</Li>
-            </Ul>
-            <Ul>
-              <Li bold>Support Center</Li>
-              <Li>공지사항</Li>
-              <Li>고객센터</Li>
-              <Li>1:1 상담톡</Li>
-            </Ul>
-            <Ul>
-              <Li bold>Information</Li>
-              <Li>회사소개</Li>
-              <Li>이벤트</Li>
-              <Li>이용약관</Li>
-              <Li>개인정보 처리방침</Li>
-              <Li>오픈 API 이용약관</Li>
-              <Li>법인계정 전환안내</Li>
-              <Li>수수료 안내</Li>
-            </Ul>
-          </Category>
-        </Second>
-        <Third>
-          <a
-            href="https://resources.gdac.com/docs/peertec-escrow-confirm.pdf"
-            target="_blank"
-          >
-            <Escrow onMouseOver={isHover} onMouseLeave={notHover}>
+    <>
+      <FooterWrap>
+        <Container>
+          <First>
+            <div className="logo">
+              <Img logo src={logoImg} alt="logo" />
+            </div>
+            <SNS>
+              <Img sns src={facebook} alt="facebook" />
+              <Img sns src={kakao} alt="kakao" />
+              <Img sns src={naver} alt="naver" />
+              <Img sns src={twitter} alt="twitter" />
+              <Img sns src={telegram} alt="telegram" />
+            </SNS>
+          </First>
+          <Second>
+            <div>
+              <Address>
+                <p>주식회사 피어테크 (GDAC) | 대표 한승환</p>
+                <p>서울특별시 강남구 역삼동 강남대로 376 강남8258빌딩 13F</p>
+                <p>사업자등록번호 549-88-00819 | 팩스번호 02-554-6444</p>
+              </Address>
+              <Contact>
+                <div>
+                  <P contact>GDAC 상장 안내</P>
+                  <Span>상장 절차 | 상장 문의</Span>
+                </div>
+                <div>
+                  <P contact>마케팅/제휴</P>
+                  <Span>biz@gdac.com</Span>
+                </div>
+                <div>
+                  <P contact>제안/건의/버그</P>
+                  <Span>contact@gdac.com</Span>
+                </div>
+              </Contact>
+            </div>
+            <Category>
+              <Ul>
+                <Li bold>Products</Li>
+                <Li>지닥 솔로리그</Li>
+                <Li>지닥 프로리그</Li>
+                <Li>그로우 서비스</Li>
+                <Li>GDAC API</Li>
+              </Ul>
+              <Ul>
+                <Li bold>GDAC Token</Li>
+                <Li>GT 소개</Li>
+                <Li>GT 마이닝</Li>
+                <Li>GT 백서</Li>
+              </Ul>
+              <Ul>
+                <Li bold>Support Center</Li>
+                <Li>공지사항</Li>
+                <Li>고객센터</Li>
+                <Li>1:1 상담톡</Li>
+              </Ul>
+              <Ul>
+                <Li bold>Information</Li>
+                <Li>회사소개</Li>
+                <Li>이벤트</Li>
+                <Li>이용약관</Li>
+                <Li>개인정보 처리방침</Li>
+                <Li>오픈 API 이용약관</Li>
+                <Li>법인계정 전환안내</Li>
+                <Li>수수료 안내</Li>
+              </Ul>
+            </Category>
+          </Second>
+          <Third>
+            <a
+              href="https://resources.gdac.com/docs/peertec-escrow-confirm.pdf"
+              target="_blank"
+            >
+              <Escrow onMouseOver={isHover} onMouseLeave={notHover}>
+                <Img
+                  hasColor={hasColor}
+                  escrow
+                  src="https://resources.gdac.com/imgs/escrow-color.png"
+                  alt="escrow"
+                />
+                <Div escrow>
+                  <P escrow>우체국 에스크로이체서비스에 가입된 거래소입니다.</P>
+                  <P escrow confirm>
+                    서비스 가입사실확인
+                  </P>
+                </Div>
+              </Escrow>
+            </a>
+            <Corporate>
               <Img
-                hasColor={hasColor}
-                escrow
-                src="https://resources.gdac.com/imgs/escrow-color.png"
-                alt="escrow"
+                corporate
+                src="https://resources.gdac.com/imgs/BitGo.png"
+                alt="bitgo"
               />
-              <Div escrow>
-                <P escrow>우체국 에스크로이체서비스에 가입된 거래소입니다.</P>
-                <P escrow confirm>
-                  서비스 가입사실확인
-                </P>
-              </Div>
-            </Escrow>
-          </a>
-          <Corporate>
-            <Img
-              corporate
-              src="https://resources.gdac.com/imgs/BitGo.png"
-              alt="bitgo"
-            />
-            <Img
-              corporate
-              src="https://resources.gdac.com/imgs/kakaopay.png"
-              alt="kakao"
-            />
-            <Img
-              corporate
-              komodo
-              src="https://resources.gdac.com/imgs/comodo.png"
-              alt="komodo"
-            />
-            <Img
-              corporate
-              src="https://resources.gdac.com/imgs/cloudbric.png"
-              alt="cloudbric"
-            />
-          </Corporate>
-          <Copyright>
-            Copyright © 2019 Peertec Inc. All rights reserved.
-          </Copyright>
-        </Third>
-      </Container>
-      <Mobile>
-        <MobileContainer>
-          <MobileDiv>
-            <MobileImg src={market} alt="logo" />
-            <MobileP>마켓</MobileP>
-          </MobileDiv>
-          <Link to="/exchange">
+              <Img
+                corporate
+                src="https://resources.gdac.com/imgs/kakaopay.png"
+                alt="kakao"
+              />
+              <Img
+                corporate
+                komodo
+                src="https://resources.gdac.com/imgs/comodo.png"
+                alt="komodo"
+              />
+              <Img
+                corporate
+                src="https://resources.gdac.com/imgs/cloudbric.png"
+                alt="cloudbric"
+              />
+            </Corporate>
+            <Copyright>
+              Copyright © 2019 Peertec Inc. All rights reserved.
+            </Copyright>
+          </Third>
+        </Container>
+        <Mobile>
+          <MobileContainer>
             <MobileDiv>
-              <MobileImg src={exchange} alt="logo" />
-              <MobileP>거래소</MobileP>
+              <MobileImg src={market} alt="logo" />
+              <MobileP>마켓</MobileP>
             </MobileDiv>
-          </Link>
-          <Link to="/balance">
-            <MobileDiv>
-              <MobileImg src={balance} alt="logo" />
-              <MobileP>잔고</MobileP>
-            </MobileDiv>
-          </Link>
-          <Link to="/wallet">
-            <MobileDiv>
-              <MobileImg src={wallet} alt="logo" />
-              <MobileP>지갑</MobileP>
-            </MobileDiv>
-          </Link>
-          <Link to="/history">
-            <MobileDiv>
-              <MobileImg src={history} alt="logo" />
-              <MobileP>거래내역</MobileP>
-            </MobileDiv>
-          </Link>
-        </MobileContainer>
-      </Mobile>
-    </FooterWrap>
+            <Link to="/exchange">
+              <MobileDiv>
+                <MobileImg src={exchange} alt="logo" />
+                <MobileP>거래소</MobileP>
+              </MobileDiv>
+            </Link>
+            <Link to="/balance">
+              <MobileDiv>
+                <MobileImg src={balance} alt="logo" />
+                <MobileP>잔고</MobileP>
+              </MobileDiv>
+            </Link>
+            <Link to="/wallet">
+              <MobileDiv>
+                <MobileImg src={wallet} alt="logo" />
+                <MobileP>지갑</MobileP>
+              </MobileDiv>
+            </Link>
+            <Link to="/history">
+              <MobileDiv>
+                <MobileImg src={history} alt="logo" />
+                <MobileP>거래내역</MobileP>
+              </MobileDiv>
+            </Link>
+          </MobileContainer>
+        </Mobile>
+      </FooterWrap>
+    </>
   );
 }
 
 const FooterWrap = styled.footer`
   position: relative;
-  background-color: white;
   width: 100%;
   height: 529px;
   padding: 0 32px;
@@ -451,4 +452,4 @@ const MobileP = styled.p`
   font-size: 10px;
 `;
 
-export default Footer;
+export default withRouter(Footer);

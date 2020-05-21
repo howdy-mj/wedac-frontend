@@ -1,54 +1,103 @@
-import React from "react";
+import React, { useState } from "react";
 import styled, { css } from "styled-components";
+import { connect } from "react-redux";
 
-function Deposit() {
+function Deposit({name, bank, account}) {
+  let accountAuth = localStorage.getItem("accountAuth");
+  const [amount, setAmount] = useState(0);
+  const [redBorder, setRedBorder] = useState(false);
+
+  const hasBorder = () => {
+    setRedBorder(true);
+  };
+
+  const handleDepositAmount = (e) => {
+    let depositInput = e.target.value;
+    setAmount(depositInput);
+    console.log("handleDepositAmount", amount);
+  };
+
+  const noBorder = () => {
+    setRedBorder(false);
+  };
+
   return (
     <DepositWrap>
-      <DepositWarning>
-        <WarningP>
-          대환 대출안내 또는 수익률 보장 안내를 받고 개인정보와 인증정보를
-          제공하여 GDAC에 원화입금을 한 경우 서비스 제한 및 민형사상 고발 대상이
-          될 수 있습니다.
-        </WarningP>
-      </DepositWarning>
-      <Header>반드시 아래의 인증된 계좌에서 송금해주세요.</Header>
-      <CustomerInfo>
-        <CustomerDiv>
-          <CustomerP left>은행명</CustomerP>
-          <CustomerP right>**은행</CustomerP>
-        </CustomerDiv>
-        <CustomerDiv>
-          <CustomerP left>입금 계좌</CustomerP>
-          <CustomerP right>09**********1234</CustomerP>
-        </CustomerDiv>
-        <CustomerDiv>
-          <CustomerP left>예금주</CustomerP>
-          <CustomerP right>김땡땡</CustomerP>
-        </CustomerDiv>
-      </CustomerInfo>
-      <ExpectedDepositDiv>
-        <ExpectedP>입금 예정 금액을 입력해 주십시오.</ExpectedP>
-        <ExpectedInputWrap>
-          <ExpectedInput type="text" inputmode="numeric" value="0" />
-          <ExpectedKRW>KRW</ExpectedKRW>
-        </ExpectedInputWrap>
-        {/* <UnderWarning>최소 입금 예약 가능 금액을 10,000입니다.</UnderWarning> */}
-      </ExpectedDepositDiv>
-      <DepositButton>입금 예약</DepositButton>
-      <BankGuide>
-        <GuideTitle>원화 입금 전 유의사항</GuideTitle>
-        <GuideContent>
-          <strong>- 최소 입금(KRW) 금액은 10,000KRW 입니다.</strong> <br />-
-          계정에 인증한 본인 명의 계좌에서만 입금이 가능합니다. <br />-
-          원화(KRW) 입금은 24시간 내에 3회 가능합니다. <br />- 입금 심사 시 본인
-          확인을 위해 개인정보 서류를 요구할 수 있습니다. <br />- 입금 심사에
-          필요한 서류를 제출하지 않거나, 불법 자금으로 의심될 경우 입금한 자금이
-          동결될 수 있습니다.
-        </GuideContent>
-      </BankGuide>
+      {accountAuth ? (
+        <>
+          <DepositWarning>
+            <WarningP>
+              대환 대출안내 또는 수익률 보장 안내를 받고 개인정보와 인증정보를
+              제공하여 GDAC에 원화입금을 한 경우 서비스 제한 및 민형사상 고발
+              대상이 될 수 있습니다.
+            </WarningP>
+          </DepositWarning>
+          <Header>반드시 아래의 인증된 계좌에서 송금해주세요.</Header>
+          <CustomerInfo>
+            <CustomerDiv>
+              <CustomerP left>은행명</CustomerP>
+              <CustomerP right>{bank}</CustomerP>
+            </CustomerDiv>
+            <CustomerDiv>
+              <CustomerP left>입금 계좌</CustomerP>
+              <CustomerP right>{account}</CustomerP>
+            </CustomerDiv>
+            <CustomerDiv>
+              <CustomerP left>예금주</CustomerP>
+              <CustomerP right>{name}</CustomerP>
+            </CustomerDiv>
+          </CustomerInfo>
+          <ExpectedDepositDiv>
+            <ExpectedP>입금 예정 금액을 입력해 주십시오.</ExpectedP>
+            <ExpectedInputWrap hasBorder={redBorder}>
+              <ExpectedInput
+                type="number"
+                onFocus={hasBorder}
+                onChange={handleDepositAmount}
+                onKeyDown={(e) =>
+                  (e.keyCode === 69 ||
+                    e.keyCode === 190 ||
+                    e.keyCode === 187 ||
+                    e.keyCode === 189) &&
+                  e.preventDefault()
+                }
+                onBlur={noBorder}
+                defaultValue={amount}
+              />
+              <ExpectedKRW>KRW</ExpectedKRW>
+            </ExpectedInputWrap>
+            {/* <UnderWarning>최소 입금 예약 가능 금액을 10,000입니다.</UnderWarning> */}
+          </ExpectedDepositDiv>
+          <DepositButton>입금 예약</DepositButton>
+          <BankGuide>
+            <GuideTitle>원화 입금 전 유의사항</GuideTitle>
+            <GuideContent>
+              <strong>- 최소 입금(KRW) 금액은 10,000KRW 입니다.</strong> <br />-
+              계정에 인증한 본인 명의 계좌에서만 입금이 가능합니다. <br />-
+              원화(KRW) 입금은 24시간 내에 3회 가능합니다. <br />- 입금 심사 시
+              본인 확인을 위해 개인정보 서류를 요구할 수 있습니다. <br />- 입금
+              심사에 필요한 서류를 제출하지 않거나, 불법 자금으로 의심될 경우
+              입금한 자금이 동결될 수 있습니다.
+            </GuideContent>
+          </BankGuide>
+        </>
+      ) : (
+        <NoEmailAuth>계좌 점유 인증이 필요합니다.</NoEmailAuth>
+      )}
     </DepositWrap>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    name: state.authAccount.name,
+    bank: state.authAccount.bank,
+    account: state.authAccount.account,
+  }
+}
+
+export default connect(mapStateToProps, )(Deposit);
+
 
 const DepositWrap = styled.div``;
 
@@ -130,6 +179,12 @@ const ExpectedInputWrap = styled.div`
   width: 100%;
   height: 34px;
   line-height: 34px;
+
+  ${(props) =>
+    props.hasBorder &&
+    css`
+      border: 1px solid ${(props) => props.theme.subColor};
+    `}
 `;
 
 const ExpectedInput = styled.input`
@@ -138,15 +193,27 @@ const ExpectedInput = styled.input`
   border: none;
   width: 100%;
   border: 1px solid #ebeef6;
+  border-right: transparent;
   padding-right: 50px;
+  outline: none;
+  size: 34px;
+  font-weight: 700;
+  color: #596070;
+
+  ::-webkit-outer-spin-button,
+  ::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
 `;
 
 const ExpectedKRW = styled.div`
-  /* position: absolute;
-  right: 350px; */
   width: 50px;
   color: #919dae;
   font-size: 12px;
+  background-color: white;
+  border: 1px solid #ebeef6;
+  border-left: transparent;
 `;
 
 const UnderWarning = styled.p`
@@ -193,4 +260,10 @@ const GuideContent = styled.p`
   line-height: 1.7;
 `;
 
-export default Deposit;
+const NoEmailAuth = styled.div`
+  font-size: 14px;
+  margin: 50px auto;
+  text-align: center;
+  color: #022553;
+`;
+

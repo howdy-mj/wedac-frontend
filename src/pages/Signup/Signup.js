@@ -1,13 +1,39 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import React from "react";
+import { Link, useHistory } from "react-router-dom";
+import Kakao from "kakaojs";
 import styled, { css } from "styled-components";
+import { YE } from "../../config";
 import Nav from "../../component/Nav/Nav";
-import SignupEmail from "./SignupEmail/SignupEmail";
 import Footer from "../../component/Footer/Footer";
-import kakao from "../../images/kakaotalk.png";
+import kakaoImg from "../../images/kakaotalk.png";
 import circle from "../../images/circle.png";
 
 function Signup() {
+  const history = useHistory();
+
+  const kakaoRegister = () => {
+    Kakao.Auth.login({
+      success: (authObj) => {
+        fetch(`${YE}/user/kakao-login`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: authObj.access_token,
+          },
+        })
+          .then((res) => res.json())
+          .then((res) => {
+            localStorage.setItem("token", res.token);
+            history.push("/");
+            window.location.reload();
+          });
+      },
+      fail: (err) => {
+        console.log(err);
+      },
+    });
+  };
+
   return (
     <>
       <Nav />
@@ -15,9 +41,9 @@ function Signup() {
         <SignupWrapper className="signupWrapper">
           <SignupFeed className="signupFeed">
             <SignupGdac className="signupGdac">GDAC 회원가입</SignupGdac>
-            <KakaoSignup className="kakaoSignup">
-              <KakaoSignupButton type="button" className="kakaoSignupButton">
-                <img src={kakao} alt="kaka" />
+            <KakaoSignup onClick={kakaoRegister} className="kakaoSignup">
+              <KakaoSignupButton>
+                <img src={kakaoImg} alt="kaka" />
                 카카오 계정으로 가입하기
               </KakaoSignupButton>
             </KakaoSignup>
@@ -25,7 +51,7 @@ function Signup() {
               <span>또는</span>
             </MiddleLine2>
             <EmailSignup className="emailSignup">
-              <Link to={`/SignupEmail/SignupEmail`}>
+              <Link to={`/signupEmail`}>
                 <EmailSignupButton type="button" className="emailSignupButton">
                   이메일로 가입하기
                 </EmailSignupButton>
@@ -33,7 +59,7 @@ function Signup() {
             </EmailSignup>
             <BelowSignupButton className="belowSignupButton">
               <BottomLeft2 className="bottomLeft2">
-                이미 계정이 있으신가요? <a href="/#">로그인</a>
+                이미 계정이 있으신가요? <a href="/login">로그인</a>
               </BottomLeft2>
               <BottomRight2 className="bottomRight2">
                 <a href="/#">Registration guide</a>
