@@ -1,5 +1,5 @@
 import React from "react";
-import { withRouter } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 import styled, { css } from "styled-components";
 import { connect } from "react-redux";
 import Phone from "./Phone/Phone";
@@ -18,8 +18,10 @@ function Vertification({
   nextLevel,
   nextGrade,
   description,
+  account,
+  link,
 }) {
-  let emailAuth = localStorage.getItem("emailAuth");
+  let phoneAuth = localStorage.getItem("phoneAuth");
   let accountAuth = localStorage.getItem("accountAuth");
   const currentUrl = match.params.type;
 
@@ -42,7 +44,9 @@ function Vertification({
                     </ShowLevel>
                   </FirstLine>
                   <Detail>{description}</Detail>
-                  <GoAuth>인증하기</GoAuth>
+                  <Link to={`${link}`}>
+                    <GoAuth>인증하기</GoAuth>
+                  </Link>
                 </LevelContent>
               </Left>
 
@@ -109,19 +113,21 @@ function Vertification({
                 <EachLevel>
                   <Line></Line>
                   <Middle>
-                    <CheckBox>{emailAuth ? "x" : "y"}</CheckBox>
+                    <CheckBox>{phoneAuth ? "x" : "y"}</CheckBox>
                     <div>
                       <Level>Level 2</Level>
                       <Description>휴대전화번호 인증</Description>
                     </div>
                   </Middle>
                   <UserInfo
-                    isComplete={emailAuth ? true : false}
-                    onClick={() => {
-                      vertifyPhone("authPhone");
+                    isComplete={phoneAuth ? true : false}
+                    onClick={(e) => {
+                      !phoneAuth
+                        ? vertifyPhone("authPhone")
+                        : e.preventDefault();
                     }}
                   >
-                    {emailAuth ? phoneNum : "인증하기"}
+                    {phoneAuth ? phoneNum : "인증하기"}
                   </UserInfo>
                 </EachLevel>
               </StageContainer>
@@ -138,11 +144,13 @@ function Vertification({
                   </Middle>
                   <UserInfo
                     isComplete={accountAuth ? true : false}
-                    onClick={() => {
-                      vertifyAccount("authAccount");
+                    onClick={(e) => {
+                      !accountAuth
+                        ? vertifyAccount("authAccount")
+                        : e.preventDefault();
                     }}
                   >
-                    {accountAuth ? email : "인증하기"}
+                    {accountAuth ? account : "인증하기"}
                   </UserInfo>
                 </EachLevel>
               </StageContainer>
@@ -188,10 +196,12 @@ function Vertification({
 const mapStateToProps = (state) => {
   return {
     email: state.login.email,
-    phoneNum: state.currentAuthStatus.phoneNum,
+    phoneNum: state.authPhone.phoneNum,
     nextLevel: state.nextAuthStatus.nextLevel,
     nextGrade: state.nextAuthStatus.nextGrade,
     description: state.nextAuthStatus.description,
+    account: state.authAccount.account,
+    link: state.nextAuthStatus.link,
   };
 };
 

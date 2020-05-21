@@ -13,7 +13,6 @@ import SectionBottom from "./SectionBottom/SectionBottom";
 import styled, { css } from "styled-components";
 
 function Exchange() {
-  console.log("준영");
   return (
     <ExchangePage>
       <Nav />

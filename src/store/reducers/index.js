@@ -9,6 +9,7 @@ import currentAuthStatus from "./currentAuthStatus";
 import authPhone from "./authPhone";
 import authAccount from "./authAccount";
 import nextAuthStatus from "./nextAuthStatus";
+import detectAsset from "./detectAsset";
 
 const rootReducer = combineReducers({
   goRegister,
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   authPhone,
   authAccount,
   nextAuthStatus,
+  detectAsset,
 });
 
 export default rootReducer;

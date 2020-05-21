@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled, { css } from "styled-components";
+import { connect } from "react-redux";
+import { YE } from "../../config";
 import Nav from "../../component/Nav/Nav";
 import Deposit from "./Deposit/Deposit";
 import Withdraw from "./Withdraw/Withdraw";
@@ -15,10 +17,29 @@ const category = {
   2: <WalletHistory />,
 };
 
-function Wallet() {
+function Wallet({ asset }) {
   let token = localStorage.getItem("token");
   const [selected, setSelected] = useState(0);
   const changeSelected = (id) => setSelected(id);
+  const [currentAsset, setCurrentAsset] = useState(0);
+
+  const addComma = (price) => {
+    if (price > 999) {
+      return ("" + price).replace(/(\d)(?=(?:\d{3})+(?!\d))/g, "$1,");
+    } else {
+      return price;
+    }
+  };
+
+  useEffect(() => {
+    fetch(`${YE}/user/deposit/check`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json", Authorization: token },
+    })
+      .then((res) => res.json())
+      .then((res) => setCurrentAsset(Math.trunc(res.my_wallet[0].volume)));
+  }, [asset]);
+
   return (
     <>
       <Nav />
@@ -53,8 +74,12 @@ function Wallet() {
                           </AssetNameDiv>
                         </AssetDetailLeft>
                       </AssetDetailDiv>
-                      <AssetDetailDiv amount>0</AssetDetailDiv>
-                      <AssetDetailDiv value>0</AssetDetailDiv>
+                      <AssetDetailDiv amount>
+                        {addComma(currentAsset)}
+                      </AssetDetailDiv>
+                      <AssetDetailDiv value>
+                        {addComma(currentAsset)}
+                      </AssetDetailDiv>
                     </AssetDetailContainer>
                   </AssetDetail>
                 </AssetContainer>
@@ -106,6 +131,14 @@ function Wallet() {
     </>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    asset: state.detectAsset.asset,
+  };
+};
+
+export default connect(mapStateToProps)(Wallet);
 
 const WalletWrap = styled.div`
   background-color: ${(props) => props.theme.backgroundColor};
@@ -411,5 +444,3 @@ const ImgComponent = styled.img`
     display: none;
   }
 `;
-
-export default Wallet;

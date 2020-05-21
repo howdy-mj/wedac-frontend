@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import styled, { css } from "styled-components";
-import { SH } from "../../../../config";
+import { YE } from "../../../../config";
 import {
   submitPhoneNum,
   changeAuthLevel,
@@ -50,15 +50,8 @@ function Phone({ submitPhoneNum, changeAuthLevel, showNextAuth, phoneNum }) {
 
   const goVerify = () => {
     console.log("phoenNum", phoneNum);
-    // changeAuthLevel(2);
-    // submitPhoneNum(phoneNum);
-    // showNextAuth(
-    //   3,
-    //   "계좌점유 인증",
-    //   "코인 입금을 위해 계좌점유 인증을 진행해주시기 바랍니다."
-    // );
 
-    fetch(`${SH}/user/sms`, {
+    fetch(`${YE}/user/sms`, {
       method: "POST",
       headers: { "Content-Type": "application/json", Authorization: token },
       body: JSON.stringify({
@@ -68,13 +61,6 @@ function Phone({ submitPhoneNum, changeAuthLevel, showNextAuth, phoneNum }) {
       if (res.status === 200) {
         console.log("인증 문자 보내기 성공");
         setShowInput(false);
-        // changeAuthLevel(2);
-        // submitPhoneNum(phoneNum);
-        // showNextAuth(
-        //   3,
-        //   "계좌점유 인증",
-        //   "코인 입금을 위해 계좌점유 인증을 진행해주시기 바랍니다."
-        // );
       } else {
         console.log("인증 문자 보내기 실패");
       }
@@ -94,7 +80,7 @@ function Phone({ submitPhoneNum, changeAuthLevel, showNextAuth, phoneNum }) {
   const checkNumber = () => {
     console.log("인증하기 버튼");
     console.log(vertifyNum);
-    fetch(`${SH}/user/sms/check`, {
+    fetch(`${YE}/user/sms/check`, {
       method: "POST",
       headers: { "Content-Type": "application/json", Authorization: token },
       body: JSON.stringify({
@@ -109,9 +95,10 @@ function Phone({ submitPhoneNum, changeAuthLevel, showNextAuth, phoneNum }) {
         showNextAuth(
           3,
           "계좌점유 인증",
-          "코인 입금을 위해 계좌점유 인증을 진행해주시기 바랍니다."
+          "코인 입금을 위해 계좌점유 인증을 진행해주시기 바랍니다.",
+          "/settings/vertification/authAccount"
         );
-        localStorage.setItem("phonAuth", true);
+        localStorage.setItem("phoneAuth", true);
         history.push("/settings/vertification");
       } else {
         alert("인증 번호를 다시 입력해주세요.");

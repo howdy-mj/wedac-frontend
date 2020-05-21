@@ -1,5 +1,5 @@
 import React from "react";
-import { useHistory, Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import styled, { css } from "styled-components";
 import { connect } from "react-redux";
 import levelCheck from "../../../images/levelCheck.PNG";
@@ -12,12 +12,8 @@ function Dashboard({
   nextLevel,
   nextGrade,
   description,
+  goVerify,
 }) {
-  const history = useHistory();
-  const goVerify = (category) => {
-    history.push(`/settings/${category}`);
-  };
-
   return (
     <ContentWrap>
       <ContentContainer>
@@ -64,7 +60,6 @@ function Dashboard({
               </ShowLevel>
             </FirstLine>
             <Detail>{description}</Detail>
-            {/* <Link to="/settings/vertification"> */}
             <GoAuth
               onClick={() => {
                 goVerify("vertification");
@@ -72,7 +67,6 @@ function Dashboard({
             >
               인증하기
             </GoAuth>
-            {/* </Link> */}
           </LevelContent>
         </Container>
 
@@ -138,7 +132,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(Dashboard);
+export default connect(mapStateToProps)(withRouter(Dashboard));
 
 const ContentWrap = styled.div`
   margin: 24px auto 120px auto;

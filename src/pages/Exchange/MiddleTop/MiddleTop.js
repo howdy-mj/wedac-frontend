@@ -1,14 +1,13 @@
-import React from "react";
-// import TradingPart from "./TradingPart/TradingPart";
-import TradingViewWidget from "react-tradingview-widget";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import TradingViewWidget from "react-tradingview-widget";
 
 function MiddleTop() {
   return (
     <div>
       <SectionMiddlePage className="sectionMiddle">
         <GraphChartArticle className="graphChart">
-          <TradingViewWidget symbol="NASDAQ:AAPL" autosize />
+          <TradingViewWidget symbol="BTCKRW" autosize />
         </GraphChartArticle>
         {/* <TradingPart /> */}
       </SectionMiddlePage>

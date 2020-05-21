@@ -3,7 +3,7 @@ import { Link, useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import Kakao from "kakaojs";
 import styled from "styled-components";
-import { SH } from "../../config";
+// import { SH } from "../../config";
 import { YE } from "../../config";
 import * as actions from "../../store/actions";
 import kakao from "../../images/kakaotalk.png";
@@ -80,7 +80,7 @@ function OnlyLogin({ HandleEmail, HandlePassword, email, password }) {
       })
     );
 
-    fetch(`${SH}/user/sign-in`, {
+    fetch(`${YE}/user/sign-in`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
