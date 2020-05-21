@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import React, { useState } from "react";
 import styled, { css } from "styled-components";
+import { withRouter } from "react-router-dom";
 import Nav from "../../component/Nav/Nav";
 import OnlyLogin from "../Login/OnlyLogin";
 import DashBoard from "./Dashboard/Dashboard";
@@ -8,41 +8,61 @@ import Vertification from "./Verification/Verification";
 import Footer from "../../component/Footer/Footer";
 
 function MySetting(props) {
-  // console.log("MySetting", props.match.params.category);
   let token = localStorage.getItem("token");
-  const [selected, setSelected] = useState(0);
+  const [selected, setSelected] = useState("dashboard");
+  const [type, setType] = useState("");
 
-  const changeTab = (id) => {
-    setSelected(id);
-    props.history.push(`/settings/${id}`);
+  // MySetting
+  const changeTab = (category) => {
+    setSelected(category);
+    props.history.push(`/settings/${category}`);
+  };
+
+  // Vertification의 휴대전화인증, 계좌점유인증
+  const vertifyPhone = (type) => {
+    setType(type);
+    window.scrollTo(0, 0);
+    props.history.push(`/settings/${props.match.params.category}/${type}`);
+  };
+
+  const vertifyAccount = (type) => {
+    setType(type);
+    window.scrollTo(0, 0);
+    props.history.push(`/settings/${props.match.params.category}/${type}`);
   };
 
   const tabs = {
-    0: <DashBoard category={selected} />,
-    1: <Vertification category={selected} />,
+    dashboard: <DashBoard />,
+    vertification: (
+      <Vertification
+        type={type}
+        vertifyPhone={vertifyPhone}
+        vertifyAccount={vertifyAccount}
+      />
+    ),
   };
 
   return (
     <>
       <Nav />
-      {!token ? (
+      {1 === 0 ? (
         <OnlyLogin />
       ) : (
         <MySettingWrap>
           <SettingHeader>
             <InnerWrap>
               <HeaderDiv
-                isActive={selected === 0}
+                isActive={selected === "dashboard"}
                 onClick={() => {
-                  changeTab(0);
+                  changeTab("dashboard");
                 }}
               >
                 대시보드
               </HeaderDiv>
               <HeaderDiv
-                isActive={selected === 1}
+                isActive={selected === "vertification"}
                 onClick={() => {
-                  changeTab(1);
+                  changeTab("vertification");
                 }}
               >
                 인증센터
@@ -52,12 +72,10 @@ function MySetting(props) {
               <HeaderDiv>API관리</HeaderDiv>
             </InnerWrap>
           </SettingHeader>
-
           {/* 대시보드, 인증센터, 보안강화, 알림설정, API관리 tabs*/}
           {tabs[selected]}
         </MySettingWrap>
       )}
-
       <Footer />
     </>
   );
@@ -95,4 +113,4 @@ const HeaderDiv = styled.div`
     `}
 `;
 
-export default MySetting;
+export default withRouter(MySetting);

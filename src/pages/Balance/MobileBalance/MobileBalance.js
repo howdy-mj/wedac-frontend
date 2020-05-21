@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled, { css } from "styled-components";
 import MobileCurrent from "./MobileCurrent/MobileCurrent";
 import MobileOutstanding from "./MobileOutstanding/MobileOutstanding";
+import OnlyLogin from "../../Login/OnlyLogin";
 
 const tabs = {
   0: <MobileCurrent />,
@@ -9,87 +10,104 @@ const tabs = {
 };
 
 function MobileBalance() {
+  let token = localStorage.getItem("token");
   const [selected, setSelected] = useState(0);
   const changeTab = (id) => setSelected(id);
+  const [allAsset, setAllAsset] = useState(0);
+  const [KRW, setKRW] = useState(0);
+  const [gainLoss, setGainLoss] = useState(0);
+  const [percent, setPercent] = useState(0);
+  const [buyAmount, setBuyAmount] = useState(0);
+  const [evaluated, setEvaluated] = useState(0);
+  const [plus, setPlus] = useState(false);
+
   return (
-    <MobileBalanceWrap>
-      <div>
-        <SummaryContainer>
+    <>
+      {token ? (
+        <MobileBalanceWrap>
           <div>
-            <SummaryDiv>
-              <SummaryTitle>총 보유자산</SummaryTitle>
-              <p>
-                <SummarySpan num>50,000</SummarySpan>
-                <SummarySpan per>KRW</SummarySpan>
-              </p>
-            </SummaryDiv>
-            <SummaryDiv>
-              <SummaryTitle>KRW 보유수량</SummaryTitle>
-              <p>
-                <SummarySpan num>0</SummarySpan>
-                <SummarySpan per>KRW</SummarySpan>
-              </p>
-            </SummaryDiv>
+            <SummaryContainer>
+              <div>
+                <SummaryDiv>
+                  <SummaryTitle>총 보유자산</SummaryTitle>
+                  <p>
+                    <SummarySpan num>{allAsset}</SummarySpan>
+                    <SummarySpan per>KRW</SummarySpan>
+                  </p>
+                </SummaryDiv>
+                <SummaryDiv>
+                  <SummaryTitle>KRW 보유수량</SummaryTitle>
+                  <p>
+                    <SummarySpan num>{KRW}</SummarySpan>
+                    <SummarySpan per>KRW</SummarySpan>
+                  </p>
+                </SummaryDiv>
+              </div>
+              <div>
+                <CalculatedContainer>
+                  <CalculatedTitle>총 매입액</CalculatedTitle>
+                  <AssetDiv>
+                    <AssetSpan num>{buyAmount}</AssetSpan>
+                    <AssetSpan per>KRW</AssetSpan>
+                  </AssetDiv>
+                </CalculatedContainer>
+                <CalculatedContainer>
+                  <CalculatedTitle>암호화폐 총 평가액</CalculatedTitle>
+                  <AssetDiv>
+                    <AssetSpan num>{evaluated}</AssetSpan>
+                    <AssetSpan per>KRW</AssetSpan>
+                  </AssetDiv>
+                </CalculatedContainer>
+                <CalculatedContainer>
+                  <CalculatedTitle>총 평가손익</CalculatedTitle>
+                  {/* 0보다 크면 +, 작으면 -*/}
+                  <AssetDiv isPlus={plus}>
+                    <AssetSpan num>{gainLoss}</AssetSpan>
+                    <AssetSpan per>KRW</AssetSpan>
+                  </AssetDiv>
+                </CalculatedContainer>
+                <CalculatedContainer>
+                  <CalculatedTitle>총 수익률</CalculatedTitle>
+                  {/* 0보다 크면 +, 작으면 -*/}
+                  <AssetDiv isPlus={plus}>
+                    <AssetSpan num>{percent}</AssetSpan>
+                    <AssetSpan per c>
+                      %
+                    </AssetSpan>
+                  </AssetDiv>
+                </CalculatedContainer>
+              </div>
+            </SummaryContainer>
           </div>
           <div>
-            <CalculatedContainer>
-              <CalculatedTitle>총 매입액</CalculatedTitle>
-              <AssetDiv>
-                <AssetSpan num>708,000</AssetSpan>
-                <AssetSpan per>KRW</AssetSpan>
-              </AssetDiv>
-            </CalculatedContainer>
-            <CalculatedContainer>
-              <CalculatedTitle>암호화폐 총 평가액</CalculatedTitle>
-              <AssetDiv>
-                <AssetSpan num>50,000</AssetSpan>
-                <AssetSpan per>KRW</AssetSpan>
-              </AssetDiv>
-            </CalculatedContainer>
-            <CalculatedContainer>
-              <CalculatedTitle>총 평가손익</CalculatedTitle>
-              <AssetDiv minus>
-                <AssetSpan num>-50,000</AssetSpan>
-                <AssetSpan per>KRW</AssetSpan>
-              </AssetDiv>
-            </CalculatedContainer>
-            <CalculatedContainer>
-              <CalculatedTitle>총 수익률</CalculatedTitle>
-              <AssetDiv minus>
-                <AssetSpan num>-90.06</AssetSpan>
-                <AssetSpan per c>
-                  %
-                </AssetSpan>
-              </AssetDiv>
-            </CalculatedContainer>
+            <Contents>
+              <Category>
+                <CategoryDiv
+                  isActive={selected === 0}
+                  onClick={() => {
+                    changeTab(0);
+                  }}
+                >
+                  <span>잔고</span>
+                </CategoryDiv>
+                <CategoryDiv
+                  isActive={selected === 1}
+                  onClick={() => {
+                    changeTab(1);
+                  }}
+                >
+                  <span>미체결 주문</span>
+                </CategoryDiv>
+              </Category>
+              {/* 잔고, 미체결 주문 Component */}
+              {tabs[selected]}
+            </Contents>
           </div>
-        </SummaryContainer>
-      </div>
-      <div>
-        <Contents>
-          <Category>
-            <CategoryDiv
-              isActive={selected === 0}
-              onClick={() => {
-                changeTab(0);
-              }}
-            >
-              <span>잔고</span>
-            </CategoryDiv>
-            <CategoryDiv
-              isActive={selected === 1}
-              onClick={() => {
-                changeTab(1);
-              }}
-            >
-              <span>미체결 주문</span>
-            </CategoryDiv>
-          </Category>
-          {/* 잔고, 미체결 주문 Component */}
-          {tabs[selected]}
-        </Contents>
-      </div>
-    </MobileBalanceWrap>
+        </MobileBalanceWrap>
+      ) : (
+        <OnlyLogin />
+      )}
+    </>
   );
 }
 
@@ -149,17 +167,8 @@ const CalculatedTitle = styled.div`
 
 const AssetDiv = styled.div`
   font-size: 14px;
-
-  ${(props) =>
-    props.plus &&
-    css`
-      color: ${(props) => props.theme.plusColor};
-    `}
-  ${(props) =>
-    props.minus &&
-    css`
-      color: ${(props) => props.theme.minusColor};
-    `}
+  color: ${(props) =>
+    props.isPlus ? props.theme.plusColor : props.theme.minusColor};
 `;
 
 const AssetSpan = styled.span`

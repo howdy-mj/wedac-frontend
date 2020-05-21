@@ -26,8 +26,8 @@ class Routes extends Component {
           <Route path="/signupEmail" component={SignupEmail} />
           <Route path="/signupVerify" component={SignupVerify} />
           <Route path="/exchange" component={Exchange} />
-          \<Route path="/settings/:category" component={MySetting} />
-          {/* <Route path="/settings/:selected" component={Dashboard} /> */}
+          <Route exact path="/settings/:category" component={MySetting} />
+          <Route path="/settings/:category/:type" component={MySetting} />
           <Route component={PageNotFound} />
         </Switch>
       </Router>
