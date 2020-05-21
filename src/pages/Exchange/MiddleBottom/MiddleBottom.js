@@ -4,17 +4,10 @@ import { connect } from "react-redux";
 import { YE } from "../../../config";
 // import TradingPartRight from "./TradingPartRight/TradingPartRight";
 import BottomRight from "./BottomRight/BottomRight";
+import BeforeLogin from "../BeforeLogin/BeforeLogin";
 
-function MiddleBottom({ asset }) {
+function MiddleBottom({ asset, dataForprice }) {
   let token = localStorage.getItem("token");
-  const [activeClick, setActiveClick] = useState(false);
-  const borderColorOn = () => setActiveClick(true);
-  const borderColorOff = () => setActiveClick(false);
-
-  const [activeClick1, setActiveClick1] = useState(false);
-  const borderColorOn1 = () => setActiveClick1(true);
-  const borderColorOff1 = () => setActiveClick1(false);
-
   const [currentAsset, setCurrentAsset] = useState(0);
   useEffect(() => {
     fetch(`${YE}/user/deposit/check`, {
@@ -25,17 +18,58 @@ function MiddleBottom({ asset }) {
       .then((res) => setCurrentAsset(Math.trunc(res.my_wallet[0].volume)));
   }, [asset]);
 
-  const addComma = (price) => {
+  const [activeClick, setActiveClick] = useState(false);
+  const borderColorOn = () => setActiveClick(true);
+  const borderColorOff = () => setActiveClick(false);
+
+  const [activeClick1, setActiveClick1] = useState(false);
+  const borderColorOn1 = () => setActiveClick1(true);
+  const borderColorOff1 = () => setActiveClick1(false);
+
+  const [activeClick3, setActiveClick3] = useState(false);
+  const borderColorOn3 = () => setActiveClick3(true);
+  const borderColorOff3 = () => setActiveClick3(false);
+
+  const [activeClick4, setActiveClick4] = useState(false);
+  const borderColorOn4 = () => setActiveClick4(true);
+  const borderColorOff4 = () => setActiveClick4(false);
+
+  function addComma(price) {
     if (price > 999) {
       return ("" + price).replace(/(\d)(?=(?:\d{3})+(?!\d))/g, "$1,");
     } else {
       return price;
     }
+  }
+
+  const [priceNumber, setPriceNumber] = useState("");
+  //const [changeNum, setChangeNum] = useState([]);
+  const changeNumber = (e) => {
+    setPriceNumber(e.target.value);
   };
+  const [priceNumber1, setPriceNumber1] = useState("");
+  const changeNumber1 = (e) => {
+    setPriceNumber1(e.target.value);
+  };
+  // useEffect(() => {
+  //   setPriceNumber(props.dateForprice);
+  // }, [props.dateForprice]);
+
+  useEffect(() => {
+    console.log("dataEffect", dataForprice);
+    setPriceNumber(dataForprice && dataForprice.split(".")[0]);
+  }, [dataForprice]);
+
+  useEffect(() => {
+    setPriceNumber1(dataForprice && dataForprice.split(".")[0]);
+  }, [dataForprice]);
+
+  console.log(activeClick);
 
   return (
     <div>
       <TradingPartArticle>
+        {/* <div>{token ? "" : <BeforeLogin />}</div> */}
         <TradingPartNav>
           <Nav left>매수</Nav>
           <Nav right>매도</Nav>
@@ -60,7 +94,16 @@ function MiddleBottom({ asset }) {
                         onBlur={() => borderColorOff()}
                         type="text"
                         placeholder
-                        value="11,442,000"
+                        onChange={changeNumber}
+                        value={priceNumber}
+                        defaultValue={0}
+                        onKeyDown={(e) =>
+                          (e.keyCode === 69 ||
+                            e.keyCode === 190 ||
+                            e.keyCode === 187 ||
+                            e.keyCode === 189) &&
+                          e.preventDefault()
+                        }
                       />
                       <PriceUnit>
                         <p>KRW</p>
@@ -85,7 +128,7 @@ function MiddleBottom({ asset }) {
                       onFocus={() => borderColorOn1()}
                       onBlur={() => borderColorOff1()}
                       className="inputInput"
-                      type="text"
+                      type="number"
                       placeholder
                       value=""
                       on
@@ -109,6 +152,97 @@ function MiddleBottom({ asset }) {
                 <InputWrapperLeft red>정산수량</InputWrapperLeft>
                 <InputPriceRight>
                   <InputPriceRightInner>
+                    <InputPricePart amount type="number" placeholder value="" />
+                    <PriceUnit amount>
+                      <p>KRW</p>
+                    </PriceUnit>
+                    <UpDown amount></UpDown>
+                  </InputPriceRightInner>
+                </InputPriceRight>
+              </InputWrapper>
+              <TextBottom className="textBottom">
+                <span>최소주문수량:500 KRW</span>
+                <span>수수료: 0.04%</span>
+              </TextBottom>
+              <TradingPartButton type="button">매수 BTC</TradingPartButton>
+            </TradingPartFeedInner>
+          </TradingPartFeedLeft>
+          {/* <BottomRight dateForprice={priceNumber} /> */}
+          <TradingPartFeedLeft>
+            <TradingPartFeedInner>
+              <InputWrapper>
+                <InputWrapperLeft>주문 가능</InputWrapperLeft>
+                <InputWrapperRight>
+                  <MoneyDetail left>0</MoneyDetail>
+                  <MoneyDetail right>BTC</MoneyDetail>
+                </InputWrapperRight>
+              </InputWrapper>
+              <InputWrapper>
+                <InputWrapperLeft>주문 가격</InputWrapperLeft>
+                <InputPriceRight>
+                  <InputPriceRightInner>
+                    <InputInner clickright={activeClick3}>
+                      <InputPricePart
+                        onFocus={() => borderColorOn3()}
+                        onBlur={() => borderColorOff3()}
+                        type="text"
+                        placeholder
+                        onChange={changeNumber1}
+                        value={priceNumber1}
+                        defaultValue={0}
+                        onKeyDown={(e) =>
+                          (e.keyCode === 69 ||
+                            e.keyCode === 190 ||
+                            e.keyCode === 187 ||
+                            e.keyCode === 189) &&
+                          e.preventDefault()
+                        }
+                      />
+                      <PriceUnit>
+                        <p>KRW</p>
+                      </PriceUnit>
+                    </InputInner>
+                    <UpDown>
+                      <Up>
+                        <Button>u</Button>
+                      </Up>
+                      <Down>
+                        <Button>f</Button>
+                      </Down>
+                    </UpDown>
+                  </InputPriceRightInner>
+                </InputPriceRight>
+              </InputWrapper>
+              <InputWrapper>
+                <InputWrapperLeft>주문 수량</InputWrapperLeft>
+                <InputPriceRight>
+                  <InputPriceRightInner clickright={activeClick4}>
+                    <InputPricePart
+                      onFocus={() => borderColorOn4()}
+                      onBlur={() => borderColorOff4()}
+                      type="text"
+                      placeholder
+                      value=""
+                    />
+                    <PriceUnit>
+                      <p>BTC</p>
+                    </PriceUnit>
+                    <UpDown></UpDown>
+                  </InputPriceRightInner>
+                </InputPriceRight>
+              </InputWrapper>
+
+              <PercentOrder>
+                <PercentList>25%</PercentList>
+                <PercentList>50%</PercentList>
+                <PercentList>75%</PercentList>
+                <PercentList>100%</PercentList>
+              </PercentOrder>
+              {/* </div> */}
+              <InputWrapper>
+                <InputWrapperLeft blue>정산수량</InputWrapperLeft>
+                <InputPriceRight>
+                  <InputPriceRightInner>
                     <InputPricePart amount type="text" placeholder value="" />
                     <PriceUnit amount>
                       <p>KRW</p>
@@ -121,12 +255,9 @@ function MiddleBottom({ asset }) {
                 <span>최소주문수량:500 KRW</span>
                 <span>수수료: 0.04%</span>
               </TextBottom>
-              <TradingPartButton className="buttonButton" type="button">
-                매수 BTC
-              </TradingPartButton>
+              <TradingPartButton selling>매도 BTC</TradingPartButton>
             </TradingPartFeedInner>
           </TradingPartFeedLeft>
-          <BottomRight />
         </TradingPartFeed>
       </TradingPartArticle>
     </div>
@@ -142,6 +273,7 @@ const mapStateToProps = (state) => {
 export default connect(mapStateToProps)(MiddleBottom);
 
 const TradingPartArticle = styled.div`
+  position: relative;
   border: 1px solid #ebeef6;
   height: 355px;
   /* width: 900px; */
@@ -295,6 +427,11 @@ const InputInner = styled.div`
     css`
       border: 1px solid red;
     `}
+  ${(props) =>
+    props.clickright &&
+    css`
+      border: 1px solid blue;
+    `}
 `;
 
 const InputPricePart = styled.input`
@@ -312,6 +449,11 @@ const InputPricePart = styled.input`
   height: 34px;
   vertical-align: middle;
   color: #596070;
+  ::-webkit-outer-spin-button,
+  ::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
 
   &:focus {
     outline: none;

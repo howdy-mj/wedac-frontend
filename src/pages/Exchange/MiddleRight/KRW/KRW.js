@@ -1,7 +1,22 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { css } from "styled-components";
-function KRW() {
+import { YE } from "../../../../config";
+
+import { withRouter, Link } from "react-router-dom";
+
+function KRW(props) {
+  const [coindata, setCoindata] = useState([]);
+
+  useEffect(() => {
+    fetch(`${YE}/market/KRW`)
+      .then((res) => res.json())
+      .then(
+        (res) => setCoindata(res) // res.krw , res.btc, res.gt 로 props전달
+      );
+  }, []);
+
+  // console.log("mmm", props.coindata);
   return (
     <div>
       <BottomNavTable>
@@ -23,218 +38,39 @@ function KRW() {
         </BottomNavTBody>
       </BottomNavTable>
       <ScrollBar>
-        <BottomNavTable>
-          <BottomNavTBody>
-            <BottomNavTR>
-              <BottomNavBelowTD first>
-                <p>ATOM</p>
-                <p>코스모스아톰</p>
-              </BottomNavBelowTD>
-              <BottomNavBelowTD second>
-                <p>3,032</p>
-              </BottomNavBelowTD>
-              <BottomNavBelowTD third>
-                <p>-1.62%</p>
-              </BottomNavBelowTD>
-              <BottomNavBelowTD last>
-                <p>6,680백만</p>
-              </BottomNavBelowTD>
-            </BottomNavTR>
-          </BottomNavTBody>
-          <BottomNavTBody>
-            <BottomNavTR>
-              <BottomNavBelowTD first>
-                <p>ATOM</p>
-                <p>코스모스아톰</p>
-              </BottomNavBelowTD>
-              <BottomNavBelowTD second>
-                <p>3,032</p>
-              </BottomNavBelowTD>
-              <BottomNavBelowTD third>
-                <p>-1.62%</p>
-              </BottomNavBelowTD>
-              <BottomNavBelowTD last>
-                <p>6,680백만</p>
-              </BottomNavBelowTD>
-            </BottomNavTR>
-          </BottomNavTBody>
-          <BottomNavTBody>
-            <BottomNavTR>
-              <BottomNavBelowTD first>
-                <p>ATOM</p>
-                <p>코스모스아톰</p>
-              </BottomNavBelowTD>
-              <BottomNavBelowTD second>
-                <p>3,032</p>
-              </BottomNavBelowTD>
-              <BottomNavBelowTD third>
-                <p>-1.62%</p>
-              </BottomNavBelowTD>
-              <BottomNavBelowTD last>
-                <p>6,680백만</p>
-              </BottomNavBelowTD>
-            </BottomNavTR>
-          </BottomNavTBody>
-          <BottomNavTBody>
-            <BottomNavTR>
-              <BottomNavBelowTD first>
-                <p>ATOM</p>
-                <p>코스모스아톰</p>
-              </BottomNavBelowTD>
-              <BottomNavBelowTD second>
-                <p>3,032</p>
-              </BottomNavBelowTD>
-              <BottomNavBelowTD third>
-                <p>-1.62%</p>
-              </BottomNavBelowTD>
-              <BottomNavBelowTD last>
-                <p>6,680백만</p>
-              </BottomNavBelowTD>
-            </BottomNavTR>
-          </BottomNavTBody>
-          <BottomNavTBody>
-            <BottomNavTR>
-              <BottomNavBelowTD first>
-                <p>ATOM</p>
-                <p>코스모스아톰</p>
-              </BottomNavBelowTD>
-              <BottomNavBelowTD second>
-                <p>3,032</p>
-              </BottomNavBelowTD>
-              <BottomNavBelowTD third>
-                <p>-1.62%</p>
-              </BottomNavBelowTD>
-              <BottomNavBelowTD last>
-                <p>6,680백만</p>
-              </BottomNavBelowTD>
-            </BottomNavTR>
-          </BottomNavTBody>
-          <BottomNavTBody>
-            <BottomNavTR>
-              <BottomNavBelowTD first>
-                <p>ATOM</p>
-                <p>코스모스아톰</p>
-              </BottomNavBelowTD>
-              <BottomNavBelowTD second>
-                <p>3,032</p>
-              </BottomNavBelowTD>
-              <BottomNavBelowTD third>
-                <p>-1.62%</p>
-              </BottomNavBelowTD>
-              <BottomNavBelowTD last>
-                <p>6,680백만</p>
-              </BottomNavBelowTD>
-            </BottomNavTR>
-          </BottomNavTBody>
-          <BottomNavTBody>
-            <BottomNavTR>
-              <BottomNavBelowTD first>
-                <p>ATOM</p>
-                <p>코스모스아톰</p>
-              </BottomNavBelowTD>
-              <BottomNavBelowTD second>
-                <p>3,032</p>
-              </BottomNavBelowTD>
-              <BottomNavBelowTD third>
-                <p>-1.62%</p>
-              </BottomNavBelowTD>
-              <BottomNavBelowTD last>
-                <p>6,680백만</p>
-              </BottomNavBelowTD>
-            </BottomNavTR>
-          </BottomNavTBody>
-          <BottomNavTBody>
-            <BottomNavTR>
-              <BottomNavBelowTD first>
-                <p>ATOM</p>
-                <p>코스모스아톰</p>
-              </BottomNavBelowTD>
-              <BottomNavBelowTD second>
-                <p>3,032</p>
-              </BottomNavBelowTD>
-              <BottomNavBelowTD third>
-                <p>-1.62%</p>
-              </BottomNavBelowTD>
-              <BottomNavBelowTD last>
-                <p>6,680백만</p>
-              </BottomNavBelowTD>
-            </BottomNavTR>
-          </BottomNavTBody>
-          <BottomNavTBody>
-            <BottomNavTR>
-              <BottomNavBelowTD first>
-                <p>ATOM</p>
-                <p>코스모스아톰</p>
-              </BottomNavBelowTD>
-              <BottomNavBelowTD second>
-                <p>3,032</p>
-              </BottomNavBelowTD>
-              <BottomNavBelowTD third>
-                <p>-1.62%</p>
-              </BottomNavBelowTD>
-              <BottomNavBelowTD last>
-                <p>6,680백만</p>
-              </BottomNavBelowTD>
-            </BottomNavTR>
-          </BottomNavTBody>
-          <BottomNavTBody>
-            <BottomNavTR>
-              <BottomNavBelowTD first>
-                <p>ATOM</p>
-                <p>코스모스아톰</p>
-              </BottomNavBelowTD>
-              <BottomNavBelowTD second>
-                <p>3,032</p>
-              </BottomNavBelowTD>
-              <BottomNavBelowTD third>
-                <p>-1.62%</p>
-              </BottomNavBelowTD>
-              <BottomNavBelowTD last>
-                <p>6,680백만</p>
-              </BottomNavBelowTD>
-            </BottomNavTR>
-          </BottomNavTBody>
-          <BottomNavTBody>
-            <BottomNavTR>
-              <BottomNavBelowTD first>
-                <p>ATOM</p>
-                <p>코스모스아톰</p>
-              </BottomNavBelowTD>
-              <BottomNavBelowTD second>
-                <p>3,032</p>
-              </BottomNavBelowTD>
-              <BottomNavBelowTD third>
-                <p>-1.62%</p>
-              </BottomNavBelowTD>
-              <BottomNavBelowTD last>
-                <p>6,680백만</p>
-              </BottomNavBelowTD>
-            </BottomNavTR>
-          </BottomNavTBody>
-          <BottomNavTBody>
-            <BottomNavTR>
-              <BottomNavBelowTD first>
-                <p>ATOM</p>
-                <p>코스모스아톰</p>
-              </BottomNavBelowTD>
-              <BottomNavBelowTD second>
-                <p>3,032</p>
-              </BottomNavBelowTD>
-              <BottomNavBelowTD third>
-                <p>-1.62%</p>
-              </BottomNavBelowTD>
-              <BottomNavBelowTD last>
-                <p>6,680백만</p>
-              </BottomNavBelowTD>
-            </BottomNavTR>
-          </BottomNavTBody>
-        </BottomNavTable>
+        {coindata.history &&
+          coindata.history.map((a) => {
+            return (
+              <Link to={`/exchange/KRW/${a.coin_code}`}>
+                <BottomNavTable>
+                  {/* onClick={() => props.coinKRW(a)}> */}
+                  <BottomNavTBody>
+                    <BottomNavTR>
+                      <BottomNavBelowTD first>
+                        <p>{a.coin_code}</p>
+                        <p>{a.coin_kor_name}</p>
+                      </BottomNavBelowTD>
+                      <BottomNavBelowTD second>
+                        <p>{Number(a.present_price).toFixed(2)}</p>
+                      </BottomNavBelowTD>
+                      <BottomNavBelowTD third>
+                        <p>{a.change_rate}%</p>
+                      </BottomNavBelowTD>
+                      <BottomNavBelowTD last>
+                        <p>{a.transaction_price}</p>
+                      </BottomNavBelowTD>
+                    </BottomNavTR>
+                  </BottomNavTBody>
+                </BottomNavTable>
+              </Link>
+            );
+          })}
       </ScrollBar>
     </div>
   );
 }
 
-export default KRW;
+export default withRouter(KRW);
 
 const BottomNavTable = styled.table`
   width: 100%;

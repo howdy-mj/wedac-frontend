@@ -1,13 +1,33 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import bitcoinicon from "../../../../images/bitcoinicon.png";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
+// import { YE } from "../../../../config";
+import { SH } from "../../../../config";
 
-function NavDetail3() {
+function NavDetail3(props) {
+  console.log("yrrrr", props);
+
+  const [detailOfcoin, setDetailOfcoin] = useState();
+  useEffect(() => {
+    fetch(`${SH}/market/exchange/ETH`)
+      .then((res) => res.json())
+      .then((res) => {
+        setDetailOfcoin(res); // res.krw , res.btc, res.gt 로 props전달
+        // console.log("aaaaa", res)
+        // console.log("result", res);
+      });
+  }, []);
+  // useEffect(() => {
+  //   setDetailOfcoin(props.coindata);
+  // }, [props.coindata]);
   return (
     <BottomInfo>
+      {console.log("eeee", props.coindata)}
       <CrytoHeader>
         <img src={bitcoinicon} alt="cointitle" />
-        <CrytoHeaderTitle>비트코인(Bitcoin)</CrytoHeaderTitle>
+        <CrytoHeaderTitle>
+          {/* {detailOfcoin.message[0].title} */}
+        </CrytoHeaderTitle>
       </CrytoHeader>
       <CrytoBottomContainer>
         <CrytoInner>

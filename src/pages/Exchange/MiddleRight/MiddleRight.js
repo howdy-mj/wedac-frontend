@@ -1,17 +1,30 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled, { css } from "styled-components";
 import search from "../../../images/search.png";
+import { YE } from "../../../config";
 import KRW from "./KRW/KRW";
 import BTC from "./BTC/BTC";
 import GT from "./GT/GT";
 
-const selectedTradeInfo = {
-  0: <KRW />,
-  1: <BTC />,
-  2: <GT />,
-};
+function MiddleRight(props) {
+  // console.log("cscs", props.coindata);
+  const [coindata, setCoindata] = useState([]);
+  const [krwCoin, setKrwCoin] = useState();
+  const coinKRW = (a) => setKrwCoin(a);
 
-function MiddleRight() {
+  // useEffect(() => {
+  //   fetch(`${YE}/market/KRW`)
+  //     .then((res) => res.json())
+  //     .then(
+  //       (res) => setCoindata(res) // res.krw , res.btc, res.gt 로 props전달
+  //     );
+  // }, []);
+
+  const selectedTradeInfo = {
+    0: <KRW coinKRW={krwCoin} />,
+    1: <BTC />,
+    2: <GT />,
+  };
   const [activeTab, setActiveTab] = useState(0);
   const selectedTradeNum = (id) => setActiveTab(id);
   return (
