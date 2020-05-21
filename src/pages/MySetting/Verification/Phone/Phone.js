@@ -50,13 +50,13 @@ function Phone({ submitPhoneNum, changeAuthLevel, showNextAuth, phoneNum }) {
 
   const goVerify = () => {
     console.log("phoenNum", phoneNum);
-    changeAuthLevel(2);
-    submitPhoneNum(phoneNum);
-    showNextAuth(
-      3,
-      "계좌점유 인증",
-      "코인 입금을 위해 계좌점유 인증을 진행해주시기 바랍니다."
-    );
+    // changeAuthLevel(2);
+    // submitPhoneNum(phoneNum);
+    // showNextAuth(
+    //   3,
+    //   "계좌점유 인증",
+    //   "코인 입금을 위해 계좌점유 인증을 진행해주시기 바랍니다."
+    // );
 
     fetch(`${SH}/user/sms`, {
       method: "POST",
@@ -66,22 +66,17 @@ function Phone({ submitPhoneNum, changeAuthLevel, showNextAuth, phoneNum }) {
       }),
     }).then((res) => {
       if (res.status === 200) {
-        console.log("휴대폰 인증 성공");
+        console.log("인증 문자 보내기 성공");
         setShowInput(false);
-        changeAuthLevel(2);
-        submitPhoneNum(phoneNum);
-        showNextAuth(
-          3,
-          "계좌점유 인증",
-          "코인 입금을 위해 계좌점유 인증을 진행해주시기 바랍니다."
-        );
-        // showNextAuthLevel(3);
-        // showNextAuthGrade("계좌점유 인증");
-        // showNextAuthDescription(
+        // changeAuthLevel(2);
+        // submitPhoneNum(phoneNum);
+        // showNextAuth(
+        //   3,
+        //   "계좌점유 인증",
         //   "코인 입금을 위해 계좌점유 인증을 진행해주시기 바랍니다."
         // );
       } else {
-        console.log("휴대폰 인증 실패");
+        console.log("인증 문자 보내기 실패");
       }
     });
   };
@@ -106,21 +101,21 @@ function Phone({ submitPhoneNum, changeAuthLevel, showNextAuth, phoneNum }) {
         auth_number: vertifyNum,
       }),
     }).then((res) => {
-      console.log(res);
-      // if (res.status === 200) {
-      //   console.log("휴대폰 인증 성공");
-      //   setShowInput(false);
-      //   changeAuthLevel(2);
-      //   submitPhoneNum(phoneNum);
-      //   showNextAuthLevel(3);
-      //   showNextAuthGrade("계좌점유 인증");
-      //   showNextAuthDescription(
-      //     "코인 입금을 위해 계좌점유 인증을 진행해주시기 바랍니다."
-      //   );
-      //   history.push("/settings/vertification");
-      // } else {
-      //   console.log("휴대폰 인증 실패");
-      // }
+      if (res.status === 200) {
+        console.log("휴대폰 인증 성공");
+        setShowInput(false);
+        changeAuthLevel(2);
+        submitPhoneNum(phoneNum);
+        showNextAuth(
+          3,
+          "계좌점유 인증",
+          "코인 입금을 위해 계좌점유 인증을 진행해주시기 바랍니다."
+        );
+        localStorage.setItem("phonAuth", true);
+        history.push("/settings/vertification");
+      } else {
+        alert("인증 번호를 다시 입력해주세요.");
+      }
     });
   };
 

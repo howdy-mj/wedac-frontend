@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { withRouter } from "react-router-dom";
 import styled, { css } from "styled-components";
 import { connect } from "react-redux";
@@ -10,22 +10,17 @@ import withdraw from "../../../images/withdraw.PNG";
 import { changeAuthLevel } from "../../../store/actions";
 
 function Vertification({
+  email,
+  phoneNum,
   vertifyPhone,
   vertifyAccount,
   match,
   nextLevel,
   nextGrade,
   description,
-  // nextAuthStatus,
 }) {
+  let emailAuth = localStorage.getItem("emailAuth");
   let accountAuth = localStorage.getItem("accountAuth");
-  const [done, setDone] = useState(false);
-  const [logo, setLogo] = useState("y");
-
-  // possible이 true라면, 코인 입출금, 원화 입출금 true로 바꾸기
-
-  const [complete, setComplete] = useState(false);
-
   const currentUrl = match.params.type;
 
   return (
@@ -46,11 +41,7 @@ function Vertification({
                       {nextGrade}
                     </ShowLevel>
                   </FirstLine>
-                  <Detail>
-                    {description}
-                    {/* 현재 회원님은 코인 및 원화 입출금이 가능합니다. 출금한도
-                    개별 승인을 원하는 경우 신원 인증을 진행해주시기 바랍니다. */}
-                  </Detail>
+                  <Detail>{description}</Detail>
                   <GoAuth>인증하기</GoAuth>
                 </LevelContent>
               </Left>
@@ -107,10 +98,10 @@ function Vertification({
                     <CheckBox isDone={true}>x</CheckBox>
                     <div>
                       <Level>Level 1</Level>
-                      <Description done>이메일 인증</Description>
+                      <Description>이메일 인증</Description>
                     </div>
                   </Middle>
-                  <UserInfo isComplete={true}>abcd@gmail.com</UserInfo>
+                  <UserInfo isComplete={true}>{email}</UserInfo>
                 </EachLevel>
               </StageContainer>
 
@@ -118,19 +109,19 @@ function Vertification({
                 <EachLevel>
                   <Line></Line>
                   <Middle>
-                    <CheckBox>{logo}</CheckBox>
+                    <CheckBox>{emailAuth ? "x" : "y"}</CheckBox>
                     <div>
                       <Level>Level 2</Level>
                       <Description>휴대전화번호 인증</Description>
                     </div>
                   </Middle>
                   <UserInfo
-                    isComplete={complete}
+                    isComplete={emailAuth ? true : false}
                     onClick={() => {
                       vertifyPhone("authPhone");
                     }}
                   >
-                    {complete ? "01058****33" : "인증하기"}
+                    {emailAuth ? phoneNum : "인증하기"}
                   </UserInfo>
                 </EachLevel>
               </StageContainer>
@@ -139,19 +130,19 @@ function Vertification({
                 <EachLevel>
                   <Line></Line>
                   <Middle>
-                    <CheckBox>{logo}</CheckBox>
+                    <CheckBox>{accountAuth ? "x" : "y"}</CheckBox>
                     <div>
                       <Level>Level 3</Level>
                       <Description>계좌 점유 인증</Description>
                     </div>
                   </Middle>
                   <UserInfo
-                    undone
+                    isComplete={accountAuth ? true : false}
                     onClick={() => {
                       vertifyAccount("authAccount");
                     }}
                   >
-                    인증하기
+                    {accountAuth ? email : "인증하기"}
                   </UserInfo>
                 </EachLevel>
               </StageContainer>
@@ -196,6 +187,8 @@ function Vertification({
 
 const mapStateToProps = (state) => {
   return {
+    email: state.login.email,
+    phoneNum: state.currentAuthStatus.phoneNum,
     nextLevel: state.nextAuthStatus.nextLevel,
     nextGrade: state.nextAuthStatus.nextGrade,
     description: state.nextAuthStatus.description,

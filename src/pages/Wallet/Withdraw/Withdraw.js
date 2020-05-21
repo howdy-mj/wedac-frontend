@@ -71,7 +71,7 @@ function Withdraw() {
               (은행점검시간 안내)
             </GuideContent>
           </BankGuide>
-          <WithdrawButton>출금신청</WithdrawButton>
+          <WithdrawButton>출금하기</WithdrawButton>
         </>
       ) : (
         <NoEmailAuth>계좌 점유 인증이 필요합니다.</NoEmailAuth>

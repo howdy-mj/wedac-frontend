@@ -45,7 +45,7 @@ function MySetting(props) {
   return (
     <>
       <Nav />
-      {1 === 0 ? (
+      {!token ? (
         <OnlyLogin />
       ) : (
         <MySettingWrap>

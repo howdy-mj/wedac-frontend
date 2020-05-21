@@ -4,7 +4,7 @@ import Routes from "./Routes";
 import { Provider } from "react-redux";
 import { createStore } from "redux";
 import { ThemeProvider } from "styled-components";
-import { composeWithDevTools } from "redux-devtools-extension"
+import { composeWithDevTools } from "redux-devtools-extension";
 import rootReducer from "./store/reducers";
 import theme from "./style/theme";
 import GlobalStyle from "./style/global";
