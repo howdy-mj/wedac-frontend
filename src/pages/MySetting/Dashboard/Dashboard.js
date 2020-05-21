@@ -14,10 +14,9 @@ function Dashboard({
   description,
 }) {
   const history = useHistory();
-  const goVerify = (path) => {
-    history.push(`/settings/${path}`);
+  const goVerify = (category) => {
+    history.push(`/settings/${category}`);
   };
-  console.log("dashboard nextLevel", nextLevel);
 
   return (
     <ContentWrap>
@@ -64,21 +63,16 @@ function Dashboard({
                 {nextGrade}
               </ShowLevel>
             </FirstLine>
-            <Detail>
-              {description}
-              {/* 현재 회원님은 코인 및 원화 입출금이 가능합니다. 출금한도 개별
-              승인을 원하는 경우 신원 인증을 진행해주시기 바랍니다. */}
-            </Detail>
-
-            <Link to="/settings/vertification">
-              <GoAuth
-              // onClick={() => {
-              //   goVerify("vertification");
-              // }}
-              >
-                인증하기
-              </GoAuth>
-            </Link>
+            <Detail>{description}</Detail>
+            {/* <Link to="/settings/vertification"> */}
+            <GoAuth
+              onClick={() => {
+                goVerify("vertification");
+              }}
+            >
+              인증하기
+            </GoAuth>
+            {/* </Link> */}
           </LevelContent>
         </Container>
 

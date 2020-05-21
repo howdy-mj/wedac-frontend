@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Link, withRouter } from "react-router-dom";
 import styled, { css } from "styled-components";
 import MobileNav from "./MobileNav/MobileNav";
@@ -23,6 +23,8 @@ function Nav(props) {
 
   const handleLogOut = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("phoneAuth");
+    localStorage.removeItem("accountAuth");
   };
 
   const changeTab = (id) => {

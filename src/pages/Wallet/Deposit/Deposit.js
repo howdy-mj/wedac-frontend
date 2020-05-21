@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled, { css } from "styled-components";
 import { connect } from "react-redux";
 
-function Deposit({name, bank, account}) {
+function Deposit({ name, bank, account }) {
   let accountAuth = localStorage.getItem("accountAuth");
   const [amount, setAmount] = useState(0);
   const [redBorder, setRedBorder] = useState(false);
@@ -68,7 +68,7 @@ function Deposit({name, bank, account}) {
             </ExpectedInputWrap>
             {/* <UnderWarning>최소 입금 예약 가능 금액을 10,000입니다.</UnderWarning> */}
           </ExpectedDepositDiv>
-          <DepositButton>입금 예약</DepositButton>
+          <DepositButton>입금하기</DepositButton>
           <BankGuide>
             <GuideTitle>원화 입금 전 유의사항</GuideTitle>
             <GuideContent>
@@ -93,11 +93,10 @@ const mapStateToProps = (state) => {
     name: state.authAccount.name,
     bank: state.authAccount.bank,
     account: state.authAccount.account,
-  }
-}
+  };
+};
 
-export default connect(mapStateToProps, )(Deposit);
-
+export default connect(mapStateToProps)(Deposit);
 
 const DepositWrap = styled.div``;
 
@@ -266,4 +265,3 @@ const NoEmailAuth = styled.div`
   text-align: center;
   color: #022553;
 `;
-
