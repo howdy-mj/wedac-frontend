@@ -1,0 +1,16 @@
+{
+  "coin_detail": [
+    {
+      "pair": "KRW / ATOM",
+      "coin_kor_name": "코스모스아톰",
+      "present": "3127.00000000",
+      "sub_krw": "0.0000",
+      "low": "3060.00000000",
+      "high": "3127.00000000",
+      "change_price": "67.00000",
+      "change_rate": "2.19",
+      "volume_24hours": "181480.72530000",
+      "price_24hour": "561478806.40000000"
+    }
+  ]
+}

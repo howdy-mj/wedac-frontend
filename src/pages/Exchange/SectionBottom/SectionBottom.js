@@ -6,15 +6,36 @@ import NavDetail2 from "./NavDetail2/NavDetail2";
 import NavDetail3 from "./NavDetail3/NavDetail3";
 import MiddleBottomRight from "../MiddleBottomRight/MiddleBottomRight";
 //const tabs = [NavDetail0, NavDetail1, NavDetail2, NavDetail3];
+import { YE } from "../../../config";
+import { SH } from "../../../config";
+function SectionBottom(props) {
+  const [coindata, setCoindata] = useState([]);
 
-const selectedTradeInfo = {
-  0: <NavDetail0 />,
-  1: <NavDetail1 />,
-  2: <NavDetail2 />,
-  3: <NavDetail3 />,
-};
+  // useEffect(() => {
+  //   fetch(`${SH}/market/exchange/ETH`)
+  //     .then((res) => res.json())
+  //     .then((res) => {
+  //       setCoindata(res); // res.krw , res.btc, res.gt 로 props전달
+  //       // console.log("aaaaa", res)
+  //       // console.log("result", res);
+  //     });
+  // }, []);
 
-function SectionBottom() {
+  // useEffect(() => {
+  //   fetch(`${YE}/market/KRW`)
+  //     .then((res) => res.json())
+  //     .then(
+  //       (res) => setCoindata(res) // res.krw , res.btc, res.gt 로 props전달
+  //     );
+  // }, []);
+
+  const selectedTradeInfo = {
+    0: <NavDetail0 />,
+    1: <NavDetail1 />,
+    2: <NavDetail2 />,
+    3: <NavDetail3 />,
+    // coindata={coindata} />,
+  };
   const [activeTab, setActiveTab] = useState(0);
   const selectedTradeNum = (id) => setActiveTab(id);
 
@@ -26,13 +47,13 @@ function SectionBottom() {
             clickActive={activeTab === 0}
             onClick={() => selectedTradeNum(0)}
           >
-            미체결
+            체결
           </NavDetail>
           <NavDetail
             clickActive={activeTab === 1}
             onClick={() => selectedTradeNum(1)}
           >
-            체결
+            미체결
           </NavDetail>
           <NavDetail
             clickActive={activeTab === 2}

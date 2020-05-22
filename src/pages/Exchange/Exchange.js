@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { withRouter, Link } from "react-router-dom";
 import Footer from "../../component/Footer/Footer";
 import Nav from "../../component/Nav/Nav";
 import SectionLeft from "./SectionLeft/SectionLeft";
@@ -10,16 +10,34 @@ import MiddleBottomRight from "./MiddleBottomRight/MiddleBottomRight";
 // import SectionMiddle from "./SectionMiddle/SectionMiddle";
 // import SectionRight from "./SectionRight/SectionRight";
 import SectionBottom from "./SectionBottom/SectionBottom";
+import BeforeLogin from "./BeforeLogin/BeforeLogin";
 import styled, { css } from "styled-components";
 
-function Exchange() {
+function Exchange(props) {
+  function addComma(price) {
+    if (price > 999) {
+      return ("" + price).replace(/(\d)(?=(?:\d{3})+(?!\d))/g, "$1,");
+    } else {
+      return price;
+    }
+  }
+  console.log("1234", props);
+  const [buyingPrice, setBuyingPrice] = useState("");
+  const coinBuyingPrice = (pricedata) => setBuyingPrice(addComma(pricedata));
+  console.log("buy", buyingPrice);
+  const [coindetail, setCoindetail] = useState([]);
+  const infoCoinDetail = (a) => setCoindetail(a);
   return (
     <ExchangePage>
       <Nav />
       <ExchangeWrapper>
         <TopDiv>
           <LeftDiv>
-            <SectionLeft />
+            <SectionLeft
+              // paramsOne={props.match.params.coin}
+              // paramsTwo={props.match.params.market}
+              handledata={coinBuyingPrice}
+            />
           </LeftDiv>
           <Middle>
             <MiddleTopDiv>
@@ -32,7 +50,7 @@ function Exchange() {
             </MiddleTopDiv>
             <MiddleBottomDiv>
               <InnerDiv3>
-                <MiddleBottom />
+                <MiddleBottom dataForprice={buyingPrice} />
               </InnerDiv3>
               <InnerDiv4>
                 <MiddleBottomRight />
@@ -49,7 +67,7 @@ function Exchange() {
   );
 }
 
-export default Exchange;
+export default withRouter(Exchange);
 
 const ExchangePage = styled.div`
   background-color: #f7fbff;
@@ -172,6 +190,7 @@ const MiddleBottomDiv = styled.div`
 `;
 
 const InnerDiv3 = styled.div`
+  position: relative;
   flex-basis: 72%;
   margin-right: 8px;
 

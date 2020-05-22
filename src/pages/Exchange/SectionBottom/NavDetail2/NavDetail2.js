@@ -1,7 +1,18 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled, { css } from "styled-components";
 
-function NavDetail2() {
+function NavDetail2(props) {
+  console.log("Asdasd", props.coindata);
+  const [coindata, setCoindata] = useState([]);
+
+  useEffect(() => {
+    fetch(`/data/coinHistorydata.json`)
+      .then((res) => res.json())
+      .then(
+        (res) => setCoindata(res) // res.krw , res.btc, res.gt 로 props전달
+      );
+  }, []);
+
   return (
     <BottomNavInner2>
       <BottomNavTable>
@@ -14,18 +25,22 @@ function NavDetail2() {
           </BottomNavTR>
         </BottomNavTBody>
       </BottomNavTable>
-
-      <BottomNavTable>
-        <BottomNavTBody>
-          <BottomNavTR>
-            <BottomNavBelowTD first>2020-05-12 09:00</BottomNavBelowTD>
-            <BottomNavBelowTD second>10,475,000</BottomNavBelowTD>
-            <BottomNavBelowTD third>-1.71%</BottomNavBelowTD>
-            <BottomNavBelowTD last>123.123123123</BottomNavBelowTD>
-          </BottomNavTR>
-        </BottomNavTBody>
-      </BottomNavTable>
-
+      <ScrollBar>
+        {props.coindata.daily_history.map((a) => {
+          return (
+            <BottomNavTable>
+              <BottomNavTBody>
+                <BottomNavTR>
+                  <BottomNavBelowTD first> {a.date}</BottomNavBelowTD>
+                  <BottomNavBelowTD second>{a.close_price}</BottomNavBelowTD>
+                  <BottomNavBelowTD third>{a.krw_price}</BottomNavBelowTD>
+                  <BottomNavBelowTD last>{a.volume}</BottomNavBelowTD>
+                </BottomNavTR>
+              </BottomNavTBody>
+            </BottomNavTable>
+          );
+        })}
+      </ScrollBar>
       {/* <BottomContents2>
         <InnerDetail22>2020-05-12 09:00</InnerDetail22>
         <InnerDetail22>10,475,000</InnerDetail22>
@@ -42,6 +57,20 @@ const BottomNavInner2 = styled.div`
   width: 100%;
   height: 100%;
   padding-top: 8px;
+`;
+
+const ScrollBar = styled.div`
+  width: 100%;
+  height: 100%;
+  overflow: scroll;
+  overflow-x: hidden;
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #b8b8b8;
+    border-radius: 3px;
+  }
 `;
 const BottomNavTable = styled.table`
   width: 100%;
