@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import styled, { css } from "styled-components";
-import bitcoinicon from "../../../images/bitcoinicon.png";
+import styled from "styled-components";
 import arrowdown from "../../../images/arrowdown.png";
 import { YE } from "../../../config";
 import { withRouter } from "react-router-dom";
@@ -11,6 +10,7 @@ import { withRouter } from "react-router-dom";
 function SectionLeft(props) {
   const [coindata, setCoindata] = useState();
   const [pricedata, setPricedata] = useState([]);
+  const [ratedata, setRatedata] = useState([]);
   const [volumedata, setVolumedata] = useState([]);
 
   useEffect(() => {
@@ -27,17 +27,16 @@ function SectionLeft(props) {
       .then((res) => res.json())
       .then((res) => {
         console.log("aaaaa", res);
-        // console.log("aaaaa", res)
         // console.log("aaaaa", res.realtime.price);
         setPricedata(res.realtime.price); // res.krw , res.btc, res.gt 로 props전달
         setVolumedata(res.realtime.volume);
+        setRatedata(res.realtime.rate);
         // setVolumedata(res.data.volume);
       });
   }, []);
 
   useEffect(() => {
-    // console.log("paramsTwo", props.paramsTwo);
-    // setCoindata(props.paramsTwo, props.paramsOne);
+    console.log("secionleft 40", props.match.params.market);
     fetch(
       `${YE}/market/${props.match.params.market}/${props.match.params.coin}`
     )
@@ -47,22 +46,18 @@ function SectionLeft(props) {
         setCoindata(res.coin_detail); // res.krw , res.btc, res.gt 로 props전달
         // console.log("resultLEFT", res.coin_detail);
       });
-  }, [props.match.params]);
+  }, [props.match.params.market, props.match.params.coin]);
 
   useEffect(() => {
-    // console.log("paramsTwo", props.paramsTwo);
-    // setCoindata(props.paramsTwo, props.paramsOne);
+    console.log("secionleft 51", props.match.params.market);
     fetch(
       `${YE}/market/${props.match.params.market}/${props.match.params.coin}/order`
     )
       .then((res) => res.json())
       .then((res) => {
-        // console.log("afaf", props.match);
-        // console.log("aaaaa", res);
         setPricedata(res.realtime.price); // res.krw , res.btc, res.gt 로 props전달
-        // console.log("resultLEFT", res.coin_detail);
       });
-  }, [props.match.params]);
+  }, [props.match.params.market, props.match.params.coin]);
 
   function addComma(price) {
     if (price > 999) {
@@ -132,7 +127,6 @@ function SectionLeft(props) {
 
   const median = arr[medianIdx];
   const medianComma = addComma(median);
-
   const newArr2 = [
     arr[medianIdx + 1],
     arr[medianIdx + 2],
@@ -144,7 +138,7 @@ function SectionLeft(props) {
     arr[medianIdx + 8],
   ];
 
-  console.log(coindata);
+  console.log("secionleft 140", coindata);
   return (
     <div>
       <SectionLeftPage>
@@ -155,7 +149,7 @@ function SectionLeft(props) {
               <DashBoard>
                 <TitlePart>
                   <CoinIcon>
-                    <img src={bitcoinicon} alt="icon" />
+                    <img src={c.thumbnail_url} alt="icon" />
                     <CrytoDetail>
                       <span>{c.coin_kor_name}</span>
                       <span>{c.pair}</span>
@@ -252,49 +246,6 @@ function SectionLeft(props) {
               </BidPrice>
             );
           })}
-          {/* <PriceRow className="priceRow">
-              <span>11.771.00</span>
-              <span>-2.33%</span>
-              <span>0.123123123</span>
-            </PriceRow>
-            <PriceRow className="priceRow">
-              <span>11.771.00</span>
-              <span>-2.33%</span>
-              <span>0.123123123</span>
-            </PriceRow>
-            <PriceRow className="priceRow">
-              <span>11.771.00</span>
-              <span>-2.33%</span>
-              <span>0.123123123</span>
-            </PriceRow>
-            <PriceRow className="priceRow">
-              <span>11.771.00</span>
-              <span>-2.33%</span>
-              <span>0.123123123</span>
-            </PriceRow>
-            <PriceRow className="priceRow">
-              <span>11.771.00</span>
-              <span>-2.33%</span>
-              <span>0.123123123</span>
-            </PriceRow>
-            <PriceRow className="priceRow">
-              <span>11.771.00</span>
-              <span>-2.33%</span>
-              <span>0.123123123</span>
-            </PriceRow>
-            <PriceRow className="priceRow">
-              <span>11.771.00</span>
-              <span>-2.33%</span>
-              <span>0.123123123</span>
-            </PriceRow> */}
-
-          {/* <BidPrice className="bidPrice">
-            <BidPriceRow className="bidPriceRow">
-              <span>11.771.00</span>
-              <span>-2.33%</span>
-              <span>0.123123123</span>
-            </BidPriceRow>
-          </BidPrice> */}
 
           {/* <PriceAmountTop />
           <PriceAmountBottom /> */}

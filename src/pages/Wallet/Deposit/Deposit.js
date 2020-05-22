@@ -11,6 +11,14 @@ function Deposit({ name, bank, account, detectAsset }) {
   const [redBorder, setRedBorder] = useState(false);
   const [able, setAble] = useState(false);
 
+  const addComma = (price) => {
+    if (price > 999) {
+      return ("" + price).replace(/(\d)(?=(?:\d{3})+(?!\d))/g, "$1,");
+    } else {
+      return price;
+    }
+  };
+
   const hasBorder = () => {
     setRedBorder(true);
   };

@@ -39,6 +39,18 @@ function Wallet({ asset }) {
       })
         .then((res) => res.json())
         .then((res) => setCurrentAsset(Math.trunc(res.my_wallet[0].volume)));
+  }, []);
+
+  useEffect(() => {
+    if (asset === 1) {
+      console.log("CDU");
+      fetch(`${YE}/user/deposit/check`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json", Authorization: token },
+      })
+        .then((res) => res.json())
+        .then((res) => setCurrentAsset(Math.trunc(res.my_wallet[0].volume)));
+    }
   }, [asset]);
 
   return (

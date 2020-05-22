@@ -15,8 +15,29 @@ function BottomRight(props) {
   const [priceNumber, setPriceNumber] = useState("");
   //const [changeNum, setChangeNum] = useState([]);
 
+  const [buyAmount, setBuyAmount] = useState("");
+
   const changeNumber = (e) => {
     setPriceNumber(e.target.value);
+  };
+  const handleBuy = (e) => {
+    setBuyAmount(e.target.value);
+  };
+
+  const quoter = () => {
+    console.log("25%");
+  };
+
+  const half = () => {
+    console.log("50%");
+  };
+
+  const third = () => {
+    console.log("75%");
+  };
+
+  const full = () => {
+    console.log("100%");
   };
 
   // useEffect(() => {
@@ -48,7 +69,6 @@ function BottomRight(props) {
                     onFocus={() => borderColorOn()}
                     onBlur={() => borderColorOff()}
                     type="text"
-                    placeholder
                     onChange={changeNumber}
                     value={priceNumber}
                     defaultValue={0}
@@ -83,8 +103,8 @@ function BottomRight(props) {
                   onFocus={() => borderColorOn1()}
                   onBlur={() => borderColorOff1()}
                   type="text"
-                  placeholder
-                  value=""
+                  onChange={() => console.log("aa")}
+                  value={buyAmount}
                 />
                 <PriceUnit>
                   <p>BTC</p>
@@ -95,10 +115,10 @@ function BottomRight(props) {
           </InputWrapper>
 
           <PercentOrder>
-            <PercentList>25%</PercentList>
-            <PercentList>50%</PercentList>
-            <PercentList>75%</PercentList>
-            <PercentList>100%</PercentList>
+            <PercentList onclick={quoter}>25%</PercentList>
+            <PercentList onClkick={half}>50%</PercentList>
+            <PercentList onClick={third}>75%</PercentList>
+            <PercentList onClick={full}>100%</PercentList>
           </PercentOrder>
           {/* </div> */}
           <InputWrapper>

@@ -12,13 +12,14 @@ function Withdraw({ bank, account, detectAsset, asset }) {
   const [currentAsset, setCurrentAsset] = useState(0);
 
   useEffect(() => {
-    token &&
+    if (asset === 1) {
       fetch(`${YE}/user/deposit/check`, {
         method: "GET",
         headers: { "Content-Type": "application/json", Authorization: token },
       })
         .then((res) => res.json())
         .then((res) => setCurrentAsset(Math.trunc(res.my_wallet[0].volume)));
+    }
   }, [asset]);
 
   const maxAmount = () => {
