@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled, { css } from "styled-components";
 import { withRouter } from "react-router-dom";
 import Nav from "../../component/Nav/Nav";
@@ -11,6 +11,10 @@ function MySetting(props) {
   let token = localStorage.getItem("token");
   const [selected, setSelected] = useState("dashboard");
   const [type, setType] = useState("");
+
+  useEffect(() => {
+    setSelected(props.match.params.category);
+  }, []);
 
   // MySetting
   const changeTab = (category) => {
@@ -32,7 +36,7 @@ function MySetting(props) {
   };
 
   const tabs = {
-    dashboard: <DashBoard />,
+    dashboard: <DashBoard goVerify={changeTab} />,
     vertification: (
       <Vertification
         type={type}

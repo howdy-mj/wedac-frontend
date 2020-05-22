@@ -96,13 +96,14 @@ export const showNextAuthDescription = (description) => {
 };
 
 // 다음 인증 레벨 한번에 보내기
-export const showNextAuth = (nextLevel, nextGrade, description) => {
+export const showNextAuth = (nextLevel, nextGrade, description, link) => {
   return {
     type: types.NEXT_AUTH,
     payload: {
       nextLevel,
       nextGrade,
       description,
+      link,
     },
   };
 };
@@ -152,6 +153,16 @@ export const submitAuthAccount = (name, bank, account) => {
       name,
       bank,
       account,
+    },
+  };
+};
+
+// 입출금 확인
+export const detectAsset = (asset) => {
+  return {
+    type: types.CHANGE_MYASSET,
+    payload: {
+      asset,
     },
   };
 };

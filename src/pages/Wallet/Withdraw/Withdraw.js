@@ -1,8 +1,71 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled, { css } from "styled-components";
+import { connect } from "react-redux";
+import { YE } from "../../../config";
+import { detectAsset } from "../../../store/actions";
 
-function Withdraw() {
+function Withdraw({ bank, account, detectAsset, asset }) {
+  let token = localStorage.getItem("token");
   let accountAuth = localStorage.getItem("accountAuth");
+  const [withdrawAmount, setWithdrawAmount] = useState(0);
+  const [able, setAble] = useState(false);
+  const [currentAsset, setCurrentAsset] = useState(0);
+
+  useEffect(() => {
+    fetch(`${YE}/user/deposit/check`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json", Authorization: token },
+    })
+      .then((res) => res.json())
+      .then((res) => setCurrentAsset(Math.trunc(res.my_wallet[0].volume)));
+  }, [asset]);
+
+  const maxAmount = () => {
+    console.log("최대 가능 금액");
+  };
+
+  const handleWithdrawAmount = (e) => {
+    setWithdrawAmount(e.target.value);
+    console.log("handleWithdrawAmount", e.target.value);
+    e.target.value.length > 3 ? setAble(true) : setAble(false);
+  };
+
+  const goWithdraw = () => {
+    console.log(withdrawAmount);
+    console.log("출금하기");
+    detectAsset(1);
+    setTimeout(() => {
+      detectAsset(0);
+    }, 2000);
+
+    fetch(`${YE}/user/deposit`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Authorization: token },
+      body: JSON.stringify({
+        deposit_side: 0,
+        price: withdrawAmount,
+      }),
+    }).then((res) => {
+      if (res.status === 200) {
+        console.log("출금 성공");
+        detectAsset(1);
+        setTimeout(() => {
+          detectAsset(0);
+        }, 2000);
+      } else {
+        console.log("출금 실패");
+      }
+    });
+  };
+
+  const addComma = (price) => {
+    if (price > 999) {
+      return ("" + price).replace(/(\d)(?=(?:\d{3})+(?!\d))/g, "$1,");
+    } else {
+      return price;
+    }
+  };
+
   return (
     <WithdrawWrap>
       {accountAuth ? (
@@ -17,24 +80,34 @@ function Withdraw() {
           <Available>
             <AvailableLeft>출금 가능 금액</AvailableLeft>
             <AvailableRight>
-              <ARValue>0</ARValue>
+              <ARValue>{addComma(currentAsset)}</ARValue>
               <ARPer>KRW</ARPer>
             </AvailableRight>
           </Available>
           <BankAccount>
             <BankLeft>입금 받을 계좌</BankLeft>
             <BankRight>
-              <p>**은행</p>
-              <p>09*****1234</p>
+              <p>{bank}</p>
+              <p>{account}</p>
             </BankRight>
           </BankAccount>
           <TotalWithdrawWrap>
             <TotalWithdraw>출금 요청 금액</TotalWithdraw>
             <TotalRight>
               <div>
-                <input />
+                <input
+                  type="number"
+                  onChange={handleWithdrawAmount}
+                  onKeyDown={(e) =>
+                    (e.keyCode === 69 ||
+                      e.keyCode === 190 ||
+                      e.keyCode === 187 ||
+                      e.keyCode === 189) &&
+                    e.preventDefault()
+                  }
+                />
               </div>
-              <div>
+              <div onClick={maxAmount}>
                 <button>최대</button>
               </div>
             </TotalRight>
@@ -71,7 +144,16 @@ function Withdraw() {
               (은행점검시간 안내)
             </GuideContent>
           </BankGuide>
-          <WithdrawButton>출금하기</WithdrawButton>
+          <WithdrawButton
+            disabled={!able}
+            style={{
+              cursor: able ? "pointer" : "not-allowed",
+              backgroundColor: able ? "#0086ec" : "rgba(0, 134, 236, 0.5)",
+            }}
+            onClick={goWithdraw}
+          >
+            출금하기
+          </WithdrawButton>
         </>
       ) : (
         <NoEmailAuth>계좌 점유 인증이 필요합니다.</NoEmailAuth>
@@ -79,6 +161,16 @@ function Withdraw() {
     </WithdrawWrap>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    bank: state.authAccount.bank,
+    account: state.authAccount.account,
+    asset: state.detectAsset.asset,
+  };
+};
+
+export default connect(mapStateToProps, { detectAsset })(Withdraw);
 
 const WithdrawWrap = styled.div``;
 
@@ -176,6 +268,12 @@ const TotalRight = styled.div`
     size: 18px;
     font-weight: 700;
     color: #596070;
+
+    ::-webkit-outer-spin-button,
+    ::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
   }
 
   button {
@@ -266,5 +364,3 @@ const NoEmailAuth = styled.div`
   text-align: center;
   color: #022553;
 `;
-
-export default Withdraw;

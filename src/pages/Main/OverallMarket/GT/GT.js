@@ -1,58 +1,63 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled, { css } from "styled-components";
-import searchIcon from "../../../../images/search.png";
+import { YE } from "../../../../config";
 
 function GT() {
+  const [GTdata, setGTdata] = useState([]);
+
+  useEffect(() => {
+    fetch(`${YE}/market/GT`)
+      .then((res) => res.json())
+      .then((res) => setGTdata(res.history));
+  }, []);
+
   return (
     <GTWrap>
-      <CryptoListItem>
-        {/* {marketInfo &&
-            marketInfo.map((info) => {
-              return (
-                <li className="logo">
-            <img src={searchIcon} alt="logo" />
-          </li>
-          <li className="name">
-            <div className="kor">코스모스아톰</div>
-            <div className="eng">ATOM/KRW</div>
-          </li>
-          <li className="price blue">3,232</li>
-          <li className="rate">
-            <p className="minus">-0.28%</p>
-          </li>
-          <li className="higher">3,309</li>
-          <li className="lower">3,095</li>
-          <li className="amount">6,992,931,658</li>
-              );
-            })} */}
-        <Li>
-          <Img src={searchIcon} alt="logo" />
-        </Li>
-        <Li isName>
-          <LiDiv kor>코스모스아톰</LiDiv>
-          <LiDiv eng>ATOM/GT</LiDiv>
-        </Li>
-        <Li price blue>
-          3,232
-        </Li>
-        <Li rate>
-          <P minus>-0.28%</P>
-        </Li>
-        <Li higher>3,309</Li>
-        <Li lower>3,095</Li>
-        <Li amount>6,992,931,658</Li>
-      </CryptoListItem>
+      {GTdata &&
+        GTdata.map((data, index) => {
+          return (
+            <>
+              <CryptoListItem key={index}>
+                <Li>
+                  <Img src={data.thumbnamil_url} alt="logo" />
+                </Li>
+                <Li isName>
+                  <LiDiv kor>{data.coin_kor_name}</LiDiv>
+                  <LiDiv eng>{data.coin_code}/GT</LiDiv>
+                </Li>
+                <Li price data={data.change_rate}>
+                  {Number(data.present_price).toFixed(2)}
+                </Li>
+                <Li rate>
+                  <P data={data.change_rate}>{data.change_rate}%</P>
+                </Li>
+                <Li higher>{Number(data.high_price).toFixed(2)}</Li>
+                <Li lower>{Number(data.low_price).toFixed(2)}</Li>
+                <Li amount>{data.transaction_price}</Li>
+              </CryptoListItem>
+            </>
+          );
+        })}
     </GTWrap>
   );
 }
 
 const GTWrap = styled.div`
-  border-bottom: 1px solid #ebeef6;
-  padding: 0 32px;
   margin: 2px auto;
+  height: 700px;
+  overflow-y: scroll;
+
+  ::-webkit-scrollbar {
+    width: 4px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #b8b8b8;
+  }
 `;
 
 const CryptoListItem = styled.ul`
+  border-bottom: 1px solid #ebeef6;
+  padding: 0 32px;
   display: flex;
   justify-content: space-evenly;
   align-items: center;
@@ -61,6 +66,11 @@ const CryptoListItem = styled.ul`
 
 const Li = styled.li`
   text-align: right;
+  color: ${(props) => {
+    if (props.data > 0) return props.theme.plusColor;
+    else if (props.data < 0) return props.theme.minusColor;
+    else return props.theme.noChangeColor;
+  }};
 
   ${(props) =>
     props.isName &&
@@ -76,24 +86,6 @@ const Li = styled.li`
       font-weight: 700;
     `}
   
-  ${(props) =>
-    props.red &&
-    css`
-      color: ${(props) => props.theme.plusColor};
-    `}
-
-  ${(props) =>
-    props.blue &&
-    css`
-      color: ${(props) => props.theme.minusColor};
-    `}
-
-  ${(props) =>
-    props.nochange &&
-    css`
-      color: ${(props) => props.theme.noChangeColor};
-    `}
-
   ${(props) =>
     props.rate &&
     css`
@@ -190,24 +182,11 @@ const P = styled.p`
   height: 26px;
   padding-top: 5px;
   text-align: center;
-
-  ${(props) =>
-    props.plus &&
-    css`
-      background-color: ${(props) => props.theme.plusColor};
-    `}
-
-  ${(props) =>
-    props.minus &&
-    css`
-      background-color: ${(props) => props.theme.minusColor};
-    `}
-
-  ${(props) =>
-    props.zero &&
-    css`
-      background-color: ${(props) => props.theme.noChangeColor};
-    `}
+  background-color: ${(props) => {
+    if (props.data > 0) return props.theme.plusColor;
+    else if (props.data < 0) return props.theme.minusColor;
+    else return props.theme.noChangeColor;
+  }};
 `;
 
 export default GT;

@@ -1,7 +1,9 @@
-import React, { useState } from "react";
-import OnlyLogin from "../Login/OnlyLogin";
+import React, { useState, useEffect } from "react";
 import styled, { css } from "styled-components";
+import { connect } from "react-redux";
+import { YE } from "../../config";
 import Nav from "../../component/Nav/Nav";
+import OnlyLogin from "../Login/OnlyLogin";
 import CurrentBalance from "./CurerntBalance/CurrentBalance";
 import OutstnadingOrder from "./OutstandingOrder/OutstandingOrder";
 import MiddleRight from "../Exchange/MiddleRight/MiddleRight";
@@ -13,17 +15,34 @@ const tabs = {
   1: <OutstnadingOrder />,
 };
 
-function Balance() {
+function Balance({ asset }) {
   let token = localStorage.getItem("token");
   const [selected, setSelected] = useState(0);
   const changeTab = (id) => setSelected(id);
-  const [allAsset, setAllAsset] = useState(0);
-  const [KRW, setKRW] = useState(0);
+  // const [KRW, setKRW] = useState(0);
   const [gainLoss, setGainLoss] = useState(0);
   const [percent, setPercent] = useState(0);
   const [buyAmount, setBuyAmount] = useState(0);
   const [evaluated, setEvaluated] = useState(0);
   const [plus, setPlus] = useState(true);
+  const [currentAsset, setCurrentAsset] = useState(0);
+
+  useEffect(() => {
+    fetch(`${YE}/user/deposit/check`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json", Authorization: token },
+    })
+      .then((res) => res.json())
+      .then((res) => setCurrentAsset(Math.trunc(res.my_wallet[0].volume)));
+  }, [asset]);
+
+  const addComma = (price) => {
+    if (price > 999) {
+      return ("" + price).replace(/(\d)(?=(?:\d{3})+(?!\d))/g, "$1,");
+    } else {
+      return price;
+    }
+  };
 
   return (
     <>
@@ -37,14 +56,14 @@ function Balance() {
                   <SummaryDiv all>
                     <SummaryTitle>총 보유자산</SummaryTitle>
                     <p>
-                      <SummarySpan num>{allAsset}</SummarySpan>
+                      <SummarySpan num>{addComma(currentAsset)}</SummarySpan>
                       <SummarySpan per>KRW</SummarySpan>
                     </p>
                   </SummaryDiv>
                   <SummaryDiv huansuan>
                     <SummaryTitle>KRW 보유수량</SummaryTitle>
                     <p>
-                      <SummarySpan num>{KRW}</SummarySpan>
+                      <SummarySpan num>{addComma(currentAsset)}</SummarySpan>
                       <SummarySpan per>KRW</SummarySpan>
                     </p>
                   </SummaryDiv>
@@ -134,6 +153,14 @@ function Balance() {
     </>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    asset: state.detectAsset.asset,
+  };
+};
+
+export default connect(mapStateToProps)(Balance);
 
 const BalanceWrap = styled.div`
   background-color: #f5f8ff;
@@ -384,5 +411,3 @@ const ImgComponent = styled.img`
     display: none;
   }
 `;
-
-export default Balance;

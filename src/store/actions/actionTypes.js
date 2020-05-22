@@ -29,6 +29,5 @@ export const CHANGE_COIN = "CHANGE_COIN";
 export const BUY = "BUY";
 export const SELL = "SELL";
 
-// My Info
+// Deposit, Withdraw
 export const CHANGE_MYASSET = "CHANGE_MYASSET";
-export const CHARGE_MONEY = "CHARGE_MONEY";

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import styled, { css } from "styled-components";
-import { SH } from "../../../../config";
+import { YE } from "../../../../config";
 import {
   submitAuthUserName,
   submitAuthUserBank,
@@ -63,7 +63,7 @@ function Account({
     );
     console.log(name, bank, account);
 
-    fetch(`${SH}/user/bankaccount`, {
+    fetch(`${YE}/user/bankaccount`, {
       method: "POST",
       headers: { "Content-Type": "application/json", Authorization: token },
       body: JSON.stringify({

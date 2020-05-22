@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import styled, { css } from "styled-components";
-import { SH } from "../../../config";
+import { YE } from "../../../config";
 import Nav from "../../../component/Nav/Nav";
 import Footer from "../../../component/Footer/Footer";
 import circle from "../../../images/circle.png";
@@ -174,7 +174,7 @@ function SignupEmail({
   const goVerify = (e) => {
     e.preventDefault();
 
-    fetch(`${SH}/user/sign-up`, {
+    fetch(`${YE}/user/sign-up`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

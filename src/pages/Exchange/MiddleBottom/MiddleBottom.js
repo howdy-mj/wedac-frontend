@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled, { css } from "styled-components";
+import { connect } from "react-redux";
+import { YE } from "../../../config";
 // import TradingPartRight from "./TradingPartRight/TradingPartRight";
 import BottomRight from "./BottomRight/BottomRight";
 
-function MiddleBottom() {
+function MiddleBottom({ asset }) {
+  let token = localStorage.getItem("token");
   const [activeClick, setActiveClick] = useState(false);
   const borderColorOn = () => setActiveClick(true);
   const borderColorOff = () => setActiveClick(false);
@@ -12,10 +15,26 @@ function MiddleBottom() {
   const borderColorOn1 = () => setActiveClick1(true);
   const borderColorOff1 = () => setActiveClick1(false);
 
-  console.log(activeClick);
+  const [currentAsset, setCurrentAsset] = useState(0);
+  useEffect(() => {
+    fetch(`${YE}/user/deposit/check`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json", Authorization: token },
+    })
+      .then((res) => res.json())
+      .then((res) => setCurrentAsset(Math.trunc(res.my_wallet[0].volume)));
+  }, [asset]);
+
+  const addComma = (price) => {
+    if (price > 999) {
+      return ("" + price).replace(/(\d)(?=(?:\d{3})+(?!\d))/g, "$1,");
+    } else {
+      return price;
+    }
+  };
+
   return (
     <div>
-      {" "}
       <TradingPartArticle>
         <TradingPartNav>
           <Nav left>매수</Nav>
@@ -27,7 +46,7 @@ function MiddleBottom() {
               <InputWrapper>
                 <InputWrapperLeft>주문 가능</InputWrapperLeft>
                 <InputWrapperRight>
-                  <MoneyDetail left>0</MoneyDetail>
+                  <MoneyDetail left>{addComma(currentAsset)}</MoneyDetail>
                   <MoneyDetail right>KRW</MoneyDetail>
                 </InputWrapperRight>
               </InputWrapper>
@@ -114,7 +133,13 @@ function MiddleBottom() {
   );
 }
 
-export default MiddleBottom;
+const mapStateToProps = (state) => {
+  return {
+    asset: state.detectAsset.asset,
+  };
+};
+
+export default connect(mapStateToProps)(MiddleBottom);
 
 const TradingPartArticle = styled.div`
   border: 1px solid #ebeef6;

@@ -1,24 +1,51 @@
 import React, { useState } from "react";
 import styled, { css } from "styled-components";
 import { connect } from "react-redux";
+import { YE } from "../../../config";
+import { detectAsset } from "../../../store/actions";
 
-function Deposit({ name, bank, account }) {
+function Deposit({ name, bank, account, detectAsset }) {
+  let token = localStorage.getItem("token");
   let accountAuth = localStorage.getItem("accountAuth");
-  const [amount, setAmount] = useState(0);
+  const [depositAmount, setDepositAmount] = useState(0);
   const [redBorder, setRedBorder] = useState(false);
+  const [able, setAble] = useState(false);
 
   const hasBorder = () => {
     setRedBorder(true);
   };
 
   const handleDepositAmount = (e) => {
-    let depositInput = e.target.value;
-    setAmount(depositInput);
-    console.log("handleDepositAmount", amount);
+    setDepositAmount(e.target.value);
+    console.log("handleDepositAmount", e.target.value);
+    e.target.value.length > 4 ? setAble(true) : setAble(false);
   };
 
   const noBorder = () => {
     setRedBorder(false);
+  };
+
+  const goDeposit = () => {
+    console.log("goDeposit", depositAmount);
+
+    fetch(`${YE}/user/deposit`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Authorization: token },
+      body: JSON.stringify({
+        deposit_side: 1,
+        price: depositAmount,
+      }),
+    }).then((res) => {
+      if (res.status === 200) {
+        console.log("입금 성공");
+        detectAsset(1);
+        setTimeout(() => {
+          detectAsset(0);
+        }, 2000);
+      } else {
+        console.log("입금 실패");
+      }
+    });
   };
 
   return (
@@ -62,13 +89,22 @@ function Deposit({ name, bank, account }) {
                   e.preventDefault()
                 }
                 onBlur={noBorder}
-                defaultValue={amount}
+                defaultValue={depositAmount}
               />
               <ExpectedKRW>KRW</ExpectedKRW>
             </ExpectedInputWrap>
             {/* <UnderWarning>최소 입금 예약 가능 금액을 10,000입니다.</UnderWarning> */}
           </ExpectedDepositDiv>
-          <DepositButton>입금하기</DepositButton>
+          <DepositButton
+            disabled={!able}
+            style={{
+              cursor: able ? "pointer" : "not-allowed",
+              backgroundColor: able ? "#0086ec" : "rgba(0, 134, 236, 0.5)",
+            }}
+            onClick={goDeposit}
+          >
+            입금하기
+          </DepositButton>
           <BankGuide>
             <GuideTitle>원화 입금 전 유의사항</GuideTitle>
             <GuideContent>
@@ -96,7 +132,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(Deposit);
+export default connect(mapStateToProps, { detectAsset })(Deposit);
 
 const DepositWrap = styled.div``;
 
