@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { css } from "styled-components";
 
-function BottomRight() {
+function BottomRight(props) {
+  console.log("kl", props);
   const [activeClick, setActiveClick] = useState(false);
   const borderColorOn = () => setActiveClick(true);
   const borderColorOff = () => setActiveClick(false);
@@ -10,6 +11,23 @@ function BottomRight() {
   const [activeClick1, setActiveClick1] = useState(false);
   const borderColorOn1 = () => setActiveClick1(true);
   const borderColorOff1 = () => setActiveClick1(false);
+
+  const [priceNumber, setPriceNumber] = useState("");
+  //const [changeNum, setChangeNum] = useState([]);
+
+  const changeNumber = (e) => {
+    setPriceNumber(e.target.value);
+  };
+
+  // useEffect(() => {
+  //   console.log("dataEffect", props.dateForprice);
+  //   setPriceNumber(props.dateForprice && props.dateForprice.split(".")[0]);
+  // }, [props.dateForprice]);
+
+  useEffect(() => {
+    setPriceNumber(props.dateForprice);
+  }, [props.dateForprice]);
+
   return (
     <div>
       <TradingPartFeedLeft>
@@ -18,7 +36,7 @@ function BottomRight() {
             <InputWrapperLeft>주문 가능</InputWrapperLeft>
             <InputWrapperRight>
               <MoneyDetail left>0</MoneyDetail>
-              <MoneyDetail right>KRW</MoneyDetail>
+              <MoneyDetail right>BTC</MoneyDetail>
             </InputWrapperRight>
           </InputWrapper>
           <InputWrapper>
@@ -31,7 +49,16 @@ function BottomRight() {
                     onBlur={() => borderColorOff()}
                     type="text"
                     placeholder
-                    value="11,442,000"
+                    onChange={changeNumber}
+                    value={priceNumber}
+                    defaultValue={0}
+                    onKeyDown={(e) =>
+                      (e.keyCode === 69 ||
+                        e.keyCode === 190 ||
+                        e.keyCode === 187 ||
+                        e.keyCode === 189) &&
+                      e.preventDefault()
+                    }
                   />
                   <PriceUnit>
                     <p>KRW</p>
@@ -217,7 +244,11 @@ const InputPricePart = styled.input`
   height: 34px;
   vertical-align: middle;
   color: #596070;
-
+  ::-webkit-outer-spin-button,
+  ::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
   &:focus {
     outline: none;
   }

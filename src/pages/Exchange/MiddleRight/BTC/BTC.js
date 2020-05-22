@@ -1,8 +1,19 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { css } from "styled-components";
+import { Link } from "react-router-dom";
+import { YE } from "../../../../config";
 
-function BTC() {
+function BTC(props) {
+  const [coindata, setCoindata] = useState([]);
+
+  useEffect(() => {
+    fetch(`${YE}/market/BTC`)
+      .then((res) => res.json())
+      .then(
+        (res) => setCoindata(res) // res.krw , res.btc, res.gt 로 props전달
+      );
+  }, []);
   return (
     <div>
       <BottomNavTable>
@@ -24,25 +35,34 @@ function BTC() {
         </BottomNavTBody>
       </BottomNavTable>
       <ScrollBar>
-        <BottomNavTable>
-          <BottomNavTBody>
-            <BottomNavTR>
-              <BottomNavBelowTD first>
-                <p>KLAY</p>
-                <p>클레이</p>
-              </BottomNavBelowTD>
-              <BottomNavBelowTD second>
-                <p>126.10</p>
-              </BottomNavBelowTD>
-              <BottomNavBelowTD third>
-                <p>-1.62%</p>
-              </BottomNavBelowTD>
-              <BottomNavBelowTD last>
-                <p>176백만</p>
-              </BottomNavBelowTD>
-            </BottomNavTR>
-          </BottomNavTBody>
-        </BottomNavTable>
+        {coindata.history &&
+          coindata.history.map((a) => {
+            return (
+              <Link to={`/exchange/BTC/${a.coin_code}`}>
+                <BottomNavTable>
+                  {/* onClick={() => props.coinKRW(a)}> */}
+
+                  <BottomNavTBody>
+                    <BottomNavTR>
+                      <BottomNavBelowTD first>
+                        <p>{a.coin_code}</p>
+                        <p>{a.coin_kor_name}</p>
+                      </BottomNavBelowTD>
+                      <BottomNavBelowTD second>
+                        <p>{Number(a.present_price).toFixed(2)}</p>
+                      </BottomNavBelowTD>
+                      <BottomNavBelowTD third>
+                        <p>{a.change_rate}%</p>
+                      </BottomNavBelowTD>
+                      <BottomNavBelowTD last>
+                        <p>{a.transaction_price}</p>
+                      </BottomNavBelowTD>
+                    </BottomNavTR>
+                  </BottomNavTBody>
+                </BottomNavTable>
+              </Link>
+            );
+          })}
       </ScrollBar>
     </div>
   );

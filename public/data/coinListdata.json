@@ -1,0 +1,60 @@
+{
+  "market_code": "GT",
+  "market_kor_name": "지닥토큰",
+  "history": [
+    {
+      "coin_code": "BOS",
+      "coin_kor_name": "보스",
+      "thumbnamil_url": "http://naver.me/58hP561l",
+      "present_price": "15.01000000",
+      "sub_krw_price": "14.3600",
+      "change_rate": "0.00",
+      "transaction_price": "0E-8"
+    },
+    {
+      "coin_code": "ENJ",
+      "coin_kor_name": "엔진코인",
+      "thumbnamil_url": "http://naver.me/5rLVTxZU",
+      "present_price": "161.50000000",
+      "sub_krw_price": "8.0099",
+      "change_rate": "0.00",
+      "transaction_price": "0E-8"
+    },
+    {
+      "coin_code": "ETH",
+      "coin_kor_name": "이더리움",
+      "thumbnamil_url": "http://naver.me/xPtEQ9lz",
+      "present_price": "38728000.00000000",
+      "sub_krw_price": "162.6900",
+      "change_rate": "0.00",
+      "transaction_price": "0E-8"
+    },
+    {
+      "coin_code": "HDAC",
+      "coin_kor_name": "에이치닥",
+      "thumbnamil_url": "http://naver.me/xitc2euB",
+      "present_price": "90.10000000",
+      "sub_krw_price": "22.2300",
+      "change_rate": "0.00",
+      "transaction_price": "0E-8"
+    },
+    {
+      "coin_code": "WGP",
+      "coin_kor_name": "더블유그린페이",
+      "thumbnamil_url": "http://naver.me/IGA2mDpH",
+      "present_price": "250.00000000",
+      "sub_krw_price": "1.3344",
+      "change_rate": "0.00",
+      "transaction_price": "0E-8"
+    },
+    {
+      "coin_code": "XRP",
+      "coin_kor_name": "리플",
+      "thumbnamil_url": "http://naver.me/G2hlHsfL",
+      "present_price": "1830.00000000",
+      "sub_krw_price": "3442919.0000",
+      "change_rate": "0.00",
+      "transaction_price": "0E-8"
+    }
+  ]
+}

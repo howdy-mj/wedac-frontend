@@ -1,8 +1,21 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { css } from "styled-components";
+import { Link } from "react-router-dom";
+import { YE } from "../../../../config";
 
-function GT() {
+function GT(props) {
+  console.log("sdf", props.coindata);
+
+  const [coindata, setCoindata] = useState([]);
+
+  useEffect(() => {
+    fetch(`${YE}/market/GT`)
+      .then((res) => res.json())
+      .then(
+        (res) => setCoindata(res) // res.krw , res.btc, res.gt 로 props전달
+      );
+  }, []);
   return (
     <div>
       <BottomNavTable>
@@ -24,25 +37,33 @@ function GT() {
         </BottomNavTBody>
       </BottomNavTable>
       <ScrollBar>
-        <BottomNavTable>
-          <BottomNavTBody>
-            <BottomNavTR>
-              <BottomNavBelowTD first>
-                <p>HDAC</p>
-                <p>에이치닥</p>
-              </BottomNavBelowTD>
-              <BottomNavBelowTD second>
-                <p>29.98</p>
-              </BottomNavBelowTD>
-              <BottomNavBelowTD third>
-                <p>0.00%</p>
-              </BottomNavBelowTD>
-              <BottomNavBelowTD last>
-                <p>9,071</p>
-              </BottomNavBelowTD>
-            </BottomNavTR>
-          </BottomNavTBody>
-        </BottomNavTable>
+        {coindata.history &&
+          coindata.history.map((a) => {
+            return (
+              <Link to={`/exchange/GT/${a.coin_code}`}>
+                <BottomNavTable>
+                  {/* onClick={() => props.coinKRW(a)}> */}
+                  <BottomNavTBody>
+                    <BottomNavTR>
+                      <BottomNavBelowTD first>
+                        <p>{a.coin_code}</p>
+                        <p>{a.coin_kor_name}</p>
+                      </BottomNavBelowTD>
+                      <BottomNavBelowTD second>
+                        <p>{Number(a.present_price).toFixed(2)}</p>
+                      </BottomNavBelowTD>
+                      <BottomNavBelowTD third>
+                        <p>{a.change_rate}%</p>
+                      </BottomNavBelowTD>
+                      <BottomNavBelowTD last>
+                        <p>{a.transaction_price}</p>
+                      </BottomNavBelowTD>
+                    </BottomNavTR>
+                  </BottomNavTBody>
+                </BottomNavTable>
+              </Link>
+            );
+          })}
       </ScrollBar>
     </div>
   );
@@ -125,7 +146,7 @@ const BottomNavTH = styled.th`
     color: #4b5262;
   }
 `;
-const BottomNavBelowTD = styled.th` 
+const BottomNavBelowTD = styled.th`
   height: 46px;
   padding: 0px 4px;
   vertical-align: middle;
