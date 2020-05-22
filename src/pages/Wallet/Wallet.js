@@ -32,12 +32,13 @@ function Wallet({ asset }) {
   };
 
   useEffect(() => {
-    fetch(`${YE}/user/deposit/check`, {
-      method: "GET",
-      headers: { "Content-Type": "application/json", Authorization: token },
-    })
-      .then((res) => res.json())
-      .then((res) => setCurrentAsset(Math.trunc(res.my_wallet[0].volume)));
+    token &&
+      fetch(`${YE}/user/deposit/check`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json", Authorization: token },
+      })
+        .then((res) => res.json())
+        .then((res) => setCurrentAsset(Math.trunc(res.my_wallet[0].volume)));
   }, [asset]);
 
   return (
