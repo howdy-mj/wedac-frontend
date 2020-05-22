@@ -6,14 +6,15 @@ function SlideBanner() {
   const [current, setCurrent] = useState(1);
 
   useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrent(current + 1);
+    }, 2000);
+
     fetch("/data/mainBanner.json")
       .then((data) => data.json())
       .then((data) => setSlideBanners(data));
+    return clearInterval(interval);
   }, []);
-
-  // setInterval(() => {
-  //   setCurrent(current + 1);
-  // }, 2000);
 
   const changingBanner = (slideBanners, current) => {
     const filteredBanner = slideBanners
