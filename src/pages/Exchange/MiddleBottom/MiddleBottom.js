@@ -57,7 +57,6 @@ function MiddleBottom({ asset, dataForprice, match }) {
   }
 
   const [priceNumber, setPriceNumber] = useState("");
-  //const [changeNum, setChangeNum] = useState([]);
   const changeNumber = (e) => {
     setPriceNumber(e.target.value);
   };
@@ -96,7 +95,8 @@ function MiddleBottom({ asset, dataForprice, match }) {
       .then((res) => console.log(res));
     // 주문가격: changeNumber;
     // 주문 수량: priceNumber1;
-    console.log(priceNumber, priceNumber1);
+    console.log(typeof priceNumber);
+    console.log(typeof priceNumber1);
   };
 
   return (
