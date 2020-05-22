@@ -1,5 +1,5 @@
 import React from "react";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 function Partners() {
   return (
@@ -32,25 +32,31 @@ function Partners() {
         </GlobalContainer>
       </Global>
       <Local>
-        <div className="container">
+        <LocalContainer className="container">
           <LocalTitle>피어테크(GDAC) 파트너스</LocalTitle>
           <LocalImg></LocalImg>
-        </div>
+        </LocalContainer>
       </Local>
     </PartnersWrap>
   );
 }
 
 const PartnersWrap = styled.div`
+  width: 100%;
+
   @media (min-width: 1220px) {
-    width: 1152px;
-    margin: 0 auto;
+    /* width: 1152px; */
   }
 `;
 
 const Global = styled.div`
   height: 555px;
   padding: 80px 38px;
+
+  @media (min-width: 1220px) {
+    width: 1152px;
+    margin: 0 auto;
+  }
 
   @media ${(props) => props.theme.tabletS} {
     height: 831px;
@@ -131,6 +137,13 @@ const Local = styled.div`
 
   @media ${(props) => props.theme.mobile} {
     height: 363px;
+  }
+`;
+
+const LocalContainer = styled.div`
+  @media (min-width: 1220px) {
+    width: 1152px;
+    margin: 0 auto;
   }
 `;
 

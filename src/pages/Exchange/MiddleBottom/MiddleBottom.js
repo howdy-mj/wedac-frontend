@@ -2,11 +2,12 @@ import React, { useState, useEffect } from "react";
 import styled, { css } from "styled-components";
 import { connect } from "react-redux";
 import { YE } from "../../../config";
+import { withRouter } from "react-router-dom";
 // import TradingPartRight from "./TradingPartRight/TradingPartRight";
 import BottomRight from "./BottomRight/BottomRight";
 import BeforeLogin from "../BeforeLogin/BeforeLogin";
 
-function MiddleBottom({ asset, dataForprice }) {
+function MiddleBottom({ asset, dataForprice, match }) {
   let token = localStorage.getItem("token");
   const [currentAsset, setCurrentAsset] = useState(0);
 
@@ -18,6 +19,17 @@ function MiddleBottom({ asset, dataForprice }) {
       })
         .then((res) => res.json())
         .then((res) => setCurrentAsset(Math.trunc(res.my_wallet[0].volume)));
+  }, []);
+
+  useEffect(() => {
+    if (asset === 1) {
+      fetch(`${YE}/user/deposit/check`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json", Authorization: token },
+      })
+        .then((res) => res.json())
+        .then((res) => setCurrentAsset(Math.trunc(res.my_wallet[0].volume)));
+    }
   }, [asset]);
 
   const [activeClick, setActiveClick] = useState(false);
@@ -66,7 +78,26 @@ function MiddleBottom({ asset, dataForprice }) {
     setPriceNumber1(dataForprice && dataForprice.split(".")[0]);
   }, [dataForprice]);
 
-  console.log(activeClick);
+  // console.log(activeClick);
+
+  // 매수 함수
+  const buyCoin = () => {
+    console.log("buycoin");
+    fetch(`${YE}/user/${match.params.market}/${match.params.coin}/order`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Authorization: token },
+      body: JSON.stringify({
+        price: priceNumber,
+        order_type: 1,
+        volume: priceNumber1,
+      }),
+    })
+      .then((res) => res.json())
+      .then((res) => console.log(res));
+    // 주문가격: changeNumber;
+    // 주문 수량: priceNumber1;
+    console.log(priceNumber, priceNumber1);
+  };
 
   return (
     <div>
@@ -131,9 +162,15 @@ function MiddleBottom({ asset, dataForprice }) {
                       onBlur={() => borderColorOff1()}
                       className="inputInput"
                       type="number"
-                      placeholder
-                      value=""
-                      on
+                      onChange={changeNumber1}
+                      value={priceNumber1}
+                      // onKeyDown={(e) =>
+                      //   (e.keyCode === 69 ||
+                      //     e.keyCode === 190 ||
+                      //     e.keyCode === 187 ||
+                      //     e.keyCode === 189) &&
+                      //   e.preventDefault()
+                      // }
                     />
                     <PriceUnit>
                       <p>BTC</p>
@@ -166,7 +203,9 @@ function MiddleBottom({ asset, dataForprice }) {
                 <span>최소주문수량:500 KRW</span>
                 <span>수수료: 0.04%</span>
               </TextBottom>
-              <TradingPartButton type="button">매수 BTC</TradingPartButton>
+              <TradingPartButton onClick={buyCoin} type="button">
+                매수 BTC
+              </TradingPartButton>
             </TradingPartFeedInner>
           </TradingPartFeedLeft>
           {/* <BottomRight dateForprice={priceNumber} /> */}
@@ -189,8 +228,6 @@ function MiddleBottom({ asset, dataForprice }) {
                         onBlur={() => borderColorOff3()}
                         type="text"
                         placeholder
-                        onChange={changeNumber1}
-                        value={priceNumber1}
                         defaultValue={0}
                         onKeyDown={(e) =>
                           (e.keyCode === 69 ||
@@ -272,7 +309,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(MiddleBottom);
+export default connect(mapStateToProps)(withRouter(MiddleBottom));
 
 const TradingPartArticle = styled.div`
   position: relative;

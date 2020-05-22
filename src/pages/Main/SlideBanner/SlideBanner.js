@@ -1,34 +1,35 @@
 import React, { useState, useEffect } from "react";
-import styled, { css } from "styled-components";
-
-const changingBanner = (slideBanners, current) => {
-  const filteredBanner = slideBanners
-    .filter((banner) => {
-      return banner.id === (current % 2) + 1;
-    })
-    .concat({
-      id: 0,
-      img: "",
-      title: "",
-      description: "",
-      action: "",
-    });
-  return filteredBanner[0];
-};
+import styled from "styled-components";
 
 function SlideBanner() {
   const [slideBanners, setSlideBanners] = useState([]);
   const [current, setCurrent] = useState(1);
 
   useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrent(current + 1);
+    }, 2000);
+
     fetch("/data/mainBanner.json")
       .then((data) => data.json())
       .then((data) => setSlideBanners(data));
+    return clearInterval(interval);
   }, []);
 
-  // setInterval(() => {
-  //   setCurrent(current + 1);
-  // }, 5000);
+  const changingBanner = (slideBanners, current) => {
+    const filteredBanner = slideBanners
+      .filter((banner) => {
+        return banner.id === (current % 2) + 1;
+      })
+      .concat({
+        id: 0,
+        img: "",
+        title: "",
+        description: "",
+        action: "",
+      });
+    return filteredBanner[0];
+  };
 
   const prevBanner = () => {
     if (current < 3) {
@@ -44,6 +45,7 @@ function SlideBanner() {
       setCurrent(current + 1);
     }
   };
+
   const currentBanner = changingBanner(slideBanners, current);
 
   return (

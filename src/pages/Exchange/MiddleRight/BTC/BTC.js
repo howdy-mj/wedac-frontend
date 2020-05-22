@@ -151,6 +151,13 @@ const BottomNavBelowTD = styled.th`
   line-height: 3;
   display: table-cell;
   font-family: NotoSansCJKkr,WhaleXSans,sans-serif;
+  color: ${(props) => {
+    if (props.data > 0) return props.theme.plusColor;
+    else if (props.data < 0) return props.theme.minusColor;
+    else return props.theme.noChangeColor;
+  }};
+
+
 ${(props) =>
   props.first &&
   css`
@@ -167,7 +174,7 @@ ${(props) =>
       letter-spacing: -0.03em;
       font-weight: 700;
       line-height: 15px;
-      color: #022553;
+      /* color: #022553; */
     }
     p:last-child {
       font-size: 10px;
@@ -186,7 +193,7 @@ ${(props) =>
 
     p {
       font-size: 12px;
-      color: #e21b36;
+      /* color: #e21b36; */
       font-weight: 700;
     }
   `}
@@ -206,7 +213,7 @@ ${(props) =>
   css`
     width: 27%;
     padding-right: 14px;
-    color: #4b5262;
+    /* color: #4b5262; */
 
     p {
       text-align: right;

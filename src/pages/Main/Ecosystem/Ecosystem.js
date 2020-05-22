@@ -119,7 +119,7 @@ const EcosystemWrap = styled.div`
 const EcosystemContainer = styled.div`
   padding: 128px 38px;
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-evenly; */
   /* width: 1152px;
   margin: 0 auto; */
 

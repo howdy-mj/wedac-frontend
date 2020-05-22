@@ -50,14 +50,14 @@ function KRW(props) {
                         <p>{a.coin_code}</p>
                         <p>{a.coin_kor_name}</p>
                       </BottomNavBelowTD>
-                      <BottomNavBelowTD second>
+                      <BottomNavBelowTD second data={a.change_rate}>
                         <p>{Number(a.present_price).toFixed(2)}</p>
                       </BottomNavBelowTD>
-                      <BottomNavBelowTD third>
+                      <BottomNavBelowTD third data={a.change_rate}>
                         <p>{a.change_rate}%</p>
                       </BottomNavBelowTD>
                       <BottomNavBelowTD last>
-                        <p>{a.transaction_price}</p>
+                        <p>{Number(a.transaction_price).toFixed(0)}</p>
                       </BottomNavBelowTD>
                     </BottomNavTR>
                   </BottomNavTBody>
@@ -166,6 +166,12 @@ const BottomNavBelowTD = styled.th`
   line-height: 3;
   display: table-cell;
   font-family: NotoSansCJKkr,WhaleXSans,sans-serif;
+  color: ${(props) => {
+    if (props.data > 0) return props.theme.plusColor;
+    else if (props.data < 0) return props.theme.minusColor;
+    else return props.theme.noChangeColor;
+  }};
+
 ${(props) =>
   props.first &&
   css`
@@ -182,7 +188,7 @@ ${(props) =>
       letter-spacing: -0.03em;
       font-weight: 700;
       line-height: 15px;
-      color: #022553;
+      /* color: #022553; */
     }
     p:last-child {
       font-size: 10px;
@@ -201,7 +207,7 @@ ${(props) =>
 
     p {
       font-size: 12px;
-      color: #174ca2;
+      /* color: #174ca2; */
       font-weight: 700;
     }
   `}
@@ -213,7 +219,7 @@ ${(props) =>
       p {
         font-size: 12px;
         font-weight: 400;
-        color: #174ca2;
+        /* color: #174ca2; */
       }
     `}
 ${(props) =>
@@ -221,7 +227,7 @@ ${(props) =>
   css`
     width: 27%;
     padding-right: 14px;
-    color: #4b5262;
+    /* color: #4b5262; */
 
     p {
       text-align: right;

@@ -1,17 +1,21 @@
 import React, { useState, useEffect } from "react";
 import styled, { css } from "styled-components";
+import { withRouter } from "react-router-dom";
+import { YE } from "../../../../config";
 
 function NavDetail2(props) {
   console.log("Asdasd", props.coindata);
   const [coindata, setCoindata] = useState([]);
 
   useEffect(() => {
-    fetch(`/data/coinHistorydata.json`)
+    fetch(
+      `${YE}/${props.match.params.market}/${props.match.params.coin}/history`
+    )
       .then((res) => res.json())
       .then(
         (res) => setCoindata(res) // res.krw , res.btc, res.gt 로 props전달
       );
-  }, []);
+  }, [props.match.params.market, props.match.params.coin]);
 
   return (
     <BottomNavInner2>
@@ -26,20 +30,21 @@ function NavDetail2(props) {
         </BottomNavTBody>
       </BottomNavTable>
       <ScrollBar>
-        {props.coindata.daily_history.map((a) => {
-          return (
-            <BottomNavTable>
-              <BottomNavTBody>
-                <BottomNavTR>
-                  <BottomNavBelowTD first> {a.date}</BottomNavBelowTD>
-                  <BottomNavBelowTD second>{a.close_price}</BottomNavBelowTD>
-                  <BottomNavBelowTD third>{a.krw_price}</BottomNavBelowTD>
-                  <BottomNavBelowTD last>{a.volume}</BottomNavBelowTD>
-                </BottomNavTR>
-              </BottomNavTBody>
-            </BottomNavTable>
-          );
-        })}
+        {props.coindata &&
+          props.coindata.daily_history.map((a) => {
+            return (
+              <BottomNavTable>
+                <BottomNavTBody>
+                  <BottomNavTR>
+                    <BottomNavBelowTD first> {a.date}</BottomNavBelowTD>
+                    <BottomNavBelowTD second>{a.close_price}</BottomNavBelowTD>
+                    <BottomNavBelowTD third>{a.krw_price}</BottomNavBelowTD>
+                    <BottomNavBelowTD last>{a.volume}</BottomNavBelowTD>
+                  </BottomNavTR>
+                </BottomNavTBody>
+              </BottomNavTable>
+            );
+          })}
       </ScrollBar>
       {/* <BottomContents2>
         <InnerDetail22>2020-05-12 09:00</InnerDetail22>
@@ -51,7 +56,7 @@ function NavDetail2(props) {
   );
 }
 
-export default NavDetail2;
+export default withRouter(NavDetail2);
 
 const BottomNavInner2 = styled.div`
   width: 100%;
