@@ -1,11 +1,8 @@
 ### 프로젝트 요약
 
 - 소개: 암호화폐 거래소 [지닥](https://www.gdac.com/) 웹사이트 클론
-
 - 기간: 2020.05.11 - 2020.05.22 (약 2주)
-
 - 인원: 프론트엔드 2명([MJ Kim](https://github.com/howdy-mj), [Seunghyunkim1](https://github.com/Seunghyunkim1)), 백엔드 2명([soohyung0121](https://github.com/soohyung0121), [yenilee](https://github.com/yenilee))
-
 - Backend-Repo: [wedac-backend](https://github.com/wecode-bootcamp-korea/wedac-backend)
 
 ---
