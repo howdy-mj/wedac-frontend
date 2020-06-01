@@ -44,8 +44,14 @@
 
 **거래소**:
 
-- 코인 데이터들을 Backend API를 fetch하여 `map` 함수를 통해 화면에 구현
-- 다른 Coin 클릭 시, `match.params`를 사용하여 해당 카테고리 이동경로 구현
+- 코인 데이터들(KRW, BTC, GT 마켓)을 Backend API를 fetch요청, `map` 함수를 통해 MiddleRight컴포넌트에 구현
+- 각 코인들의(KRW, BTC, GT 마켓)분류에 맞게 탭전환 기능 구현 (MiddleRight, SectionBottom)
+- 각 코인들(KRW, BTC, GT 마켓) 클릭시 Link to 로 url 변경 구현
+- 변경된 url에 따라 동일페이지 다른 컴포넌트(sectionLeft)에서 'match.params'로 API fetch요청, 'map'함수로 화면에 구현
+- 구현된 sectionLeft API(코인 유동가격) 클릭시 최상단 컴포넌트로 props로 api전달 후 매수/매도 컴포넌트의 주문가격input에 props로 받아서 구현
+- 매수 버튼 클릭시 fetch Post형식으로 백엔드에게 주문가격 전송/ console창에서만 기능확인
+- tradingview 라이브러리 사용
+- 반응형웹 구현 (web, tablet, mobile)
 
 **회원가입/로그인**:
 
