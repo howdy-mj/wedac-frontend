@@ -1,8 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
-import MobileHomeNav from "./MobileHomeNav/MobileHomeNav";
-import logoImg from "../../images/logo_white.png";
+import MobileHomeNav from "./MobileHomeNav";
 
 function HomeNav() {
   let token = localStorage.getItem("token");
@@ -39,11 +38,6 @@ function HomeNav() {
         <Container>
           <MainNav>
             <Left>
-              <Logo>
-                <Link to="/">
-                  <Img src={logoImg} alt="mainlogo" />
-                </Link>
-              </Logo>
               <Category>
                 <Ul>
                   <Li>그로우</Li>
@@ -90,10 +84,23 @@ function HomeNav() {
 
 const HomeNavbar = styled.nav`
   background-color: ${(props) => props.theme.gdacColor};
-  width: 100%;
+  // width: 100%;
 
   @media ${(props) => props.theme.mobile} {
     display: none;
+  }
+`;
+
+const SubNav = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 34px;
+  padding: 12px 25px;
+
+  @media ${(props) => props.theme.desktop} {
+    width: 1640px;
+    margin: 0 auto;
   }
 `;
 
@@ -105,26 +112,11 @@ const Container = styled.div`
 
 const MainNav = styled.div`
   height: 58px;
-  width: 100%;
-  padding-left: 25px;
-  padding-right: 25px;
+  padding: 0 40px;
   font-size: 14px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-
-  @media ${(props) => props.theme.desktop} {
-    width: 1640px;
-    margin: 0 auto;
-  }
-`;
-
-const SubNav = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  height: 34px;
-  padding: 12px 25px;
 
   @media ${(props) => props.theme.desktop} {
     width: 1640px;
@@ -144,11 +136,6 @@ const Left = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-`;
-
-const Logo = styled.div`
-  margin-right: 40px;
-  padding-top: 14px;
 `;
 
 const Img = styled.img`
@@ -191,6 +178,7 @@ const Li = styled.li`
     if (props.middle) {
       return css`
         padding-top: 20px;
+        margin-right: 20px;
       `;
     }
     if (props.left) {

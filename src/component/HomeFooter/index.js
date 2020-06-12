@@ -1,17 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
-import logoImg from "../../images/logo_white.png";
-import facebook from "../../images/sns-b-facebook.png";
-import kakao from "../../images/sns-b-kakao.png";
-import naver from "../../images/sns-b-blog.png";
 import twitter from "../../images/sns-b-twitter.png";
-import telegram from "../../images/sns-b-telegram.png";
-import market from "../../images/b-market.png";
-import exchange from "../../images/b-exchange.png";
-import balance from "../../images/b-balance.png";
-import wallet from "../../images/b-wallet.png";
-import history from "../../images/b-history.png";
 
 function HomeFooter() {
   const [hasColor, setHasColor] = useState(false);
@@ -26,15 +16,12 @@ function HomeFooter() {
     <HomeFooterWrap>
       <Container>
         <First>
-          <div className="logo">
-            <Img logo src={logoImg} alt="logo" />
-          </div>
           <SNS>
-            <Img sns src={facebook} alt="facebook" />
-            <Img sns src={kakao} alt="kakao" />
-            <Img sns src={naver} alt="naver" />
+            <Logo sns>p</Logo>
+            <Logo sns>I</Logo>
+            <Logo sns>2</Logo>
             <Img sns src={twitter} alt="twitter" />
-            <Img sns src={telegram} alt="telegram" />
+            <Logo sns>|</Logo>
           </SNS>
         </First>
         <Second>
@@ -142,30 +129,30 @@ function HomeFooter() {
       <Mobile>
         <MobileContainer>
           <MobileDiv>
-            <MobileImg src={market} alt="logo" />
+            <MobileLogo>l</MobileLogo>
             <MobileP>마켓</MobileP>
           </MobileDiv>
           <Link to="/exchange">
             <MobileDiv>
-              <MobileImg src={exchange} alt="logo" />
+              <MobileLogo>m</MobileLogo>
               <MobileP>거래소</MobileP>
             </MobileDiv>
           </Link>
           <Link to="/balance">
             <MobileDiv>
-              <MobileImg src={balance} alt="logo" />
+              <MobileLogo>k</MobileLogo>
               <MobileP>잔고</MobileP>
             </MobileDiv>
           </Link>
           <Link to="/wallet">
             <MobileDiv>
-              <MobileImg src={wallet} alt="logo" />
+              <MobileLogo>4</MobileLogo>
               <MobileP>지갑</MobileP>
             </MobileDiv>
           </Link>
           <Link to="/history">
             <MobileDiv>
-              <MobileImg src={history} alt="logo" />
+              <MobileLogo>3</MobileLogo>
               <MobileP>거래내역</MobileP>
             </MobileDiv>
           </Link>
@@ -213,6 +200,30 @@ const First = styled.div`
   }
 `;
 
+const SNS = styled.div`
+  position: absolute;
+  right: 20px;
+  height: 40px;
+
+  @media (min-width: 1221px) {
+    position: static;
+  }
+`;
+
+const Logo = styled.span`
+  font-family: "emoticon";
+  font-size: 20px;
+  color: white;
+
+  ${(props) =>
+    props.sns &&
+    css`
+      margin-left: 15px;
+      height: 20px;
+      width: 20px;
+    `};
+`;
+
 const Img = styled.img`
   ${(props) =>
     props.logo &&
@@ -248,20 +259,11 @@ const Img = styled.img`
       width: 50px;
     `}
 
-    ${(props) =>
-      props.hasColor &&
-      css`
-        filter: grayscale(0);
-      `}
-`;
-
-const SNS = styled.div`
-  position: absolute;
-  right: 20px;
-
-  @media (min-width: 1221px) {
-    position: static;
-  }
+  ${(props) =>
+    props.hasColor &&
+    css`
+      filter: grayscale(0);
+    `}
 `;
 
 const Second = styled.div`
@@ -443,9 +445,10 @@ const MobileDiv = styled.div`
   padding-top: 5px;
 `;
 
-const MobileImg = styled.img`
-  height: 18px;
-  width: 18px;
+const MobileLogo = styled.span`
+  font-family: "emoticon";
+  font-size: 18px;
+  color: #929eb0;
 `;
 
 const MobileP = styled.p`

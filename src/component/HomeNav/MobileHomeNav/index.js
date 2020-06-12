@@ -1,17 +1,11 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
-import logoImg from "../../../images/logo_white.png";
 
 function MobileHomeNav() {
   return (
     <MobileHomeNavbar>
       <Container>
-        <Left>
-          <Link to="/">
-            <Img src={logoImg} alt="logo" />
-          </Link>
-        </Left>
+        <Left></Left>
         <Right>
           <Div>그로우</Div>
           <Div>
@@ -52,11 +46,6 @@ const Container = styled.div`
 
 const Left = styled.div`
   line-height: 52px;
-`;
-
-const Img = styled.img`
-  height: 19px;
-  width: 62px;
 `;
 
 const Right = styled.div`

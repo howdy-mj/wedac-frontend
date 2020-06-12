@@ -16,6 +16,12 @@
 
 데모영상 보러가기▲(이미지 클릭)
 
+<div style="font-style: italic; font-size: 14px; ">
+
+본 프로젝트는 2020.05.11 기준으로 작업되어 현재 화면과 다를 수 있습니다.
+
+</div>
+
 ---
 
 ### 사용된 기술
@@ -26,7 +32,7 @@
 
 ---
 
-### 구현 기능
+### What I Did
 
 **메인**:
 
@@ -44,17 +50,6 @@
 - 로그인 유무에 따른 Nav 텍스트 및 링크 변경
 - 반응형 구현 (web, tablet, mobile)
 
-**거래소**:
-
-- 코인 데이터들(KRW, BTC, GT 마켓)을 Backend API를 fetch요청, `map` 함수를 통해 MiddleRight컴포넌트에 구현
-- 각 코인들의(KRW, BTC, GT 마켓)분류에 맞게 탭전환 기능 구현 (MiddleRight, SectionBottom)
-- 각 코인들(KRW, BTC, GT 마켓) 클릭시 Link to 로 url 변경 구현
-- 변경된 url에 따라 동일페이지 다른 컴포넌트(sectionLeft)에서 `match.params`로 API fetch요청, `map`함수로 화면에 구현
-- 구현된 sectionLeft API(코인 유동가격) 클릭시 최상단 컴포넌트로 props로 api전달 후 매수/매도 컴포넌트의 주문가격input에 props로 받아서 구현
-- 매수 버튼 클릭시 fetch Post형식으로 백엔드에게 주문가격 전송/ console창에서만 기능확인
-- tradingview 라이브러리 사용
-- 반응형웹 구현 (web, tablet, mobile)
-
 **회원가입/로그인**:
 
 - 아이디, 비밀번호, 비밀번호 중복확인 정규식으로 조건 체크
@@ -62,7 +57,7 @@
 - 필수 input이 다 입력되었을 때만 회원가입 버튼 활성화
 - '이메일로 가입하기' 버튼 클릭 시 이메일 전송 구현(Backend), 이메일 url 클릭 시 다시 wedac으로 돌아오기
 - 카카오톡 회원가입/로그인 구현
-- 회원가입 및 로그인 state를 Redux로 관리
+- 회원가입 및 로그인 state를 Redux로 관리5
 - 반응형 구현 (web, tablet, mobile)
 
 **내 설정**:
@@ -93,3 +88,15 @@
 - 로그인 했을 때만 화면 표시
 - 체결내역, 입출금내역 tab 전환 구현
 - 반응형 구현 (web, tablet, mobile)
+
+---
+
+## To do...
+
+(2020.06.13 업데이트)
+
+- 메인 들어갔을 때 뜨는 주의사항 모달창
+- 메인 배너 setInterval로 돌리기
+- 코드 리팩토링
+- tradingview 데이터 넣기
+- 승현님이 만든 거래소 페이지 코드 이해하기, 혼자 다시 만들어보기

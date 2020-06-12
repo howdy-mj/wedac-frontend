@@ -1,8 +1,7 @@
 import React, { Component } from "react";
-import HomeNav from "./component/HomeNav/HomeNav";
+import HomeNav from "./component/HomeNav";
 import Main from "./pages/Main/Main";
-import HomeFooter from "./component/HomeFooter/HomeFooter";
-// import Footer from "./component/Footer/Footer";
+import HomeFooter from "./component/HomeFooter";
 
 class Home extends Component {
   render() {
@@ -11,7 +10,6 @@ class Home extends Component {
         <HomeNav />
         <Main />
         <HomeFooter />
-        {/* <Footer /> */}
       </div>
     );
   }
