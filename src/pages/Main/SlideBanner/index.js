@@ -6,73 +6,62 @@ function SlideBanner() {
   const [current, setCurrent] = useState(1);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrent(current + 1);
-    }, 2000);
-
     fetch("/data/mainBanner.json")
       .then((data) => data.json())
       .then((data) => setSlideBanners(data));
-    return clearInterval(interval);
   }, []);
 
+  useEffect(() => {
+    console.log("setinterval");
+    const id = setInterval(() => {
+      setCurrent(current + 1);
+    }, 5000);
+    return () => clearInterval(id);
+  }, [current]);
+
   const changingBanner = (slideBanners, current) => {
-    const filteredBanner = slideBanners
-      .filter((banner) => {
-        return banner.id === (current % 2) + 1;
-      })
-      .concat({
-        id: 0,
-        img: "",
-        title: "",
-        description: "",
-        action: "",
-      });
+    const filteredBanner = slideBanners.filter((banner) => {
+      return banner.id === (current % 2) + 1;
+    });
     return filteredBanner[0];
   };
 
   const prevBanner = () => {
-    if (current < 3) {
-      setCurrent(1);
-    } else {
-      setCurrent(current - 1);
-    }
+    setCurrent(current - 1);
   };
   const nextBanner = () => {
-    if (current > 3) {
-      setCurrent(1);
-    } else {
-      setCurrent(current + 1);
-    }
+    setCurrent(current + 1);
   };
 
   const currentBanner = changingBanner(slideBanners, current);
 
   return (
     <SlideBannerWrap>
-      <Container>
-        <BannerContainer id={currentBanner.id}>
-          <BannerLeft>
-            <Tilte>{currentBanner.title}</Tilte>
-            <Description>
-              <p>{currentBanner.description1}</p>
-              <p>{currentBanner.description2}</p>
-            </Description>
-            <Action>{currentBanner.action}</Action>
-          </BannerLeft>
-          <BannerRight>
-            <BannerImg src={currentBanner.img} alt="img" />
-          </BannerRight>
-          <Button>
-            <Prev onClick={prevBanner}>
-              <ARrowPrev />
-            </Prev>
-            <Next onClick={nextBanner}>
-              <ArrowNext />
-            </Next>
-          </Button>
-        </BannerContainer>
-      </Container>
+      {slideBanners[0] && (
+        <Container>
+          <BannerContainer id={currentBanner.id}>
+            <BannerLeft>
+              <Tilte>{currentBanner.title}</Tilte>
+              <Description>
+                <p>{currentBanner.description1}</p>
+                <p>{currentBanner.description2}</p>
+              </Description>
+              <Action>{currentBanner.action}</Action>
+            </BannerLeft>
+            <BannerRight>
+              <BannerImg src={currentBanner.img} alt="img" />
+            </BannerRight>
+            <Button>
+              <Prev onClick={prevBanner}>
+                <ARrowPrev />
+              </Prev>
+              <Next onClick={nextBanner}>
+                <ArrowNext />
+              </Next>
+            </Button>
+          </BannerContainer>
+        </Container>
+      )}
     </SlideBannerWrap>
   );
 }
