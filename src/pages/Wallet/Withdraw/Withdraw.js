@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled, { css } from "styled-components";
 import { connect } from "react-redux";
-import { YE } from "../../../config";
+import { YE, addComma } from "../../../config";
 import { detectAsset } from "../../../store/actions";
 
 function Withdraw({ bank, account, detectAsset, asset }) {
@@ -58,14 +58,6 @@ function Withdraw({ bank, account, detectAsset, asset }) {
         console.log("출금 실패");
       }
     });
-  };
-
-  const addComma = (price) => {
-    if (price > 999) {
-      return ("" + price).replace(/(\d)(?=(?:\d{3})+(?!\d))/g, "$1,");
-    } else {
-      return price;
-    }
   };
 
   return (

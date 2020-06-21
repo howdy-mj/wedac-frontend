@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled, { css } from "styled-components";
 import { connect } from "react-redux";
-import { YE } from "../../config";
+import { YE, addComma } from "../../config";
 import Nav from "../../component/Nav/Nav";
 import Deposit from "./Deposit/Deposit";
 import Withdraw from "./Withdraw/Withdraw";
@@ -22,14 +22,6 @@ function Wallet({ asset }) {
   const [selected, setSelected] = useState(0);
   const changeSelected = (id) => setSelected(id);
   const [currentAsset, setCurrentAsset] = useState(0);
-
-  const addComma = (price) => {
-    if (price > 999) {
-      return ("" + price).replace(/(\d)(?=(?:\d{3})+(?!\d))/g, "$1,");
-    } else {
-      return price;
-    }
-  };
 
   useEffect(() => {
     token &&

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled, { css } from "styled-components";
 import { connect } from "react-redux";
-import { YE } from "../../../config";
+import { YE, addComma } from "../../../config";
 import { detectAsset } from "../../../store/actions";
 
 function Deposit({ name, bank, account, detectAsset }) {
@@ -10,14 +10,6 @@ function Deposit({ name, bank, account, detectAsset }) {
   const [depositAmount, setDepositAmount] = useState(0);
   const [redBorder, setRedBorder] = useState(false);
   const [able, setAble] = useState(false);
-
-  const addComma = (price) => {
-    if (price > 999) {
-      return ("" + price).replace(/(\d)(?=(?:\d{3})+(?!\d))/g, "$1,");
-    } else {
-      return price;
-    }
-  };
 
   const hasBorder = () => {
     setRedBorder(true);

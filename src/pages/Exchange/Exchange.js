@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { withRouter, Link } from "react-router-dom";
+import { addComma } from "../../config";
 import Footer from "../../component/Footer/Footer";
 import Nav from "../../component/Nav/Nav";
 import SectionLeft from "./SectionLeft/SectionLeft";
@@ -14,19 +15,12 @@ import BeforeLogin from "./BeforeLogin/BeforeLogin";
 import styled, { css } from "styled-components";
 
 function Exchange(props) {
-  function addComma(price) {
-    if (price > 999) {
-      return ("" + price).replace(/(\d)(?=(?:\d{3})+(?!\d))/g, "$1,");
-    } else {
-      return price;
-    }
-  }
-  console.log("1234", props);
   const [buyingPrice, setBuyingPrice] = useState("");
   const coinBuyingPrice = (pricedata) => setBuyingPrice(addComma(pricedata));
   console.log("buy", buyingPrice);
   const [coindetail, setCoindetail] = useState([]);
   const infoCoinDetail = (a) => setCoindetail(a);
+
   return (
     <ExchangePage>
       <Nav />

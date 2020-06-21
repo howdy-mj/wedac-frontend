@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled, { css } from "styled-components";
 import { connect } from "react-redux";
-import { YE } from "../../../config";
+import { YE, addComma } from "../../../config";
 import { withRouter } from "react-router-dom";
 // import TradingPartRight from "./TradingPartRight/TradingPartRight";
 import BottomRight from "./BottomRight/BottomRight";
@@ -47,14 +47,6 @@ function MiddleBottom({ asset, dataForprice, match }) {
   const [activeClick4, setActiveClick4] = useState(false);
   const borderColorOn4 = () => setActiveClick4(true);
   const borderColorOff4 = () => setActiveClick4(false);
-
-  function addComma(price) {
-    if (price > 999) {
-      return ("" + price).replace(/(\d)(?=(?:\d{3})+(?!\d))/g, "$1,");
-    } else {
-      return price;
-    }
-  }
 
   const [priceNumber, setPriceNumber] = useState("");
   const changeNumber = (e) => {
