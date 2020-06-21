@@ -2,19 +2,20 @@ import React, { useState, useEffect } from "react";
 import styled, { css } from "styled-components";
 import { YE } from "../../../../config";
 
-function KRW() {
-  const [KRWdata, setKRWdata] = useState([]);
+function GT() {
+  const [GTdata, setGTdata] = useState([]);
 
+  // GT 마켓 정보 가져오기
   useEffect(() => {
-    fetch(`${YE}/market/KRW`)
+    fetch(`${YE}/market/GT`)
       .then((res) => res.json())
-      .then((res) => setKRWdata(res.history));
+      .then((res) => setGTdata(res.history));
   }, []);
 
   return (
-    <KRWWrap>
-      {KRWdata &&
-        KRWdata.map((data, index) => {
+    <GTWrap>
+      {GTdata &&
+        GTdata.map((data, index) => {
           return (
             <>
               <CryptoListItem key={index}>
@@ -23,15 +24,13 @@ function KRW() {
                 </Li>
                 <Li isName>
                   <LiDiv kor>{data.coin_kor_name}</LiDiv>
-                  <LiDiv eng>{data.coin_code}/KRW</LiDiv>
+                  <LiDiv eng>{data.coin_code}/GT</LiDiv>
                 </Li>
-                <Li price blue data={data.change_rate}>
+                <Li price data={data.change_rate}>
                   {Number(data.present_price).toFixed(2)}
                 </Li>
                 <Li rate>
-                  <P data={data.change_rate} minus>
-                    {data.change_rate}%
-                  </P>
+                  <P data={data.change_rate}>{data.change_rate}%</P>
                 </Li>
                 <Li higher>{Number(data.high_price).toFixed(2)}</Li>
                 <Li lower>{Number(data.low_price).toFixed(2)}</Li>
@@ -40,11 +39,11 @@ function KRW() {
             </>
           );
         })}
-    </KRWWrap>
+    </GTWrap>
   );
 }
 
-const KRWWrap = styled.div`
+const GTWrap = styled.div`
   margin: 2px auto;
   height: 700px;
   overflow-y: scroll;
@@ -87,7 +86,7 @@ const Li = styled.li`
       width: 15%;
       font-weight: 700;
     `}
-
+  
   ${(props) =>
     props.rate &&
     css`
@@ -191,4 +190,4 @@ const P = styled.p`
   }};
 `;
 
-export default KRW;
+export default GT;

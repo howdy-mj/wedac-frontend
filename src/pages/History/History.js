@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import styled, { css } from "styled-components";
 import Nav from "../../component/Nav/Nav";
-import Trade from "./Trade/Trade";
-import InOut from "./InOut/InOut";
+import Trade from "./Trade";
+import InOut from "./InOut";
 import OnlyLogin from "../Login/OnlyLogin";
 import MiddleRight from "../Exchange/MiddleRight/MiddleRight";
 import Footer from "../../component/Footer/Footer";

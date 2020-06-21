@@ -2,19 +2,20 @@ import React, { useState, useEffect } from "react";
 import styled, { css } from "styled-components";
 import { YE } from "../../../../config";
 
-function BTC() {
-  const [BTCdata, setBTCdata] = useState([]);
+function KRW() {
+  const [KRWdata, setKRWdata] = useState([]);
 
+  // KRW 마켓 정보 가져오기
   useEffect(() => {
-    fetch(`${YE}/market/BTC`)
+    fetch(`${YE}/market/KRW`)
       .then((res) => res.json())
-      .then((res) => setBTCdata(res.history));
+      .then((res) => setKRWdata(res.history));
   }, []);
 
   return (
-    <BTCWrap>
-      {BTCdata &&
-        BTCdata.map((data, index) => {
+    <KRWWrap>
+      {KRWdata &&
+        KRWdata.map((data, index) => {
           return (
             <>
               <CryptoListItem key={index}>
@@ -23,30 +24,28 @@ function BTC() {
                 </Li>
                 <Li isName>
                   <LiDiv kor>{data.coin_kor_name}</LiDiv>
-                  <LiDiv eng>{data.coin_code}/BTC</LiDiv>
+                  <LiDiv eng>{data.coin_code}/KRW</LiDiv>
                 </Li>
-                <Li price data={data.change_rate}>
+                <Li price blue data={data.change_rate}>
                   {Number(data.present_price).toFixed(2)}
                 </Li>
                 <Li rate>
-                  <P data={data.change_rate}>{data.change_rate}%</P>
+                  <P data={data.change_rate} minus>
+                    {data.change_rate}%
+                  </P>
                 </Li>
                 <Li higher>{Number(data.high_price).toFixed(2)}</Li>
                 <Li lower>{Number(data.low_price).toFixed(2)}</Li>
-                <Li amount>
-                  {data.transaction_price === "0E-8"
-                    ? "0"
-                    : Number(data.transaction_price).toFixed(2)}
-                </Li>
+                <Li amount>{data.transaction_price}</Li>
               </CryptoListItem>
             </>
           );
         })}
-    </BTCWrap>
+    </KRWWrap>
   );
 }
 
-const BTCWrap = styled.div`
+const KRWWrap = styled.div`
   margin: 2px auto;
   height: 700px;
   overflow-y: scroll;
@@ -193,4 +192,4 @@ const P = styled.p`
   }};
 `;
 
-export default BTC;
+export default KRW;

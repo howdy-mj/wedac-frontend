@@ -413,9 +413,11 @@ const InputPassword = styled.input`
     opacity: 0.6;
   }
 `;
+
 const EmailButtonDiv = styled.div`
   padding: 0 65px;
 `;
+
 const EmailButton = styled.button`
   background-color: rgba(0, 134, 236, 0.5);
   border-color: transparent;
@@ -425,13 +427,16 @@ const EmailButton = styled.button`
   color: #fff;
   border-radius: 2px;
 `;
+
 const BelowLoginButton = styled.div`
   padding: 0 65px 6px;
   width: 100%;
   height: 40px;
 `;
+
 const BelowLeft = styled.div`
   float: left;
+
   a {
     display: inline-block;
     margin-top: 7px;
@@ -441,8 +446,10 @@ const BelowLeft = styled.div`
     font-size: 12px;
   }
 `;
+
 const BelowRight = styled.div`
   float: right;
+
   a {
     display: inline-block;
     margin-top: 14px;
@@ -452,6 +459,7 @@ const BelowRight = styled.div`
     font-size: 12px;
   }
 `;
+
 const SupportBottom = styled.div`
   padding-top: 10px;
   margin-top: 8px;
@@ -461,6 +469,7 @@ const SupportBottom = styled.div`
   text-align: center;
   border-top: 1px solid #ebeef6;
 `;
+
 const SupportFirst = styled.p`
   width: 300px;
   margin: 5px auto;
@@ -483,12 +492,14 @@ const SupportSecond = styled.p`
   display: flex;
   align-items: center;
   justify-content: center;
+
   img {
     display: inline-block;
     width: 14px;
     height: 14px;
     margin-right: 2px;
   }
+
   a {
     text-decoration: none;
     margin-left: 10px;

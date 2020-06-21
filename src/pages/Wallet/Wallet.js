@@ -23,6 +23,7 @@ function Wallet({ asset }) {
   const changeSelected = (id) => setSelected(id);
   const [currentAsset, setCurrentAsset] = useState(0);
 
+  // 로그인 정보로 잔고 확인
   useEffect(() => {
     token &&
       fetch(`${YE}/user/deposit/check`, {
@@ -33,6 +34,7 @@ function Wallet({ asset }) {
         .then((res) => setCurrentAsset(Math.trunc(res.my_wallet[0].volume)));
   }, []);
 
+  // 원화 입출금 후, 변동된 잔고 확인
   useEffect(() => {
     if (asset === 1) {
       console.log("CDU");

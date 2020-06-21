@@ -15,6 +15,7 @@ function Deposit({ name, bank, account, detectAsset }) {
     setRedBorder(true);
   };
 
+  // 10,000원 이상일 경우에만 원화 입금 가능하게 설정
   const handleDepositAmount = (e) => {
     setDepositAmount(e.target.value);
     console.log("handleDepositAmount", e.target.value);
@@ -25,6 +26,7 @@ function Deposit({ name, bank, account, detectAsset }) {
     setRedBorder(false);
   };
 
+  // 원화 입금 처리
   const goDeposit = () => {
     console.log("goDeposit", depositAmount);
 

@@ -2,19 +2,20 @@ import React, { useState, useEffect } from "react";
 import styled, { css } from "styled-components";
 import { YE } from "../../../../config";
 
-function GT() {
-  const [GTdata, setGTdata] = useState([]);
+function BTC() {
+  const [BTCdata, setBTCdata] = useState([]);
 
+  // BTC 마켓 정보 가져오기
   useEffect(() => {
-    fetch(`${YE}/market/GT`)
+    fetch(`${YE}/market/BTC`)
       .then((res) => res.json())
-      .then((res) => setGTdata(res.history));
+      .then((res) => setBTCdata(res.history));
   }, []);
 
   return (
-    <GTWrap>
-      {GTdata &&
-        GTdata.map((data, index) => {
+    <BTCWrap>
+      {BTCdata &&
+        BTCdata.map((data, index) => {
           return (
             <>
               <CryptoListItem key={index}>
@@ -23,7 +24,7 @@ function GT() {
                 </Li>
                 <Li isName>
                   <LiDiv kor>{data.coin_kor_name}</LiDiv>
-                  <LiDiv eng>{data.coin_code}/GT</LiDiv>
+                  <LiDiv eng>{data.coin_code}/BTC</LiDiv>
                 </Li>
                 <Li price data={data.change_rate}>
                   {Number(data.present_price).toFixed(2)}
@@ -33,16 +34,20 @@ function GT() {
                 </Li>
                 <Li higher>{Number(data.high_price).toFixed(2)}</Li>
                 <Li lower>{Number(data.low_price).toFixed(2)}</Li>
-                <Li amount>{data.transaction_price}</Li>
+                <Li amount>
+                  {data.transaction_price === "0E-8"
+                    ? "0"
+                    : Number(data.transaction_price).toFixed(2)}
+                </Li>
               </CryptoListItem>
             </>
           );
         })}
-    </GTWrap>
+    </BTCWrap>
   );
 }
 
-const GTWrap = styled.div`
+const BTCWrap = styled.div`
   margin: 2px auto;
   height: 700px;
   overflow-y: scroll;
@@ -85,7 +90,7 @@ const Li = styled.li`
       width: 15%;
       font-weight: 700;
     `}
-  
+
   ${(props) =>
     props.rate &&
     css`
@@ -189,4 +194,4 @@ const P = styled.p`
   }};
 `;
 
-export default GT;
+export default BTC;

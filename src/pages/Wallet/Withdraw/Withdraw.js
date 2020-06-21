@@ -11,6 +11,7 @@ function Withdraw({ bank, account, detectAsset, asset }) {
   const [able, setAble] = useState(false);
   const [currentAsset, setCurrentAsset] = useState(0);
 
+  // 원화 입출금 후, 변동된 잔고 확인
   useEffect(() => {
     if (asset === 1) {
       fetch(`${YE}/user/deposit/check`, {
@@ -26,12 +27,14 @@ function Withdraw({ bank, account, detectAsset, asset }) {
     console.log("최대 가능 금액");
   };
 
+  // 1,000원 이상일 경우에만 원화 입금 가능하게 설정
   const handleWithdrawAmount = (e) => {
     setWithdrawAmount(e.target.value);
     console.log("handleWithdrawAmount", e.target.value);
     e.target.value.length > 3 ? setAble(true) : setAble(false);
   };
 
+  // 원화 출금 처리
   const goWithdraw = () => {
     console.log(withdrawAmount);
     console.log("출금하기");

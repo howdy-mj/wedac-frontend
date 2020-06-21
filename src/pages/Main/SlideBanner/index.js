@@ -5,12 +5,14 @@ function SlideBanner() {
   const [slideBanners, setSlideBanners] = useState([]);
   const [current, setCurrent] = useState(1);
 
+  // 배너 불러오기
   useEffect(() => {
     fetch("/data/mainBanner.json")
       .then((data) => data.json())
       .then((data) => setSlideBanners(data));
   }, []);
 
+  // 5초마다 current의 값 증가
   useEffect(() => {
     console.log("setinterval");
     const id = setInterval(() => {
@@ -19,6 +21,7 @@ function SlideBanner() {
     return () => clearInterval(id);
   }, [current]);
 
+  // current와 banner.id가 만나는 것만 화면에 보여주기
   const changingBanner = (slideBanners, current) => {
     const filteredBanner = slideBanners.filter((banner) => {
       return banner.id === (current % 2) + 1;

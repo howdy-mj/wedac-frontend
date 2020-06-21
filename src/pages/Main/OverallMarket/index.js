@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import styled, { css } from "styled-components";
 import { YE } from "../../../config";
 import SearchBox from "./SearchBox/SearchBox";
-import KRW from "./KRW/KRW";
-import BTC from "./BTC/BTC";
-import GT from "./GT/GT";
+import KRW from "./KRW";
+import BTC from "./BTC";
+import GT from "./GT";
 
 const selectedMarket = {
   0: <KRW />,
