@@ -1,16 +1,16 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Home from "./Home";
-import Balance from "./pages/Balance/Balance";
-import Wallet from "./pages/Wallet/Wallet";
-import History from "./pages/History/History";
+import Balance from "./pages/Balance";
+import Wallet from "./pages/Wallet";
+import History from "./pages/History";
 import Login from "./pages/Login/Login";
-import Signup from "./pages/Signup/Signup";
-import SignupEmail from "./pages/Signup/SignupEmail/SignupEmail";
-import SignupVerify from "./pages/Signup/SignupVerify/SignupVerify";
+import Signup from "./pages/Signup";
+import SignupEmail from "./pages/Signup/SignupEmail";
+import SignupVerify from "./pages/Signup/SignupVerify";
 import Exchange from "./pages/Exchange/Exchange";
-import MySetting from "./pages/MySetting/MySetting";
-import PageNotFound from "./pages/PageNotFount/PageNotFound";
+import MySetting from "./pages/MySetting";
+import PageNotFound from "./pages/PageNotFount";
 
 class Routes extends Component {
   render() {
